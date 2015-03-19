@@ -1,0 +1,18 @@
+<template name="home">
+  {{>insertCompanyForm}}
+</template>
+
+
+<template name="insertCompanyForm">
+  {{#autoForm collection="Companies" id="insertCompanyForm" type="insert"}}
+  <fieldset>
+    <legend>Add a Company</legend>
+    {{> afQuickField name='email'}}
+    {{> afQuickField name='name'}}
+    {{> afQuickField name='website'}}
+    {{> afQuickField name='description' rows=6}}
+    {{> afQuickField name='monthlyPaymentLimit'}}
+  </fieldset>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  {{/autoForm}}
+</template>
