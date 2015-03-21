@@ -1,0 +1,42 @@
+<template name="company">
+  {{>updateCompanyForm}}
+</template>
+
+<template name="updateCompanyForm">
+	Update Company Info
+
+  {{#autoForm collection="Companies" id="updateCompanyForm" type="update" doc=thisCompany}}
+  <fieldset>
+    <legend>Company Info</legend>
+    {{> afQuickField name='name'}}
+    {{> afQuickField name='website'}}
+    {{> afQuickField name='description' rows=6}}
+    {{> afFieldInput name='accountIsActive' type='hidden' value='true'}}
+  </fieldset>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  {{/autoForm}}
+
+
+</template>
+
+
+<template name="companyProfile">
+  {{>insertCompanyForm}}
+</template>
+
+<template name="insertCompanyForm">
+  {{#autoForm collection="Companies" id="insertCompanyForm" type="insert"}}
+  <fieldset>
+    <legend>Company Info</legend>
+    {{> afQuickField name='name'}}
+    {{> afQuickField name='website'}}
+    {{> afQuickField name='description' rows=6}}
+    {{> afFieldInput name='accountIsActive' type='hidden' value='true'}}
+    {{> afFieldInput name='companyId' type='hidden' value=currentUser._id}}
+  </fieldset>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  {{/autoForm}}
+</template>
+
+
+

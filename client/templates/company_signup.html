@@ -1,0 +1,21 @@
+<template name="companySignup">
+  <h1>new company</h1>
+  {{>companyUserSignup}}
+</template>
+
+<template name="companyUserSignup">
+  <form id="companyUserSignup">
+  <fieldset>
+    <div class="form-group" data-required="true">
+    	<label for="register-email" class="control-label">Email</label>
+    	<input type="text" name="email" id="register-email" required="" class="form-control">    
+  	</div>
+  	<div class="form-group" data-required="true">
+    	<label for="register-password" class="control-label">Password</label>
+    	<input type="password" name="password" id="register-password" required="" class="form-control">    
+  	</div>
+
+  </fieldset>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</template>

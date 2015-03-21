@@ -19,9 +19,38 @@ Router.route('/', {
   name: 'home'
 });
 
+Router.route('/sales/signup/', {
+    name: 'salesSignup'
+});
+
+Router.route('/sales/company/', {
+    name: 'companySignup'
+});
+
+Router.route('/companies/', {
+    name: 'companies'
+});
+
+Router.route('/salespeople/', {
+    name: 'salespeople',
+    waiton:function() {
+      return Meteor.subscribe('salespeople');
+    }
+});
+
+
 Router.route('/company/:_id', {
     name: 'company',
     data: function() {
         return Companies.findOne(this.params._id);
     }
 });
+
+Router.route('/profile/:_id', {
+    name: 'profile',
+    data: function() {
+        return Meteor.users.findOne(this.params._id);
+    }
+});
+
+

@@ -1,0 +1,20 @@
+<template name="profile">
+		<h1>{{userType}} Profile</h1>
+
+		{{# if isSalesPerson }}
+
+		{{>salesProfile}}
+
+		{{/if}}
+
+		{{#if isCompany}}
+
+			{{#if companyProfile}}
+				{{>updateCompanyForm}}
+			{{else}}
+				{{>insertCompanyForm}}
+			{{/if}}
+
+		{{/if}}
+</template>
+

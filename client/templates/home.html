@@ -1,0 +1,19 @@
+<template name="home">
+   {{#if currentUser}}
+        {{> dashboard}}
+    {{else}}
+        {{>login}}
+        <a href="/sales/signup/" class="btn">Signup for Sales</a>
+        <a href="/sales/company/" class="btn">Signup for Company</a>
+    {{/if}}
+
+</template>
+
+
+<template name="dashboard">
+    Welcome.
+    {{>companies}}
+</template>
+
+
+
