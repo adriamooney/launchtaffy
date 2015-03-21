@@ -15,6 +15,13 @@ AutoForm.hooks({
       //Meteor.call('createNewCompanyUser', email, result);
        //Accounts.sendEnrollmentEmail(result); //needs to be called from server. make a method for this
     }
+  },
+  updateCompanyForm: {
+      onSuccess: function(formType, result) {
+        console.log(result);
+
+      }
+
   }/*,
   userSignup: {
     onSubmit: function (insertDoc, updateDoc, currentDoc) {

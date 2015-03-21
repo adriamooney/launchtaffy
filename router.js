@@ -7,9 +7,9 @@ Router.configure({
   },
   //wait for the data to be rendered before showing the layout
   waitOn: function() { 
-  	//return [Meteor.subscribe('posts'), Meteor.subscribe('comments')];
+  	return [Meteor.subscribe('companies'), Meteor.subscribe('users')];
   	//return [Meteor.subscribe('accountplans')];
-  	return Meteor.subscribe('companies');
+  	//return Meteor.subscribe('companies');
 
 	}
   //told the router to use the layout template layout.html as the default layout for all routes
@@ -32,10 +32,7 @@ Router.route('/companies/', {
 });
 
 Router.route('/salespeople/', {
-    name: 'salespeople',
-    waiton:function() {
-      return Meteor.subscribe('salespeople');
-    }
+    name: 'salespeople'
 });
 
 

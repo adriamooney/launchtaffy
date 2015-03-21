@@ -1,7 +1,7 @@
 <template name="companies">
 	<ul>
 	{{#each companies}}
-	<li>{{name}}</li>
+	<li><a href="/company/{{this._id}}">{{name}}</a></li>
 	{{/each}}
 	</ul>
 </template>

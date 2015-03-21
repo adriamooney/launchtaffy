@@ -1,9 +1,19 @@
 <template name="salespeople">
 	salespeople
-	{{salespeople}}
+	<div>
 		{{#each salespeople}}
-			{{profile}}
-			{{bio}}
-			{{website}}
+			{{# if profile.fullName}}
+			<ul>
+				<li>{{profile.fullName}}</li>
+				<li>{{profile.bio}}</li>
+				<li>{{profile.website}}</li>
+				<li><a href="/profile/{{_id}}" class="btn">Contact</a></li>
+			</ul>
+			{{/if}}
 		{{/each}}
+	</div>
+
 </template>
+
+
+

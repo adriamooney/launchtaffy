@@ -1,17 +1,26 @@
 <template name="company">
-  {{>updateCompanyForm}}
+  
+  	{{# if thisCompany}}
+  	{{>updateCompanyForm}}
+  	
+  	{{ else }}
+		<h1>{{this.name}}</h1>
+		<p>{{this.description}}</p>
+		<p><a href="{{this.website}}">{{this.website}}</a></p>
+  	{{/if}}
+
 </template>
 
 <template name="updateCompanyForm">
 	Update Company Info
 
-  {{#autoForm collection="Companies" id="updateCompanyForm" type="update" doc=thisCompany}}
+  {{#autoForm collection="Companies" id="updateCompanyForm" type="update" doc=this}}
   <fieldset>
     <legend>Company Info</legend>
-    {{> afQuickField name='name'}}
-    {{> afQuickField name='website'}}
-    {{> afQuickField name='description' rows=6}}
-    {{> afFieldInput name='accountIsActive' type='hidden' value='true'}}
+    {{> afQuickField name='name' value=this.name}}
+    {{> afQuickField name='website' value=this.website}}
+    {{> afQuickField name='description' rows=6 value=this.description}}
+    {{> afFieldInput name='accountIsActive' value=this.accountIsActive}}
   </fieldset>
   <button type="submit" class="btn btn-primary">Submit</button>
   {{/autoForm}}
@@ -37,6 +46,8 @@
   <button type="submit" class="btn btn-primary">Submit</button>
   {{/autoForm}}
 </template>
+
+
 
 
 

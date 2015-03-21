@@ -2,18 +2,33 @@
 		<h1>{{userType}} Profile</h1>
 
 		{{# if isSalesPerson }}
+			{{#if isMySalesProfile}}
 
-		{{>salesProfile}}
+				{{>updateSalesForm}}
+			{{else}}
+
+			{{>salesProfile}}
+			
+			{{/if}}
 
 		{{/if}}
 
 		{{#if isCompany}}
 
-			{{#if companyProfile}}
-				{{>updateCompanyForm}}
+			{{#if isMyCompany}}
+
+				{{#if companyProfile}}
+					{{>updateCompanyForm}}
+				{{else}}
+					{{>insertCompanyForm}}
+				{{/if}}
+
 			{{else}}
-				{{>insertCompanyForm}}
+				
+				{{>company}}
+
 			{{/if}}
+
 
 		{{/if}}
 </template>

@@ -1,4 +1,4 @@
-Template.registerHelper('isSalesPerson', function() {
+/*Template.registerHelper('isSalesPerson', function() {
 	var user = Meteor.user();
 	if(user) {
 		var userType =  user.profile.userType;
@@ -8,8 +8,8 @@ Template.registerHelper('isSalesPerson', function() {
 	}
 		
 });
-
-Template.registerHelper('isCompany', function() {
+ */
+/*Template.registerHelper('isCompany', function() {
 
 		var user = Meteor.user();
 		if(user) {
@@ -18,22 +18,26 @@ Template.registerHelper('isCompany', function() {
 				return true;
 			}
 		}
-});
+}); */
 
-Template.registerHelper('userType', function() {
+/*Template.registerHelper('userType', function() {
 
 	if (Meteor.user()) {
 		return Meteor.user().profile.userType;
 	}
 		
-});
+}); */
 
-Template.registerHelper('thisCompany', function() {
+/*Template.registerHelper('thisCompany', function() {
 
 	if (Meteor.user()) {
+
 		var userId = Meteor.userId();
-		var company = Companies.findOne({companyId: userId});
-		return company;
+
+		if(userId == companyId) {
+			var company = Companies.findOne({companyId: userId});
+			return company;
+		}
 	}
 		
-});
+});  */
