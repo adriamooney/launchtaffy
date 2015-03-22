@@ -3,12 +3,14 @@ Template.userSignup.events({
     event.preventDefault();
     var emailVar = event.target.email.value;
     var passwordVar = event.target.password.value;
+    var username = event.target.username.value;
 
 
     Accounts.createUser({
         email: emailVar,
         password: passwordVar,
-        profile: {userType: 'salesperson'}
+        username: username,
+        profile: {userType: 'salesperson', isActive: 'true'}
     }, function() {
         Router.go('/');
     }); 
@@ -20,12 +22,14 @@ Template.companyUserSignup.events({
     event.preventDefault();
     var emailVar = event.target.email.value;
     var passwordVar = event.target.password.value;
+    var username = event.target.username.value;
 
 
     Accounts.createUser({
         email: emailVar,
         password: passwordVar,
-        profile: {userType: 'company'}
+        username: username,
+        profile: {userType: 'company', isActive:'true'}
     }, function() {
         Router.go('/');
     }); 

@@ -1,6 +1,10 @@
 <template name="layout">
 
 		{{>header}}
-		{{>yield}}
+
+		<div class="container">
+			{{>appMessages}}
+			{{>yield}}
+		</div>
 
 </template>

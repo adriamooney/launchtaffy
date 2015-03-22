@@ -1,0 +1,14 @@
+<template name="messages">
+	<ul>
+	{{#each messages}} 
+		<li>From: {{fromId}} Message:{{message}} {{>reply}} </li>
+	{{/each}}
+	</ul>
+</template>
+
+<template name="reply">
+		<form id="replyToMessage">Reply
+			<div class="form-group"><textarea id="message" class="form-control"></textarea></div>
+			<button class="btn btn-primary" type="submit">Submit</button> 
+		</form>
+</template>

@@ -15,10 +15,12 @@
         <div class="collapse navbar-collapse" id="navigation">
           <ul class="nav navbar-nav navbar-right">
             <!--spacebars equivalent of Meter.user()-->
-            {{#if currentUser}}<li><a href="/profile/{{currentUser._id}}">{{currentUser.emails.[0].address}}</a></li>{{/if}}
+            {{#if currentUser}}<li><a href="/profile/{{currentUser._id}}">{{currentUser.username}}</a></li>{{/if}}
             <li><a href="/salespeople/">Browse Salespeople</a></li>
             <li><a href="/companies/">Browse Companies</a></li>
+
             {{#if currentUser}}
+            <li><a href="#" class="logout">Logout</a></li>
             <li>
 
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="fa fa-cog"></span>Menu</a>

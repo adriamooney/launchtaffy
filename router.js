@@ -7,7 +7,7 @@ Router.configure({
   },
   //wait for the data to be rendered before showing the layout
   waitOn: function() { 
-  	return [Meteor.subscribe('companies'), Meteor.subscribe('users')];
+  	return [Meteor.subscribe('companies'), Meteor.subscribe('users'), Meteor.subscribe('messages')];
   	//return [Meteor.subscribe('accountplans')];
   	//return Meteor.subscribe('companies');
 

@@ -1,5 +1,6 @@
 Invoices = new Mongo.Collection("invoices");
 Companies = new Mongo.Collection("companies");
+Messages = new Mongo.Collection("messages");
 
 var Schema = {};
 
@@ -134,6 +135,20 @@ Schema.User = new SimpleSchema({
 }); */
 
 //Meteor.users.attachSchema(Schema.User);
+Messages.attachSchema(new SimpleSchema({
+    message: {
+        type: String
+    },
+    status: {
+        type: String
+    },
+    from: {
+        type: String
+    },
+    to: {
+        type: String
+    }
+}));
 
 Companies.attachSchema(new SimpleSchema({
 	/*email: {

@@ -7,6 +7,12 @@
 		<h1>{{this.name}}</h1>
 		<p>{{this.description}}</p>
 		<p><a href="{{this.website}}">{{this.website}}</a></p>
+		{{#if currentUser}}
+		<form id="contactCompany">Send Message
+			<div class="form-group"><textarea id="message" class="form-control"></textarea></div>
+			<button class="btn btn-primary" type="submit">Submit</button> 
+		</form>
+		{{/if}}
   	{{/if}}
 
 </template>
@@ -37,10 +43,11 @@
   {{#autoForm collection="Companies" id="insertCompanyForm" type="insert"}}
   <fieldset>
     <legend>Company Info</legend>
-    {{> afQuickField name='name'}}
-    {{> afQuickField name='website'}}
-    {{> afQuickField name='description' rows=6}}
+    {{> afQuickField name='name' value=''}}
+    {{> afQuickField name='website' value=''}}
+    {{> afQuickField name='description' rows=6 value=''}}
     {{> afFieldInput name='accountIsActive' type='hidden' value='true'}}
+
     {{> afFieldInput name='companyId' type='hidden' value=currentUser._id}}
   </fieldset>
   <button type="submit" class="btn btn-primary">Submit</button>

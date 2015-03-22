@@ -29,6 +29,10 @@ Meteor.methods({
   },
   updateSalesUser: function(id, profile) {
     Meteor.users.update( {_id: id}, {$set: {profile: profile}});
+  },
+  sendMessage: function(senderId, toId, msg) {
+    //senderId, companyId, msg
+    Messages.insert({'message': msg, 'from': senderId, 'to': toId, 'status': 'unread'} );
   }
 });
 

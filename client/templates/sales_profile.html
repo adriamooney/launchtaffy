@@ -1,5 +1,11 @@
 <template name="salesProfile">
 		View sales profile
+		{{#if currentUser}}
+		<form id="contactSalesPerson">Send Message
+			<div class="form-group"><textarea id="message" class="form-control"></textarea></div>
+			<button class="btn btn-primary" type="submit">Submit</button> 
+		</form>
+		{{/if}}
 </template>
 
 <template name="updateSalesForm">
