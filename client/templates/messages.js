@@ -24,6 +24,9 @@ Template.reply.events({
 			if(!err) {
 				AppMessages.throw('your messages was sent', 'success');
 			}
+			else {
+				AppMessages.throw(err.reason, 'danger');
+			}
 		}); 
 	}
 });

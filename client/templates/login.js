@@ -5,6 +5,10 @@ Template.login.events({
         var passwordVar = template.find('#login-password').value;
         Meteor.loginWithPassword(emailVar, passwordVar, function(err) {
         	console.log(err);
+        	if (err) {
+	            // Inform the user that account creation failed
+	            AppMessages.throw(err.reason, 'danger');
+	          } 
         });
     }
 });

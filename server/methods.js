@@ -19,9 +19,11 @@ Meteor.methods({
           if (err) {
             // Inform the user that account creation failed
             console.log(err);
+            AppMessages.throw(err.reason, 'danger');
           } else {
             // Success. Account has been created and the user
             // has logged in successfully. 
+            AppMessages.throw('New user created', 'success');
             console.log('success');
           }
 
