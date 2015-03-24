@@ -10,7 +10,7 @@ Template.userSignup.events({
         email: emailVar,
         password: passwordVar,
         username: username,
-        profile: {userType: 'salesperson', isActive: 'true'}
+        profile: {userType: 'salesperson', isActive: 'true', profileStatus: 0}
     }, function(err) {
         if (err) {
             // Inform the user that account creation failed
@@ -38,7 +38,7 @@ Template.companyUserSignup.events({
         email: emailVar,
         password: passwordVar,
         username: username,
-        profile: {userType: 'company', isActive:'true'}
+        profile: {userType: 'company', isActive:'true', profileStatus: 0}
     }, function(err) {
         if (err) {
             // Inform the user that account creation failed

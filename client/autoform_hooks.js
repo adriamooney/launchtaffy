@@ -5,7 +5,9 @@ AutoForm.hooks({
     onSuccess: function(formType, result) {
       //console.log(result);
       var company = Companies.findOne({_id: result});
-      var email = company.email;
+      //var email = company.email;
+
+      Meteor.users.update({_id: company.companyId}, {$set: {'profile.companyId': result}});
 
       //Router.go('/');
 

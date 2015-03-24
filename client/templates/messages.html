@@ -1,15 +1,48 @@
 <template name="messages">
-	<ul>
-	{{#each messages}} 
-		<li>From: {{fromId}} Message:{{message}} {{>reply}} </li>
-	{{/each}}
-	</ul>
+<h4>Messages Recieved</h4>
+<div class="panel">
+
+</div>
+{{#each messagesToMe}} 
+<div class="panel panel-default">
+    <div class="panel-body">
+        <p><b>{{fromId}}:</b>{{{message}}}</p>
+        <ul>
+        {{#each replies}}
+            <li><b>{{fromId}}:</b> {{{this.message}}}</li>
+        {{/each}}
+        </ul>
+        {{>reply}}
+    </div>
+</div>
+{{/each}}
+
+<h4>Messages Sent</h4>
+
+{{#each messagesFromMe}} 
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">To: {{toId}}</h3>
+    </div>
+    <div class="panel-body">
+        <p><b>{{fromId}}:</b>{{{message}}}</p>
+        <ul>
+        {{#each replies}}
+            <li><b>{{fromId}}:</b> {{{this.message}}}</li>
+        {{/each}}
+        </ul>
+        {{>reply}}
+    </div>
+</div>
+{{/each}}
+
+
 </template>
 
 <template name="reply">
-		<form id="replyToMessage">Reply
-			<div class="form-group"><textarea id="message" class="form-control"></textarea></div>
-			<button class="btn btn-primary" type="submit">Submit</button> 
-		</form>
+	<form id="replyToMessage"><h5>Reply:</h5>
+		<div class="form-group"><textarea id="message" class="form-control"></textarea></div>
+		<button class="btn btn-primary" type="submit">Submit</button> 
+	</form>
 </template>
 

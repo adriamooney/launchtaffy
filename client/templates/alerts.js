@@ -17,5 +17,5 @@ Template.appMessage.rendered = function() {
   var message = this.data;
   Meteor.setTimeout(function () {
     AppMessages.collection.remove(message._id);
-  }, 3000);
+  }, 6000);
 };

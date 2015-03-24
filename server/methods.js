@@ -34,7 +34,31 @@ Meteor.methods({
   },
   sendMessage: function(senderId, toId, msg) {
     //senderId, companyId, msg
-    Messages.insert({'message': msg, 'from': senderId, 'to': toId, 'status': 'unread'} );
+    var now = new Date().getTime();
+    Messages.insert({'message': msg, 'from': senderId, 'to': toId, 'status': 'unread', 'timeStamp': new Date(now - 7 * 3600 * 1000)} );
+  },
+  replyToMessage: function(id, senderId, toId, msg) {
+    Messages.update( {_id: id}, {$push: {'replies': {'to': toId, 'status': 'unread', 'message': msg, 'from': senderId} }});
+  },
+  sendEmail: function (to, from, subject, text) {
+    check([to, from, subject, text], [String]);
+
+    // Let other method calls from the same client start running,
+    // without waiting for the email sending to complete.
+    this.unblock();
+    return Meteor.Mandrill.send({
+        to: to,
+        from: from,
+        subject: subject,
+        text: text
+    });
+
+    /*Email.send({
+      to: to,
+      from: from,
+      subject: subject,
+      text: text
+    }); */
   }
 });
 

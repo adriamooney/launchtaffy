@@ -139,6 +139,9 @@ Messages.attachSchema(new SimpleSchema({
     message: {
         type: String
     },
+    timeStamp: {
+        type: String
+    },
     status: {
         type: String
     },
@@ -147,6 +150,23 @@ Messages.attachSchema(new SimpleSchema({
     },
     to: {
         type: String
+    },
+    replies: {
+        type: [Object],
+        min: 0,
+        optional:true
+    },
+    "replies.$.status": {
+        type:String
+    },
+    "replies.$.from": {
+        type:String
+    },
+    "replies.$.to": {
+        type:String
+    },
+    "replies.$.message": {
+        type:String
     }
 }));
 

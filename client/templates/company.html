@@ -30,8 +30,21 @@
   </fieldset>
   <button type="submit" class="btn btn-primary">Submit</button>
   {{/autoForm}}
+</template>
 
+<template name="updateCompanyFormOnProfile">
+  Update Company Info
 
+  {{#autoForm collection="Companies" id="updateCompanyForm" type="update" doc=this.companyId}}
+  <fieldset>
+    <legend>Company Info</legend>
+    {{> afQuickField name='name' value=this.name}}
+    {{> afQuickField name='website' value=this.website}}
+    {{> afQuickField name='description' rows=6 value=this.description}}
+    {{> afFieldInput name='accountIsActive' value=this.accountIsActive}}
+  </fieldset>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  {{/autoForm}}
 </template>
 
 

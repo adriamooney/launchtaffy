@@ -13,6 +13,15 @@
 <template name="dashboard">
 	<h1>Dashboard</h1>
 	{{>messages}}
+	{{# if emptyProfile }}
+		{{>welcome}}
+	{{/if}}
+</template>
+
+<template name="welcome">
+	<h1>Welcome to SalesCrowd!</h1>
+	<p>Head on over to create your profile so companies can find you.</p>
+	<p><a class="btn btn-primary" href="/profile/{{currentUser._id}}">Profile</a></p>
 </template>
 
 

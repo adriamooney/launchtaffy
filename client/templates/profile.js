@@ -70,13 +70,37 @@ Template.updateSalesForm.events({
 		event.preventDefault();
 
 		console.log('submitted');
+		var profileStatus;
+
+		if (template.find('#bio').value == '') {  //TODO: flesh this out later so profile can be done by a %
+			profileStatus = 0;
+		}
+		else {
+			profileStatus = 1
+		}
+
 		var profile = {
 			fullName: template.find('#fullName').value,
 			website: template.find('#website').value,
 			bio: template.find('#bio').value,
 			userType: 'salesperson',
-			isActive: 'true'  //make this an option this later so user can cancel
+			isActive: 'true',//make this an option this later so user can cancel
+			profileStatus: profileStatus  
+
 		}
-		Meteor.call('updateSalesUser', Meteor.userId(), profile);
+
+
+		Meteor.call('updateSalesUser', Meteor.userId(), profile, function(err) {
+
+        	if (err) {
+            // Inform the user that account creation failed
+	            AppMessages.throw(err.reason, 'danger');
+	          } else {
+	            // Success. Account has been created and the user
+	            // has logged in successfully. 
+	            AppMessages.throw('Profile updated.', 'success');
+	            //.go('/');
+	          }
+		});
 	}
 });
