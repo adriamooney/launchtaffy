@@ -10,5 +10,12 @@ Template.login.events({
 	            AppMessages.throw(err.reason, 'danger');
 	          } 
         });
-    }
+    },
+    'click #forgot-password': function(event, template) {
+        e.preventDefault();
+        //TODO: all this stuff
+        /*Accounts.forgotPassword(email, function(err) {
+
+        }); */
+    } 
 });

@@ -2,14 +2,14 @@ Meteor.methods({
 	sendInitialEmail: function(result) {
 		return Accounts.sendEnrollmentEmail(result);
 	},
-	createNewCompanyUser: function (email,result) {
+	/*createNewCompanyUser: function (email,result) {
     // i recommend to create user with initial password otherwise it will be empty string
    // Meteor.call("validateEmail", email);  TODO: make this method
     var userId = Accounts.createUser({email:email, password: 'password', profile: {companyId: result, userType: 'company'} });
 
     Accounts.sendEnrollmentEmail(userId);
-  },
-  createNewSalesUser: function(doc) {
+  }, */
+ /* createNewSalesUser: function(doc) {
   		check(doc, Schema.User);
 
   		var email = doc.email;
@@ -28,7 +28,7 @@ Meteor.methods({
           }
 
         });
-  },
+  }, */
   updateSalesUser: function(id, profile) {
     Meteor.users.update( {_id: id}, {$set: {profile: profile}});
   },
@@ -39,6 +39,15 @@ Meteor.methods({
   },
   replyToMessage: function(id, senderId, toId, msg) {
     Messages.update( {_id: id}, {$push: {'replies': {'to': toId, 'status': 'unread', 'message': msg, 'from': senderId} }});
+  },
+  deleteMessage: function(id) {
+    Messages.remove(id);
+  },
+  archiveMessage: function(id) {
+    Messages.update({_id:id}, {$set: {'status': 'archived'}});
+  },
+  unarchiveMessage: function(id) {
+    Messages.update({_id:id}, {$set: {'status': 'read'}});
   },
   sendEmail: function (to, from, subject, text) {
     check([to, from, subject, text], [String]);

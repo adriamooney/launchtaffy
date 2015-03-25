@@ -1,10 +1,14 @@
 <template name="messages">
-<h4>Messages Recieved</h4>
-<div class="panel">
 
-</div>
+{{>searchBox}}
+
+<h4>Messages Recieved</h4>
+
 {{#each messagesToMe}} 
 <div class="panel panel-default">
+    <div class="panel-heading clearfix {{status}}">
+        <h3 class="panel-title"><span class="pull-right"><a href="#" class="glyphicon glyphicon-trash delete-msg" title="delete"></a> <a href="#" class="glyphicon glyphicon glyphicon-folder-close archive-msg" title="archive"></a></span></h3>
+    </div>
     <div class="panel-body">
         <p><b>{{fromId}}:</b>{{{message}}}</p>
         <ul>
@@ -16,13 +20,14 @@
     </div>
 </div>
 {{/each}}
+
 
 <h4>Messages Sent</h4>
 
 {{#each messagesFromMe}} 
 <div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">To: {{toId}}</h3>
+    <div class="panel-heading {{status}}">
+        <h3 class="panel-title">To: {{toId}}<span class="pull-right"><a href="#" class="glyphicon glyphicon-trash delete-msg" title="delete"></a> <a href="#" class="glyphicon glyphicon glyphicon-folder-close archive-msg" title="archive"></a></span></h3>
     </div>
     <div class="panel-body">
         <p><b>{{fromId}}:</b>{{{message}}}</p>
@@ -35,6 +40,7 @@
     </div>
 </div>
 {{/each}}
+
 
 
 </template>
@@ -44,5 +50,27 @@
 		<div class="form-group"><textarea id="message" class="form-control"></textarea></div>
 		<button class="btn btn-primary" type="submit">Submit</button> 
 	</form>
+</template>
+
+<template name="searchBox">
+    <div class="form-group">{{> esInput index="messages" placeholder="Search..." class="form-control"}}</div>
+
+
+        {{#esEach index="messages"}}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">To: {{toId}}<span class="pull-right"><a href="#" class="glyphicon glyphicon-trash delete-msg" title="delete"></a> <a href="#" class="glyphicon glyphicon glyphicon-folder-open unarchive-msg" title="unarchive"></a></span></h3>
+                </div>
+                <div class="panel-body">
+                    <p><b>{{fromId}}:</b>{{{message}}}</p>
+                    <ul>
+                    {{#each replies}}
+                        <li><b>{{fromId}}:</b> {{{this.message}}}</li>
+                    {{/each}}
+                    </ul>
+                </div>
+            </div>
+        {{/esEach}}
+
 </template>
 

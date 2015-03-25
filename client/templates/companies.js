@@ -19,6 +19,14 @@ Template.company.helpers({
 	}
 });
 
+Template.updateCompanyFormOnProfile.helpers({ //probably could be moved to a generic helper function
+	usersCompany: function() {
+		var userId = Meteor.userId();
+		var company = Companies.findOne({companyId: userId});
+		return company;
+	}
+});
+
 Template.company.events({
 	'submit #contactCompany': function(event, template) {
 		event.preventDefault();

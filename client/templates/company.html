@@ -34,8 +34,8 @@
 
 <template name="updateCompanyFormOnProfile">
   Update Company Info
-
-  {{#autoForm collection="Companies" id="updateCompanyForm" type="update" doc=this.companyId}}
+  <!--this is not right this.companyId is not right. need to write a template helper-->
+  {{#autoForm collection="Companies" id="updateCompanyForm" type="update" doc=usersCompany}}
   <fieldset>
     <legend>Company Info</legend>
     {{> afQuickField name='name' value=this.name}}

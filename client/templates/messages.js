@@ -1,9 +1,12 @@
 Template.messages.helpers({
 	messagesToMe: function() {
-		return Messages.find({to: Meteor.userId()}, {sort: {timeStamp: -1}});
+		//return Messages.find({$and: [{to: Meteor.userId()},{status: 'unread'}]}, {sort: {timeStamp: -1}});
+
+		return Messages.find({$or: [{$and: [{to: Meteor.userId()},{'status': 'unread'}]}, {$and: [{to: Meteor.userId()},{'status': 'read'}]}]},  {sort: {timeStamp: -1}});
 	},
 	messagesFromMe: function() {
-		return Messages.find({from: Meteor.userId()}, {sort: {timeStamp: -1}});
+		return Messages.find({$or: [{$and: [{from: Meteor.userId()},{'status': 'unread'}]}, {$and: [{from: Meteor.userId()},{'status': 'read'}]}]},  {sort: {timeStamp: -1}});
+		//return Messages.find({$and: [{from: Meteor.userId()},{status: 'unread'}]}, {sort: {timeStamp: -1}});
 	},
 	fromId: function() {
 		var fromId = this.from;
@@ -18,6 +21,46 @@ Template.messages.helpers({
 		return person;
 	}
 });
+
+Template.searchBox.helpers({
+	fromId: function() {
+		var fromId = this.from;
+		var from =  Meteor.users.findOne({_id: fromId});
+		var person = from.username;
+		return person;
+	},
+	toId: function() {
+		var toId = this.to;
+		var to =  Meteor.users.findOne({_id: toId});
+		var person = to.username;
+		return person;
+	}
+});
+
+Template.messages.events({
+	'click .delete-msg': function(event, template) {
+		event.preventDefault();
+		Meteor.call('deleteMessage', this._id, function() {
+			AppMessages.throw('Message deleted', 'success');
+		});
+	},
+	'click .archive-msg': function(event, template) {
+		event.preventDefault();
+		Meteor.call('archiveMessage', this._id, function() {
+			AppMessages.throw('Message archived', 'success');
+		});
+	},
+	'click .unarchive-msg': function(event, template) {
+		event.preventDefault();
+		Meteor.call('unarchiveMessage', this._id, function() {
+			AppMessages.throw('Message unarchived', 'success');
+		});
+
+	}
+
+});
+
+
 
 Template.reply.events({
 	'submit #replyToMessage': function(event, template) {

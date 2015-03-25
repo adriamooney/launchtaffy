@@ -1,6 +1,9 @@
 Invoices = new Mongo.Collection("invoices");
 Companies = new Mongo.Collection("companies");
 Messages = new Mongo.Collection("messages");
+//easy search:
+//https://atmospherejs.com/matteodem/easy-search
+Messages.initEasySearch('message');
 
 var Schema = {};
 
@@ -137,7 +140,8 @@ Schema.User = new SimpleSchema({
 //Meteor.users.attachSchema(Schema.User);
 Messages.attachSchema(new SimpleSchema({
     message: {
-        type: String
+        type: String,
+        max: 3000
     },
     timeStamp: {
         type: String
