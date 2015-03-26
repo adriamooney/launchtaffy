@@ -1,17 +1,33 @@
 <template name="salespeople">
-	salespeople
-	<div>
+
+	{{#if salespeople}}
 		{{#each salespeople}}
-			{{# if profile.fullName}}
-			<ul>
-				<li>{{profile.fullName}}</li>
-				<li>{{profile.bio}}</li>
-				<li>{{profile.website}}</li>
-				<li><a href="/profile/{{_id}}" class="btn">Contact</a></li>
-			</ul>
-			{{/if}}
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+			        <h3 class="panel-title"><a href="/profile/{{_id}}">{{username}}</a></h3>
+			    </div>
+				<div class="panel-body">
+					<ul class="list-unstyled">
+						{{#if profile.bio}}
+						<li>{{profile.bio}}</li>
+						{{else}}
+							<li>No Bio for this Sales Person</li>
+						{{/if}}
+						{{#if profile.website}}
+						<li><a href="{{profile.website}}" target="_blank">{{profile.website}}</a></li>
+						{{/if}}
+					</ul>
+				</div>
+			</div>
+
 		{{/each}}
-	</div>
+
+		{{else}}
+			<div class="alert alert-info" role="alert"><strong>We're sorry,</strong> there are no active salespeople at this time. Check again soon.</div>
+
+		{{/if}}
+
 
 </template>
 

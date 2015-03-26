@@ -9,26 +9,13 @@ Meteor.methods({
 
     Accounts.sendEnrollmentEmail(userId);
   }, */
- /* createNewSalesUser: function(doc) {
-  		check(doc, Schema.User);
-
-  		var email = doc.email;
-  		var password = doc.password;
-
-  		Accounts.createUser({email: email, password : password}, function(err){
-          if (err) {
-            // Inform the user that account creation failed
-            console.log(err);
-            AppMessages.throw(err.reason, 'danger');
-          } else {
-            // Success. Account has been created and the user
-            // has logged in successfully. 
-            AppMessages.throw('New user created', 'success');
-            console.log('success');
-          }
-
-        });
-  }, */
+  createNewSalesUser: function(email, password, username) {
+  		//check(doc, Schema.User);
+  	   Accounts.createUser({email: email, password : password, username: username, profile: {userType: 'salesperson', isActive: true, profileStatus: 0}});
+  }, 
+  createNewCompanyUser: function(email, password, username) {
+    Accounts.createUser({email: email, password : password, username: username, profile: {userType: 'company', isActive: true, profileStatus: 0}});
+  },
   updateSalesUser: function(id, profile) {
     Meteor.users.update( {_id: id}, {$set: {profile: profile}});
   },

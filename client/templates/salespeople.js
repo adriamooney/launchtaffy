@@ -1,7 +1,16 @@
 Template.salespeople.helpers({
 	salespeople: function() {
-		console.log(Meteor.users.find().count());
-		return Meteor.users.find();
+		console.log(Meteor.users.find({'profile.isActive': true}).count());
+		var users = Meteor.users.find({ $and: [ {'profile.userType': 'salesperson'}, {'profile.isActive': true}, {'emails.0.verified': true} ] } ); 
+		
+		console.log( users.count() );
+		if (users.count() > 0) {
+			return users;
+		}
+		else {
+			return false;
+		}
+
 	}
 });
 

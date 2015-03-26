@@ -6,23 +6,19 @@ Template.userSignup.events({
     var username = event.target.username.value;
     //TODO: NEEDS VALIDATION
 
-    Accounts.createUser({
-        email: emailVar,
-        password: passwordVar,
-        username: username,
-        profile: {userType: 'salesperson', isActive: 'true', profileStatus: 0}
-    }, function(err) {
-        if (err) {
+    Meteor.call('createNewSalesUser', emailVar, passwordVar, username, function(error, result) {
+          if (error) {
             // Inform the user that account creation failed
-            AppMessages.throw(err.reason, 'danger');
+            AppMessages.throw(error.reason, 'danger');
           } else {
             // Success. Account has been created and the user
             // has logged in successfully. 
-            AppMessages.throw('Account created', 'success');
+            AppMessages.throw('Account created. Check your email for a login verification link', 'success');
             Router.go('/');
           }
-        
-    }); 
+
+    });
+
     }
 });  
 
@@ -33,23 +29,21 @@ Template.companyUserSignup.events({
     var passwordVar = event.target.password.value;
     var username = event.target.username.value;
     //TODO: NEEDS VALIDATION
-
-    Accounts.createUser({
-        email: emailVar,
-        password: passwordVar,
-        username: username,
-        profile: {userType: 'company', isActive:'true', profileStatus: 0}
-    }, function(err) {
-        if (err) {
+    Meteor.call('createNewCompanyUser', emailVar, passwordVar, username, function(error, result) {
+          if (error) {
             // Inform the user that account creation failed
-            AppMessages.throw(err.reason, 'danger');
+            AppMessages.throw(error.reason, 'danger');
           } else {
             // Success. Account has been created and the user
             // has logged in successfully. 
-            AppMessages.throw('Account created', 'success');
+            AppMessages.throw('Account created. Check your email for a login verification link', 'success');
             Router.go('/');
           }
-    }); 
+
+    });
+    
+    
+
     }
 });  
 

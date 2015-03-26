@@ -1,7 +1,14 @@
 <template name="messages">
+{{# if anyMessages}}
+    {{>searchBox}}
+{{/if}}
 
-{{>searchBox}}
+{{# if anyMessages}}
+{{else}}
+<p>No messages</p>
+{{/if}}
 
+{{#if messagesToMe}}
 <h4>Messages Recieved</h4>
 
 {{#each messagesToMe}} 
@@ -20,8 +27,9 @@
     </div>
 </div>
 {{/each}}
+{{/if}}
 
-
+{{#if messagesFromMe}}
 <h4>Messages Sent</h4>
 
 {{#each messagesFromMe}} 
@@ -40,6 +48,7 @@
     </div>
 </div>
 {{/each}}
+{{/if}}
 
 
 

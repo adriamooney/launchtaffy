@@ -80,11 +80,11 @@ Template.updateSalesForm.events({
 		}
 
 		var profile = {
-			fullName: template.find('#fullName').value,
+			//fullName: template.find('#fullName').value,
 			website: template.find('#website').value,
 			bio: template.find('#bio').value,
 			userType: 'salesperson',
-			isActive: 'true',//make this an option this later so user can cancel
+			isActive: true,//make this an option this later so user can cancel
 			profileStatus: profileStatus  
 
 		}

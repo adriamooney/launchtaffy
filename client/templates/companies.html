@@ -1,7 +1,11 @@
 <template name="companies">
+	{{#if companies}}
 	<ul>
 	{{#each companies}}
 	<li><a href="/company/{{this._id}}">{{name}}</a></li>
 	{{/each}}
 	</ul>
+	{{else}}
+		<div class="alert alert-info" role="alert"><strong>We're sorry,</strong> there are no active companies at this time. Check again soon.</div>
+	{{/if}}
 </template>

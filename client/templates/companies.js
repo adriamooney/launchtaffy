@@ -1,6 +1,12 @@
 Template.companies.helpers({
 	companies: function() {
-		return Companies.find();
+		var companies = Companies.find({accountIsActive: true});
+		if(companies.count() > 0) {
+			return companies;
+		}
+		else {
+			return false;
+		}
 	}
 });
 

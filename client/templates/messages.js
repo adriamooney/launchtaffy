@@ -1,12 +1,34 @@
 Template.messages.helpers({
 	messagesToMe: function() {
 		//return Messages.find({$and: [{to: Meteor.userId()},{status: 'unread'}]}, {sort: {timeStamp: -1}});
-
-		return Messages.find({$or: [{$and: [{to: Meteor.userId()},{'status': 'unread'}]}, {$and: [{to: Meteor.userId()},{'status': 'read'}]}]},  {sort: {timeStamp: -1}});
+		var messages = Messages.find({$or: [{$and: [{to: Meteor.userId()},{'status': 'unread'}]}, {$and: [{to: Meteor.userId()},{'status': 'read'}]}]},  {sort: {timeStamp: -1}});
+		if (messages.count() > 0) {
+			return messages;
+		}
+		else {
+			return false;
+		}
+		//return Messages.find({$or: [{$and: [{to: Meteor.userId()},{'status': 'unread'}]}, {$and: [{to: Meteor.userId()},{'status': 'read'}]}]},  {sort: {timeStamp: -1}});
 	},
 	messagesFromMe: function() {
-		return Messages.find({$or: [{$and: [{from: Meteor.userId()},{'status': 'unread'}]}, {$and: [{from: Meteor.userId()},{'status': 'read'}]}]},  {sort: {timeStamp: -1}});
+		var messages =  Messages.find({$or: [{$and: [{from: Meteor.userId()},{'status': 'unread'}]}, {$and: [{from: Meteor.userId()},{'status': 'read'}]}]},  {sort: {timeStamp: -1}});
+		if (messages.count() > 0) {
+			return messages;
+		}
+		else {
+			return false;
+		}
 		//return Messages.find({$and: [{from: Meteor.userId()},{status: 'unread'}]}, {sort: {timeStamp: -1}});
+	},
+	anyMessages: function() {
+		var messages =  Messages.find({$or: [{from: Meteor.userId()},{to: Meteor.userId()}]}, {sort: {timeStamp: -1}});
+		if (messages.count() > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+
 	},
 	fromId: function() {
 		var fromId = this.from;
