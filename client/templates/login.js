@@ -8,6 +8,9 @@ Template.login.events({
 	            // Inform the user that account creation failed
 	            AppMessages.throw(err.reason, 'danger');
 	       } 
+           else {
+            Router.go('/');
+           }
         });
     }
 });

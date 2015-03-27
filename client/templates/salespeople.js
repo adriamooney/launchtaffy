@@ -51,8 +51,13 @@ Template.salesProfile.events({
 	'click #approve-salesprson': function(event, template) {
 		event.preventDefault();
 		var companyId = Meteor.user().profile.companyId;
+		var company = Companies.findOne({_id: companyId});
+		var companyName = company.name;
+		console.log(companyName);
 		//console.log(companyId);
 		var userId = this._id;
+		var useremail = this.emails[0].address;
+		console.log(useremail);
 		//console.log(userId);
 		if(companyId) {
 			Meteor.call('approveSalesPerson', companyId, userId, function(err) {
@@ -61,6 +66,12 @@ Template.salesProfile.events({
 				}
 				else {
 					AppMessages.throw('You have now approved this salesperson.', 'success');
+					Meteor.call('sendEmail', useremail, 'SalesCrowd <no-reply@salescrowd.com>', 'You have been approved!', 'You have been approved by '+companyName, function(err) {
+						if(err) {
+							console.log(err);
+						}
+					});
+
 				}
 			});
 		}
