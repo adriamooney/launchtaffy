@@ -2,13 +2,6 @@ Meteor.methods({
 	sendInitialEmail: function(result) {
 		return Accounts.sendEnrollmentEmail(result);
 	},
-	/*createNewCompanyUser: function (email,result) {
-    // i recommend to create user with initial password otherwise it will be empty string
-   // Meteor.call("validateEmail", email);  TODO: make this method
-    var userId = Accounts.createUser({email:email, password: 'password', profile: {companyId: result, userType: 'company'} });
-
-    Accounts.sendEnrollmentEmail(userId);
-  }, */
   createNewSalesUser: function(email, password, username) {
   		//check(doc, Schema.User);
   	   Accounts.createUser({email: email, password : password, username: username, profile: {userType: 'salesperson', isActive: true, profileStatus: 0}});
@@ -55,6 +48,14 @@ Meteor.methods({
       subject: subject,
       text: text
     }); */
+  },
+  approveSalesPerson: function(companyId, userId) {
+    //Meteor.users.update({_id: userId}, {$addToSet: {'profile.approvedCompanies': {'company': companyId
+    Meteor.users.update({_id: userId}, {$addToSet: {'profile.approvedCompanies': companyId}});  
+  },
+  removeSalesPerson: function(companyId, userId) {
+   // Meteor.users.update({_id: userId}, {$pull: {'profile.approvedCompanies': {'company': companyId}}});
+   Meteor.users.update({_id: userId}, {$pull: {'profile.approvedCompanies': companyId}});
   }
 });
 

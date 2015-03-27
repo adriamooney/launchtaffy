@@ -5,19 +5,25 @@ Template.userSignup.events({
     var passwordVar = event.target.password.value;
     var username = event.target.username.value;
     //TODO: NEEDS VALIDATION
+    //where to put functions so they will be in scope?
 
-    Meteor.call('createNewSalesUser', emailVar, passwordVar, username, function(error, result) {
-          if (error) {
-            // Inform the user that account creation failed
-            AppMessages.throw(error.reason, 'danger');
-          } else {
-            // Success. Account has been created and the user
-            // has logged in successfully. 
-            AppMessages.throw('Account created. Check your email for a login verification link', 'success');
-            Router.go('/');
-          }
+     // if ( isValidLength(passwordVar) && isValidLength(username) ) {  
+      // Then use the Meteor.createUser() function
 
-    });
+        Meteor.call('createNewSalesUser', emailVar, passwordVar, username, function(error, result) {
+              if (error) {
+                // Inform the user that account creation failed
+                AppMessages.throw(error.reason, 'danger');
+              } else {
+                // Success. Account has been created and the user
+                // has logged in successfully. 
+                AppMessages.throw('Account created. Check your email for a login verification link', 'success');
+                Router.go('/');
+              }
+
+        });
+
+      //}
 
     }
 });  

@@ -19,6 +19,10 @@ Router.route('/', {
   name: 'home'
 });
 
+Router.route('/forgot-password/', {
+  name: 'forgotPassword'
+});
+
 Router.route('/sales/signup/', {
     name: 'salesSignup'
 });
@@ -33,6 +37,10 @@ Router.route('/companies/', {
 
 Router.route('/salespeople/', {
     name: 'salespeople'
+});
+
+Router.route('/login/', {
+    name: 'login'
 });
 
 

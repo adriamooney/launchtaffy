@@ -1,5 +1,33 @@
 <template name="salesProfile">
-		View sales profile
+
+		<div class="panel panel-default">
+				<div class="panel-body">
+					<ul class="list-unstyled">
+						{{#if this.profile.bio}}
+						<li>{{this.profile.bio}}</li>
+						{{else}}
+							<li>No Bio for this Sales Person</li>
+						{{/if}}
+						{{#if this.profile.website}}
+						<li><a href="{{profile.website}}" target="_blank">{{this.profile.website}}</a></li>
+						{{/if}}
+					</ul>
+					{{#if currentUserIsCompany}}
+
+						{{#if salesPersonIsApproved}}
+						<div class="well pull-right">
+							<p>{{this.username}} is currently on your approved list of salespeople</p>
+							<button id="unapprove-salesprson" class="btn btn-danger btn-xs">Revoke approval</button>
+						</div>
+						{{else}}
+							<button id="approve-salesprson" class="btn btn-primary btn-sm pull-right">Approve {{this.username}} to sell for you</button>
+
+						{{/if}}
+
+					{{/if}}
+
+				</div>
+			</div>
 		{{#if currentUser}}
 		<form id="contactSalesPerson">Send Message
 			<div class="form-group"><textarea id="message" class="form-control"></textarea></div>
@@ -9,6 +37,14 @@
 </template>
 
 <template name="updateSalesForm">
+
+	<p>Companies I can sell for:</p>
+	<ul>
+	{{#each approvedCompanies}}
+		<li>{{name}}</li>
+	{{/each}}
+	</ul>
+
 	<form id="updateSalesForm"> 
 		<fieldset>
   		<div class="form-group">

@@ -41,3 +41,23 @@
 	}
 		
 });  */
+
+Template.registerHelper('currentUserIsCompany', function() {
+	var user = Meteor.user().profile.userType;
+	if (user == 'company') {
+		return true;
+	}
+	else {
+		return false;
+	}
+});
+
+Template.registerHelper('currentUserIsSales', function() {
+	var user = Meteor.user().profile.userType;
+	if (user == 'salesperson') {
+		return true;
+	}
+	else {
+		return false;
+	}
+});
