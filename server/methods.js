@@ -56,6 +56,12 @@ Meteor.methods({
   removeSalesPerson: function(companyId, userId) {
    // Meteor.users.update({_id: userId}, {$pull: {'profile.approvedCompanies': {'company': companyId}}});
    Meteor.users.update({_id: userId}, {$pull: {'profile.approvedCompanies': companyId}});
+  },
+  addToCompanyFavorites: function(companyId, userId) {
+    Meteor.users.update({_id: userId}, {$addToSet: {'profile.favoriteCompanies': companyId}});
+  },
+  removeFromCompanyFavorites: function(companyId, userId) {
+    Meteor.users.update({_id: userId}, {$pull: {'profile.favoriteCompanies': companyId}});
   }
 });
 

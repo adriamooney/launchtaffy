@@ -8,16 +8,13 @@
 			        <h3 class="panel-title"><a href="/profile/{{_id}}">{{username}}</a></h3>
 			    </div>
 				<div class="panel-body">
-					<ul class="list-unstyled">
+					
 						{{#if profile.bio}}
-						<li>{{profile.bio}}</li>
+						<div>{{profile.bio}}</div>
 						{{else}}
-							<li>No Bio for this Sales Person</li>
+							<p>No Bio for this Sales Person</p>
 						{{/if}}
-						{{#if profile.website}}
-						<li><a href="{{profile.website}}" target="_blank">{{profile.website}}</a></li>
-						{{/if}}
-					</ul>
+
 				</div>
 			</div>
 

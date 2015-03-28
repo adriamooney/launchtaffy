@@ -17,17 +17,21 @@ Template.salespeople.helpers({
 Template.salesProfile.helpers({
 	salesPersonIsApproved: function() {
 		var thisCompany = Meteor.user().profile.companyId;
-		console.log(thisCompany);
-		var companiesArr = this.profile.approvedCompanies;
-		console.log(companiesArr[0]);
 
-		if (_.contains(companiesArr, thisCompany)) {
-			return true;
+		var companiesArr = this.profile.approvedCompanies;
+		if(companiesArr) {
+
+			if (_.contains(companiesArr, thisCompany)) {
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
+
 		else {
 			return false;
 		}
-			
 
 	}
 });
@@ -53,12 +57,11 @@ Template.salesProfile.events({
 		var companyId = Meteor.user().profile.companyId;
 		var company = Companies.findOne({_id: companyId});
 		var companyName = company.name;
-		console.log(companyName);
-		//console.log(companyId);
+
 		var userId = this._id;
 		var useremail = this.emails[0].address;
-		console.log(useremail);
-		//console.log(userId);
+
+
 		if(companyId) {
 			Meteor.call('approveSalesPerson', companyId, userId, function(err) {
 				if(err) {
@@ -83,7 +86,12 @@ Template.salesProfile.events({
 	'click #unapprove-salesprson': function(event, template) {
 		event.preventDefault();
 		var companyId = Meteor.user().profile.companyId;
+		var company = Companies.findOne({_id: companyId});
+		var companyName = company.name;
+
 		var userId = this._id;
+		var useremail = this.emails[0].address;
+
 		if(companyId) {
 			Meteor.call('removeSalesPerson', companyId, userId, function(err) {
 				if(err) {
@@ -92,6 +100,11 @@ Template.salesProfile.events({
 				}
 				else {
 					AppMessages.throw('You have revoked approval this salesperson.', 'success');
+					Meteor.call('sendEmail', useremail, 'SalesCrowd <no-reply@salescrowd.com>', 'Your approval has been revoked', 'Your approval to sell for '+companyName+' has been revoked.  You are no long authorized to sell for this company.', function(err) {
+						if(err) {
+							console.log(err);
+						}
+					});
 				}
 			});
 		}
@@ -105,13 +118,18 @@ Template.salesProfile.events({
 Template.updateSalesForm.helpers({
 	approvedCompanies: function() {
 		var companiesArr = this.profile.approvedCompanies;
+		if(companiesArr) {
+			var ids = companiesArr;
+			console.log(ids);
 
-		var ids = companiesArr;
-		console.log(ids);
-
-		var companies = Companies.find({_id: {$in: ids}});
-		console.log(companies);
-		return companies;
+			var companies = Companies.find({_id: {$in: ids}});
+			console.log(companies);
+			return companies;
+		}
+		else {
+			return false;
+		}
+		
 
 	}
 

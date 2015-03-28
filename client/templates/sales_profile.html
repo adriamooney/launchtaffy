@@ -38,12 +38,14 @@
 
 <template name="updateSalesForm">
 
-	<p>Companies I can sell for:</p>
-	<ul>
-	{{#each approvedCompanies}}
-		<li>{{name}}</li>
-	{{/each}}
-	</ul>
+	{{#if approvedCompanies}}
+		<p>Companies I can sell for:</p>
+		<ul>
+		{{#each approvedCompanies}}
+			<li>{{name}}</li>
+		{{/each}}
+		</ul>
+	{{/if}}
 
 	<form id="updateSalesForm"> 
 		<fieldset>

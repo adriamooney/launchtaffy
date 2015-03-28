@@ -4,14 +4,43 @@
   	{{>updateCompanyForm}}
   	
   	{{ else }}
-		<h1>{{this.name}}</h1>
+		<h1>{{this.name}} 
+      {{#if isFavorite }}
+      <!--<small class="pull-right"><a id="removeFromCompanyFavorites" href="#"><i class="glyphicon glyphicon-heart"></i>On your Favorites List</a></small>-->
+      {{else}}
+      <small class="pull-right"><a id="addToCompanyFavorites" href="#"><i class="glyphicon glyphicon-heart-empty"></i>Add to Favorites</a></small>
+      {{/if}}
+    </h1>
 		<p>{{this.description}}</p>
 		<p><a href="{{this.website}}">{{this.website}}</a></p>
+
+    {{#if companyResources}}
+    <h3>Company Resources</h3>
+      <ul>
+        {{#if showPrivate}}
+          {{#each companyResources}}
+            
+                <li><a href="{{url}}">{{name}}</a></li>
+
+          {{/each}}
+        {{else}}
+          {{#each companyResources}}
+                {{#if private}}
+                {{else}}
+                  <li><a href="{{url}}">{{name}}</a></li>
+                {{/if}}
+          {{/each}}
+        {{/if}}
+      </ul>
+    {{/if}}
+
 		{{#if currentUser}}
-		<form id="contactCompany">Send Message
+    <div class="well"><h4>Send Message</h4>
+		<form id="contactCompany">
 			<div class="form-group"><textarea id="message" class="form-control"></textarea></div>
 			<button class="btn btn-primary" type="submit">Submit</button> 
 		</form>
+  </div>
 		{{/if}}
   	{{/if}}
 
@@ -26,6 +55,7 @@
     {{> afQuickField name='name' value=this.name}}
     {{> afQuickField name='website' value=this.website}}
     {{> afQuickField name='description' rows=6 value=this.description}}
+    {{> afArrayField name='companyResources'}}
     {{> afFieldInput name='accountIsActive' value=this.accountIsActive}}
   </fieldset>
   <button type="submit" class="btn btn-primary">Submit</button>
@@ -34,13 +64,14 @@
 
 <template name="updateCompanyFormOnProfile">
   Update Company Info
-  <!--this is not right this.companyId is not right. need to write a template helper-->
+
   {{#autoForm collection="Companies" id="updateCompanyForm" type="update" doc=usersCompany}}
   <fieldset>
     <legend>Company Info</legend>
     {{> afQuickField name='name' value=this.name}}
     {{> afQuickField name='website' value=this.website}}
     {{> afQuickField name='description' rows=6 value=this.description}}
+    {{> afArrayField name='companyResources'}}
     {{> afFieldInput name='accountIsActive' value=this.accountIsActive}}
   </fieldset>
   <button type="submit" class="btn btn-primary">Submit</button>
@@ -59,12 +90,47 @@
     {{> afQuickField name='name' value=''}}
     {{> afQuickField name='website' value=''}}
     {{> afQuickField name='description' rows=6 value=''}}
+    {{> afArrayField name='companyResources'}}
     {{> afFieldInput name='accountIsActive' type='hidden' value='true'}}
 
     {{> afFieldInput name='companyId' type='hidden' value=currentUser._id}}
   </fieldset>
   <button type="submit" class="btn btn-primary">Submit</button>
   {{/autoForm}}
+</template>
+
+<!--TODO: move this somewhere else-->
+
+<template name="afArrayField_myArray">
+  <div class="panel panel-default">
+    <div class="panel-heading">{{afFieldLabelText name=this.atts.name}}</div>
+    {{#if afFieldIsInvalid name=this.atts.name}}
+    <div class="panel-body has-error">
+      <span class="help-block">{{{afFieldMessage name=this.atts.name}}}</span>
+    </div>
+    {{/if}}
+    <ul class="list-group">
+      {{#afEachArrayItem name=this.atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount}}
+      <li class="list-group-item autoform-array-item">
+        <div>
+          <div class="autoform-remove-item-wrap">
+            {{#if afArrayFieldHasMoreThanMinimum name=../atts.name minCount=../atts.minCount maxCount=../atts.maxCount}}
+            <button type="button" class="btn btn-default btn-xs autoform-remove-item"><span class="glyphicon glyphicon-minus"></span></button>
+            {{/if}}
+          </div>
+          <div class="autoform-array-item-body">
+            {{> afQuickField name=this.name label=false options=afOptionsFromSchema}}
+          </div>
+        </div>
+      </li>
+      {{/afEachArrayItem}}
+      {{#if afArrayFieldHasLessThanMaximum name=this.atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount}}
+      <li class="list-group-item">
+        <button type="button" class="btn btn-info btn-xs autoform-add-item" data-autoform-field="{{this.atts.name}}" data-autoform-minCount="{{this.atts.minCount}}" data-autoform-maxCount="{{this.atts.maxCount}}"><span class="glyphicon glyphicon-plus"></span></button>
+      </li>
+      {{/if}}
+    </ul>
+  </div>
 </template>
 
 

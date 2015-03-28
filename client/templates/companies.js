@@ -22,6 +22,48 @@ Template.company.helpers({
 				return company;
 			}
 		}
+	},
+	companyResources: function() {
+		if(this.companyResources) {
+			var arr = _.values(this.companyResources);
+			return arr;
+		}
+		else {
+			return false;
+		}
+	},
+	showPrivate: function() {
+		var company = this._id;
+		var userCompaniesArr = Meteor.user().profile.approvedCompanies;
+		if(userCompaniesArr) {
+			if (_.contains(userCompaniesArr, company)) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+	},
+	isFavorite: function() {
+		var thisCompany = this._id;
+
+		var companiesArr = Meteor.user().profile.favoriteCompanies;
+		if(companiesArr) {
+
+			if (_.contains(companiesArr, thisCompany)) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+
+		else {
+			return false;
+		}
 	}
 });
 
@@ -46,6 +88,15 @@ Template.company.events({
 			}
 			else {
 				AppMessages.throw(err.reason, 'danger');
+			}
+		});
+	},
+	'click #addToCompanyFavorites': function(event, template) {
+		event.preventDefault();
+		var companyId = this._id;
+		Meteor.call('addToCompanyFavorites', companyId, Meteor.userId(), function(err) {
+			if(!err) {
+				AppMessages.throw('Added to your favorites list!', 'success');
 			}
 		});
 	}

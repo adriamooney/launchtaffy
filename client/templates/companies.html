@@ -1,10 +1,27 @@
 <template name="companies">
 	{{#if companies}}
-	<ul>
+
 	{{#each companies}}
-	<li><a href="/company/{{this._id}}">{{name}}</a></li>
+
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+	        <h3 class="panel-title"><a href="/company/{{this._id}}">{{name}}</a></h3>
+	    </div>
+		<div class="panel-body">
+			
+				{{#if description}}
+				<div>{{description}}</div>
+				{{else}}
+					<p>No Description for this Company</p>
+				{{/if}}
+
+		</div>
+	</div>
+
+
 	{{/each}}
-	</ul>
+
 	{{else}}
 		<div class="alert alert-info" role="alert"><strong>We're sorry,</strong> there are no active companies at this time. Check again soon.</div>
 	{{/if}}

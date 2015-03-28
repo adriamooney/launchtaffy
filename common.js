@@ -5,6 +5,10 @@ Messages = new Mongo.Collection("messages");
 //https://atmospherejs.com/matteodem/easy-search
 Messages.initEasySearch('message');
 
+if (Meteor.isClient) {
+    AutoForm.setDefaultTemplateForType('afArrayField', 'myArray');
+}
+
 var Schema = {};
 
 /*Schema.UserProfile = new SimpleSchema({
@@ -193,6 +197,21 @@ Companies.attachSchema(new SimpleSchema({
     description: {
     	type: String,
     	label: 'Company Description'
+    },
+    companyResources: {
+        type: [Object],
+        optional:true
+    },
+    "companyResources.$.name": {
+        type:String
+    },
+    "companyResources.$.url": {
+        type: String,
+        regEx: SimpleSchema.RegEx.Url
+    },
+    "companyResources.$.private": {
+        type:Boolean,
+        label: "Private (only your approved salespeople can see this)"
     },
    /* monthlyPaymentLimit: {
     	type: String,
