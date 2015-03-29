@@ -1,13 +1,25 @@
 Accounts.onCreateUser(function(options, user) {
- // user.profile = {};
 
-  user.profile = options.profile;
+    if(!options.profile) {
+      options.profile = {};
+    }
 
+    var userType = ServerSession.get('userType');
+    //console.log(profile);
+    if(userType) {
+      options.profile.userType = userType;
+    }
+    options.profile.isActive = true;
+    options.profile.profileStatus = 0;
 
-  // we wait for Meteor to create the user before sending an email
-  Meteor.setTimeout(function() {
-    Accounts.sendVerificationEmail(user._id);
-  }, 2 * 1000);
+    if (options.profile) {
+        user.profile = options.profile;
+    }
+
+    // we wait for Meteor to create the user before sending an email
+    Meteor.setTimeout(function() {
+      Accounts.sendVerificationEmail(user._id);
+    }, 2 * 1000);
 
   return user;
 });
@@ -21,3 +33,4 @@ Accounts.validateLoginAttempt(function(attempt){
   }
   return true;
 }); 
+

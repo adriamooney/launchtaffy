@@ -15,8 +15,9 @@ accounts-password
 email
 underscore
 timmyg13:mandrill
-accounts-ui
 matteodem:server-session
 matteodem:easy-search
-pauli:linkedin
+accounts-oauth
+accounts-ui
+jamielob:accounts-ui-no-dropdown
 pauli:accounts-linkedin

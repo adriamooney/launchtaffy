@@ -24,11 +24,23 @@ Router.route('/forgot-password/', {
 });
 
 Router.route('/sales/signup/', {
-    name: 'salesSignup'
+    name: 'salesSignup',
+    after: function () {
+        ServerSession.set('userType', 'salesperson');
+        Accounts.onLogin(function() {
+          Router.go('/');
+        });
+    }
 });
 
-Router.route('/sales/company/', {
-    name: 'companySignup'
+Router.route('/company/signup/', {
+    name: 'companySignup',
+    after: function () {
+        ServerSession.set('userType', 'company');
+        Accounts.onLogin(function() {
+          Router.go('/');
+        });
+    }
 });
 
 Router.route('/companies/', {
