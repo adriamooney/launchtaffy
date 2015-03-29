@@ -32,9 +32,28 @@
 </template>
 
 <template name="welcome">
-	<h1>Welcome to SalesCrowd!</h1>
-	<p>Head on over to create your profile so people can find you.</p>
-	<p><a class="btn btn-primary" href="/profile/{{currentUser._id}}">Profile</a></p>
+    {{#if noUserType}}
+            {{>chooseUserType}}
+    {{else}}
+    	<h1>Welcome to SalesCrowd!</h1>
+    	<p>Head on over to create your profile so people can find you.</p>
+    	<p><a class="btn btn-primary" href="/profile/{{currentUser._id}}">Profile</a></p>
+    {{/if}}
+</template>
+
+<template name="chooseUserType">
+    <h1>Are you a company or a salesperson?</h1>
+     
+    <div class="col-md-6">
+            <div class="well">
+                <div class="text-center"><button class="btn btn-success" id="chooseSalesperson">Salesperson</button></div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="well">
+                <div class="text-center"><button class="btn btn-success" id="chooseCompany">Company</button></div>
+            </div>
+        </div>   
 </template>
 
 

@@ -52,7 +52,10 @@ Router.route('/salespeople/', {
 });
 
 Router.route('/login/', {
-    name: 'login'
+    name: 'login',
+    after: function () {
+      ServerSession.set('userType', 'other');
+    }
 });
 
 

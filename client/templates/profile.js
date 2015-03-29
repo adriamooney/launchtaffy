@@ -104,3 +104,13 @@ Template.updateSalesForm.events({
 		});
 	}
 });
+
+
+Template.chooseUserType.events({
+	'click #chooseCompany': function(event, template) {
+		Meteor.users.update({_id: Meteor.userId()}, {$set: {'profile.userType': 'company'}});
+	},
+	'click #chooseSalesperson': function(event, template) {
+		Meteor.users.update({_id: Meteor.userId()}, {$set: {'profile.userType': 'salesperson'}});
+	}
+});

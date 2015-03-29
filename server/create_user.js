@@ -1,5 +1,26 @@
 Accounts.onCreateUser(function(options, user) {
 
+  /*if (user.services.linkedin) {
+      var email = user.services.linkedin.emailAddress;
+      Meteor.users.update({_id: user._id}, { $addToSet: { 'emails.address': {'address': email, 'verified': true} }});
+  } */
+    var linkedin = user.services.linkedin;
+    if(linkedin) {
+      var email = user.services.linkedin.emailAddress;
+    }
+    
+
+    if(email) {
+        var emailAlreadyExist = Meteor.users.find({"emails.address": email}, {limit: 1}).count()>0
+
+      console.log(emailAlreadyExist + ' exitence')
+
+      if(emailAlreadyExist === true) {
+          throw new Meteor.Error(403, "email already registered");
+      }
+    }
+
+
     if(!options.profile) {
       options.profile = {};
     }
@@ -17,9 +38,9 @@ Accounts.onCreateUser(function(options, user) {
     }
 
     // we wait for Meteor to create the user before sending an email
-    Meteor.setTimeout(function() {
+   /* Meteor.setTimeout(function() {
       Accounts.sendVerificationEmail(user._id);
-    }, 2 * 1000);
+    }, 2 * 1000); */
 
   return user;
 });
@@ -33,4 +54,8 @@ Accounts.validateLoginAttempt(function(attempt){
   }
   return true;
 }); 
+
+
+Accounts.config({sendVerificationEmail: true});
+
 

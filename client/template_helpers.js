@@ -61,3 +61,13 @@ Template.registerHelper('currentUserIsSales', function() {
 		return false;
 	}
 });
+
+Template.registerHelper('noUserType', function() {
+	var userType = Meteor.user().profile.userType;
+	if (userType == 'other') {
+		return true
+	}
+	else {
+		return false;
+	}
+});

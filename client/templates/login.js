@@ -33,3 +33,17 @@ Template.forgotPassword.events({
         });
     }
 });
+
+/*Template.login.onCreated(function () {
+    Accounts.config({forbidClientAccountCreation: true});
+});
+*/
+
+Accounts.onLogin(function(options) {
+
+        Router.go('/');
+
+  /*Meteor.users.update({ _id: options.user._id }, {
+    $set: { lastActiveAt: new Date() }
+  }); */
+});
