@@ -10,7 +10,7 @@ Accounts.createUser = _.wrap(Accounts.createUser, function(createUser) {
   // This is called on the client
   var newCallback = function(err) {
     if (err) {
-      if(err.error == 403) {
+      if(err.reason == 'Login forbidden') { //because createUser is called on the server, it tries to login right away, which we don't want since we are using sendVerificationEmail
         Router.go('/');
         AppMessages.throw('Account created. Check your email for a login verification link', 'success');
       }

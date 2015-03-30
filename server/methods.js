@@ -62,6 +62,19 @@ Meteor.methods({
   },
   removeFromCompanyFavorites: function(companyId, userId) {
     Meteor.users.update({_id: userId}, {$pull: {'profile.favoriteCompanies': companyId}});
+  },
+  getLinkedCompanyProfile: function(companyName) {
+
+      if( Meteor.user().services.linkedin.accessToken) {
+        var accessToken = Meteor.user().services.linkedin.accessToken;
+        var linkedin = Linkedin().init(accessToken);
+        linkedin.companies.name(companyName, function(err, company) {
+    // Here you go
+        console.log(company);
+
+        });
+      }
+
   }
 });
 

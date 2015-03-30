@@ -8,15 +8,29 @@ Accounts.onCreateUser(function(options, user) {
     if(linkedin) {
       var email = user.services.linkedin.emailAddress;
     }
+
+    if (user.emails) {
+      var accountEmail = user.emails[0].address;
+      console.log(accountEmail);
+    }
     
 
-    if(email) {
+    if(accountEmail) {//if already signed up with linkedin signup form, this prevent account signup
+      var emailAlreadyExist = Meteor.users.find({"profile.emailAddress": accountEmail}, {limit: 1}).count()>0
+      console.log(emailAlreadyExist);
+      if(emailAlreadyExist === true) {
+          throw new Meteor.Error(403, "Email already registered");
+      }
+    }
+    
+
+    if(email) {  //if already signed up with account signup form, this prevent linkedin signup
         var emailAlreadyExist = Meteor.users.find({"emails.address": email}, {limit: 1}).count()>0
 
-      console.log(emailAlreadyExist + ' exitence')
+        console.log(emailAlreadyExist);
 
       if(emailAlreadyExist === true) {
-          throw new Meteor.Error(403, "email already registered");
+          throw new Meteor.Error(403, "Email already registered");
       }
     }
 

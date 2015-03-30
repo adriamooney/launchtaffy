@@ -34,16 +34,19 @@ Template.forgotPassword.events({
     }
 });
 
-/*Template.login.onCreated(function () {
-    Accounts.config({forbidClientAccountCreation: true});
-});
-*/
+/*Template.home.onRendered(function () {
+    
+}); */
+
 
 Accounts.onLogin(function(options) {
 
-        Router.go('/');
+    Router.go('/');
 
   /*Meteor.users.update({ _id: options.user._id }, {
     $set: { lastActiveAt: new Date() }
   }); */
 });
+
+
+     
