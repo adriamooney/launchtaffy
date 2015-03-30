@@ -25,10 +25,9 @@
           {{/each}}
         {{else}}
           {{#each companyResources}}
-                {{#if private}}
-                {{else}}
+                {{#unless private}}
                   <li><a href="{{url}}">{{name}}</a></li>
-                {{/if}}
+                {{/unless}}
           {{/each}}
         {{/if}}
       </ul>
@@ -52,11 +51,11 @@
   {{#autoForm collection="Companies" id="updateCompanyForm" type="update" doc=this}}
   <fieldset>
     <legend>Company Info</legend>
-    {{> afQuickField name='name' value=this.name}}
+    {{> afQuickField name='name' value=this.name id='name'}}
     {{> afQuickField name='website' value=this.website}}
     {{> afQuickField name='description' rows=6 value=this.description}}
     {{> afArrayField name='companyResources'}}
-    {{> afFieldInput name='accountIsActive' value=this.accountIsActive}}
+    {{> afFieldInput name='companyProfileStatus' type="hidden" value=this.companyProfileStatus}}
   </fieldset>
   <button type="submit" class="btn btn-primary">Submit</button>
   {{/autoForm}}
@@ -68,11 +67,12 @@
   {{#autoForm collection="Companies" id="updateCompanyForm" type="update" doc=usersCompany}}
   <fieldset>
     <legend>Company Info</legend>
-    {{> afQuickField name='name' value=this.name}}
+    {{> afQuickField name='name' value=this.name id='name'}}
     {{> afQuickField name='website' value=this.website}}
     {{> afQuickField name='description' rows=6 value=this.description}}
     {{> afArrayField name='companyResources'}}
     {{> afFieldInput name='accountIsActive' value=this.accountIsActive}}
+    {{> afFieldInput name='companyProfileStatus' type="hidden" value=this.companyProfileStatus}}   
   </fieldset>
   <button type="submit" class="btn btn-primary">Submit</button>
   {{/autoForm}}

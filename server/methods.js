@@ -9,9 +9,10 @@ Meteor.methods({
   createNewCompanyUser: function(email, password, username) {
     Accounts.createUser({email: email, password : password, username: username, profile: {userType: 'company', isActive: true, profileStatus: 0}});
   },
-  updateSalesUser: function(id, profile) {
-    Meteor.users.update( {_id: id}, {$set: {profile: profile}});
+  updateSalesUser: function(id, userData) {
+    Meteor.users.update( {_id: id}, {$set: userData});
   },
+  //TODO: updateCompanyUser
   sendMessage: function(senderId, toId, msg) {
     //senderId, companyId, msg
     var now = new Date().getTime();
@@ -62,6 +63,12 @@ Meteor.methods({
   },
   removeFromCompanyFavorites: function(companyId, userId) {
     Meteor.users.update({_id: userId}, {$pull: {'profile.favoriteCompanies': companyId}});
+  },
+  addToSalesPeopleFavorites: function(salesId, userId) {
+    Meteor.users.update({_id: userId}, {$addToSet: {'profile.favoriteSalesPeople': salesId}});
+  },
+  removeFromSalesPeopleFavorites: function(salesId, userId) {
+    Meteor.users.update({_id: userId}, {$pull: {'profile.favoriteSalesPeople': salesId}});
   },
   getLinkedCompanyProfile: function(companyName) {
 

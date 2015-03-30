@@ -1,0 +1,15 @@
+<template name="favorites">
+	{{# if favoriteCompanies}}
+	<h3>Favorite Companies</h3>
+	{{#each favoriteCompanies}}
+		{{name}}
+	{{/each}}
+	{{/if}}
+
+	{{# if favoriteSalesPeople}}
+	<h3>Favorite Sales People</h3>
+	{{#each favoriteSalesPeople}}
+		{{_id}} {{profile.firstName}} {{profile.lastName}}
+	{{/each}}
+	{{/if}}
+</template>

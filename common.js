@@ -222,6 +222,10 @@ Companies.attachSchema(new SimpleSchema({
     accountIsActive: {
     	type:Boolean
     },
+    companyProfileStatus: {
+        type:Number,
+        optional:true
+    },
     companyId: {
         type: String
     }

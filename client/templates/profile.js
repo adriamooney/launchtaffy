@@ -69,7 +69,6 @@ Template.updateSalesForm.events({
 	'submit form': function(event, template) {
 		event.preventDefault();
 
-		console.log('submitted');
 		var profileStatus;
 
 		if (template.find('#bio').value == '') {  //TODO: flesh this out later so profile can be done by a %
@@ -79,18 +78,18 @@ Template.updateSalesForm.events({
 			profileStatus = 1
 		}
 
-		var profile = {
+		var userData = {
 			//fullName: template.find('#fullName').value,
-			website: template.find('#website').value,
-			bio: template.find('#bio').value,
-			userType: 'salesperson',
-			isActive: true,//make this an option this later so user can cancel
-			profileStatus: profileStatus  
+			"profile.website": template.find('#website').value,
+			"profile.bio": template.find('#bio').value,
+			"profile.userType": 'salesperson',
+			"profile.isActive": true,//make this an option this later so user can cancel
+			"profile.profileStatus": profileStatus  
 
 		}
 
 
-		Meteor.call('updateSalesUser', Meteor.userId(), profile, function(err) {
+		Meteor.call('updateSalesUser', Meteor.userId(), userData, function(err) {
 
         	if (err) {
             // Inform the user that account creation failed

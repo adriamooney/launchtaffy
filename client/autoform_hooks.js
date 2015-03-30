@@ -19,12 +19,33 @@ AutoForm.hooks({
     }
   },
   updateCompanyForm: {
+    onSuccess: function(formType, result) {
+    var companyProfileStatus;
+
+    //it doesn't work because template is not available here.  have to find another way to get it.
+      if (this.template.find('#name').value == '') {  //TODO: flesh this out later so profile can be done by a %
+        companyProfileStatus = 0;
+      }
+      else {
+        companyProfileStatus = 1;
+      } 
+      var id = this.docId;
+      console.log(id); 
+
+    Companies.update({_id: id}, {$set: {companyProfileStatus: companyProfileStatus}}); 
+
+
+    console.log(this)
+
+    }
+  },
+/*  updateCompanyForm: {
       onSuccess: function(formType, result) {
-        console.log(result);
+        console.log(this.docId);
 
       }
 
-  }/*,
+  }*//*, 
   userSignup: {
     onSubmit: function (insertDoc, updateDoc, currentDoc) {
 

@@ -51,6 +51,13 @@ Router.route('/salespeople/', {
     name: 'salespeople'
 });
 
+Router.route('/favorites/:_id', {
+    name: 'favorites',
+    data: function() {
+        return Meteor.users.findOne(this.params._id);
+    }
+});
+
 Router.route('/login/', {
     name: 'login',
     after: function () {

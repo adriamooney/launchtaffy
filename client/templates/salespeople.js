@@ -1,8 +1,9 @@
 Template.salespeople.helpers({
 	salespeople: function() {
 		console.log(Meteor.users.find({'profile.isActive': true}).count());
-		var users = Meteor.users.find({ $and: [ {'profile.userType': 'salesperson'}, {'profile.isActive': true}, {'emails.0.verified': true} ] } ); 
-		
+		//var users = Meteor.users.find({ $and: [ {'profile.userType': 'salesperson'}, {'profile.isActive': true}, {'emails.0.verified': true} ] } ); 
+		var users = Meteor.users.find({ $and: [ {'profile.userType': 'salesperson'}, {'profile.isActive': true} ] } ); 
+
 		console.log( users.count() );
 		if (users.count() > 0) {
 			return users;
@@ -33,6 +34,24 @@ Template.salesProfile.helpers({
 			return false;
 		}
 
+	},
+	isFavorite: function() {
+		var thisUser = this._id;
+
+		var usersArr = Meteor.user().profile.favoriteSalesPeople;
+		if(usersArr) {
+
+			if (_.contains(usersArr, thisUser)) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+
+		else {
+			return false;
+		}
 	}
 });
 
@@ -112,6 +131,15 @@ Template.salesProfile.events({
 			AppMessages.throw('You must fill out your company profile first.', 'danger');
 		}
 
+	},
+	'click #addToFavorites': function(event, template) {
+		event.preventDefault();
+		var id = this._id;
+		Meteor.call('addToSalesPeopleFavorites', id, Meteor.userId(), function(err) {
+			if(!err) {
+				AppMessages.throw('Added to your favorites list!', 'success');
+			}
+		});
 	}
 });
 

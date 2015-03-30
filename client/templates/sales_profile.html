@@ -1,5 +1,9 @@
 <template name="salesProfile">
 
+		{{#unless isFavorite }}
+      	<small class="pull-right"><a id="addToFavorites" href="#"><i class="glyphicon glyphicon-heart-empty"></i>Add to Favorites</a></small>
+      	{{/unless}}
+
 		<div class="panel panel-default">
 				<div class="panel-body">
 					<ul class="list-unstyled">
