@@ -81,19 +81,40 @@ Meteor.methods({
         //console.log(company);
           var name = company.name;
           var description = company.description;
-
-          console.log(userId);
+          
           if(!err) {
+            
             Companies.insert({name: name, description: description, accountIsActive: true, companyId: userId, companyProfileStatus:1});
 
           }
-        
+
+        }));
+      }
+  },
+  updateLinkedCompanyProfile: function(companyName, id) {
+
+    if( Meteor.user().services.linkedin.accessToken) {
+        var accessToken = Meteor.user().services.linkedin.accessToken;
+        var linkedin = Linkedin().init(accessToken);
+        var userId = this.userId;
+        linkedin.companies.name(companyName, Meteor.bindEnvironment(function(err, company) {
+    // Here you go
+        //console.log(company);
+          var name = company.name;
+          var description = company.description;
+          
+          if(!err) {
+            
+
+            Companies.update({companyId: id}, {$set: {name: name, description: description}});
+
+
+          }
 
         }));
       }
 
-
-
   }
+
 });
 

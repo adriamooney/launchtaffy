@@ -116,7 +116,16 @@ Template.getLinkedinInfo.events({
 
 		//TODO: this one will work for initial insert only.  need a different event for update
 
-	} 
-})
-
+	},
+	'click #updateCompanyInfo': function(event, template) {
+		var val = template.find('#companyNameVal').value;
+		var id = Meteor.userId();
+		Meteor.call("updateLinkedCompanyProfile", val, id, function(err, result) {
+			if(err) {
+				AppMessages.throw(err.reason, 'danger');
+			}
+		
+		});
+	}
+});
 

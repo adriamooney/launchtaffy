@@ -41,7 +41,9 @@
            <a class="btn btn-primary" href="/profile/{{currentUser._id}}">Profile</a>
         </p>
         {{#if currentUserIsCompany}}
-            {{>getLinkedinInfo}}
+            {{#unless userHasCompany}}
+                {{>getLinkedinInfo}}
+            {{/unless}}
         {{/if}}
     {{/if}}
 </template>

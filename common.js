@@ -200,7 +200,8 @@ Companies.attachSchema(new SimpleSchema({
     },
     companyResources: {
         type: [Object],
-        optional:true
+        optional:true,
+        min:0
     },
     "companyResources.$.name": {
         type:String

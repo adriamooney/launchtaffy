@@ -46,11 +46,19 @@
 </template>
 
 <template name="getLinkedinInfo">
+  
     <a class="btn btn-primary" data-toggle="collapse" href="#companyName">Get company Info from LinkedIn</a>
     <div id="companyName" class="collapse">
         <input type="text" value="" id="companyNameVal" />
-        <button class="btn btn-primary" id="getCompanyInfo">Go</button>
+        {{#if userHasCompany}}
+          <button class="btn btn-primary" id="updateCompanyInfo">Update</button>
+          {{else}}
+          <button class="btn btn-primary" id="getCompanyInfo">Go</button>
+        {{/if}}
     </div>
+    
+
+
 </template>
 
 <template name="updateCompanyForm">
@@ -95,7 +103,7 @@
 <template name="insertCompanyForm">
 
   {{>getLinkedinInfo}}
-  
+
   {{#autoForm collection="Companies" id="insertCompanyForm" type="insert"}}
   <fieldset>
     <legend>Company Info</legend>

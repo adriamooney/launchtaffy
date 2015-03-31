@@ -76,7 +76,14 @@ Template.registerHelper('userHasCompany', function() {
 	var userType = Meteor.user().profile.userType;
 	if (userType == 'company') {
 		var id = Meteor.userId();
-		Companies.findOne({companyId: id});  //check to see if this returns anything or not.
+		var company = Companies.findOne({companyId: id});  //TODO: check to see if this returns anything or not.
+
+		if(company) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	else {
 		return false;
