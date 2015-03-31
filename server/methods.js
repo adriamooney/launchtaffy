@@ -70,17 +70,29 @@ Meteor.methods({
   removeFromSalesPeopleFavorites: function(salesId, userId) {
     Meteor.users.update({_id: userId}, {$pull: {'profile.favoriteSalesPeople': salesId}});
   },
-  getLinkedCompanyProfile: function(companyName) {
+  getLinkedCompanyProfile: function(companyName, id) {
 
       if( Meteor.user().services.linkedin.accessToken) {
         var accessToken = Meteor.user().services.linkedin.accessToken;
         var linkedin = Linkedin().init(accessToken);
-        linkedin.companies.name(companyName, function(err, company) {
+        var userId = this.userId;
+        linkedin.companies.name(companyName, Meteor.bindEnvironment(function(err, company) {
     // Here you go
-        console.log(company);
+        //console.log(company);
+          var name = company.name;
+          var description = company.description;
 
-        });
+          console.log(userId);
+          if(!err) {
+            Companies.insert({name: name, description: description, accountIsActive: true, companyId: userId, companyProfileStatus:1});
+
+          }
+        
+
+        }));
       }
+
+
 
   }
 });

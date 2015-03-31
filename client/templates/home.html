@@ -36,8 +36,13 @@
             {{>chooseUserType}}
     {{else}}
     	<h1>Welcome to SalesCrowd!</h1>
-    	<p>Head on over to create your profile so people can find you.</p>
-    	<p><a class="btn btn-primary" href="/profile/{{currentUser._id}}">Profile</a></p>
+    	<p>Head on over to create your profile so {{#if currentUserIsSales}}companies{{/if}}{{#if currentUserIsCompany}}sales people{{/if}} can find you.</p>
+    	<p>
+           <a class="btn btn-primary" href="/profile/{{currentUser._id}}">Profile</a>
+        </p>
+        {{#if currentUserIsCompany}}
+            {{>getLinkedinInfo}}
+        {{/if}}
     {{/if}}
 </template>
 

@@ -45,8 +45,17 @@
 
 </template>
 
+<template name="getLinkedinInfo">
+    <a class="btn btn-primary" data-toggle="collapse" href="#companyName">Get company Info from LinkedIn</a>
+    <div id="companyName" class="collapse">
+        <input type="text" value="" id="companyNameVal" />
+        <button class="btn btn-primary" id="getCompanyInfo">Go</button>
+    </div>
+</template>
+
 <template name="updateCompanyForm">
-	Update Company Info
+
+  {{>getLinkedinInfo}}
 
   {{#autoForm collection="Companies" id="updateCompanyForm" type="update" doc=this}}
   <fieldset>
@@ -62,7 +71,7 @@
 </template>
 
 <template name="updateCompanyFormOnProfile">
-  Update Company Info
+  {{>getLinkedinInfo}}
 
   {{#autoForm collection="Companies" id="updateCompanyForm" type="update" doc=usersCompany}}
   <fieldset>
@@ -84,6 +93,9 @@
 </template>
 
 <template name="insertCompanyForm">
+
+  {{>getLinkedinInfo}}
+  
   {{#autoForm collection="Companies" id="insertCompanyForm" type="insert"}}
   <fieldset>
     <legend>Company Info</legend>

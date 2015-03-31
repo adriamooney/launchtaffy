@@ -100,6 +100,23 @@ Template.company.events({
 			}
 		});
 	}
+	
 });
+
+Template.getLinkedinInfo.events({
+	'click #getCompanyInfo': function(event, template) {
+		var val = template.find('#companyNameVal').value;
+
+		Meteor.call("getLinkedCompanyProfile", val, function(err, result) {
+			if(err) {
+				AppMessages.throw(err.reason, 'danger');
+			}
+		
+		});
+
+		//TODO: this one will work for initial insert only.  need a different event for update
+
+	} 
+})
 
 

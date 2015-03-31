@@ -71,3 +71,16 @@ Template.registerHelper('noUserType', function() {
 		return false;
 	}
 });
+
+Template.registerHelper('userHasCompany', function() {
+	var userType = Meteor.user().profile.userType;
+	if (userType == 'company') {
+		var id = Meteor.userId();
+		Companies.findOne({companyId: id});  //check to see if this returns anything or not.
+	}
+	else {
+		return false;
+	}
+});
+
+
