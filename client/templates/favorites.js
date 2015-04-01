@@ -39,4 +39,25 @@ Template.favorites.helpers({
 	}
 });
 
+Template.favorites.events({  
+	'click .removeCompanyFavorite': function(event, template) {
+		event.preventDefault();
+
+		var userId = Meteor.userId();
+
+		var companyId = this._id;
+
+		Meteor.call('removeFromCompanyFavorites', companyId, userId);
+	},
+	'click .removeSalesFavorite': function(event, template) {
+		event.preventDefault();
+
+		var userId = Meteor.userId();
+
+		var salesId = this._id;
+
+		Meteor.call('removeFromSalesPeopleFavorites', salesId, userId);
+	}
+});
+
 

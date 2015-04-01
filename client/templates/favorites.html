@@ -1,15 +1,19 @@
 <template name="favorites">
 	{{# if favoriteCompanies}}
 	<h3>Favorite Companies</h3>
+	<ul class="list-unstyled">
 	{{#each favoriteCompanies}}
-		{{name}}
+		<li>{{name}} <a href="#" class="removeCompanyFavorite">remove</a></li>
 	{{/each}}
+	</ul>
 	{{/if}}
 
 	{{# if favoriteSalesPeople}}
 	<h3>Favorite Sales People</h3>
+	<ul class="list-unstyled">
 	{{#each favoriteSalesPeople}}
-		{{_id}} {{profile.firstName}} {{profile.lastName}}
+		<li>{{profile.firstName}} {{profile.lastName}} <a href="#" class="removeSalesFavorite">remove</a></li>
 	{{/each}}
+	</ul>
 	{{/if}}
 </template>
