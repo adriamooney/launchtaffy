@@ -4,39 +4,63 @@
       	<small class="pull-right"><a id="addToFavorites" href="#"><i class="glyphicon glyphicon-heart-empty"></i>Add to Favorites</a></small>
       	{{/unless}}
 
-		<div class="panel panel-default">
-				<div class="panel-body">
-					<ul class="list-unstyled">
-						{{#if this.profile.bio}}
-						<li>{{this.profile.bio}}</li>
-						{{else}}
-							<li>No Bio for this Sales Person</li>
-						{{/if}}
-						{{#if this.profile.website}}
-						<li><a href="{{profile.website}}" target="_blank">{{this.profile.website}}</a></li>
-						{{/if}}
-					</ul>
-					{{#if currentUserIsCompany}}
 
-						{{#if salesPersonIsApproved}}
-						<div class="well pull-right">
-							<p>{{this.username}} is currently on your approved list of salespeople</p>
-							<button id="unapprove-salesprson" class="btn btn-danger btn-xs">Revoke approval</button>
-						</div>
-						{{else}}
-							<button id="approve-salesprson" class="btn btn-primary btn-sm pull-right">Approve {{this.username}} to sell for you</button>
+      	<div class="media">
+		  <div class="media-left">
+		    <a href="/profile/{{_id}}">
+		      {{# if profile.pictureUrl}}
+		      	<img class="media-object" src="{{profile.pictureUrl}}" alt="{{profile.firstName}} {{profile.lastName}} Picture" />
+		      	{{else}}
+		      	<img class="media-object" src="" alt="" style="width:60px;height:60px;background:#ccc;border:1px solid #666"/>
+		      {{/if}}
+		    </a>
+		  </div>
+		  <div class="media-body">
+		    <h4 class="media-heading">{{profile.firstName}} {{profile.lastName}}</h4>
+		    	{{#if profile.headline}}
+		    	<h5>Headline</h5>
+				<p>{{profile.headline}}</p>
+				{{/if}}
 
-						{{/if}}
+				{{#if this.profile.bio}}
+				<h5>Bio</h5>
+				<p>{{this.profile.bio}}</p>
+				{{/if}}
+
+				{{#if this.profile.keywords}}
+				<h5>Keywords</h5>
+				<p>{{this.profile.keywords}}</p>
+				{{/if}}
+
+
+				{{#if currentUserIsCompany}}
+					<div>
+					{{#if salesPersonIsApproved}}
+					
+						<p>{{this.username}} is currently on your approved list of salespeople</p>
+						<button id="unapprove-salesprson" class="btn btn-danger btn-xs">Revoke approval</button>
+					
+					{{else}}
+						<button id="approve-salesprson" class="btn btn-success btn-xs">Approve {{this.profile.firstName}} {{this.profile.LastName}} to sell for your company</button>
 
 					{{/if}}
+					</div>
+				{{/if}}
 
-				</div>
-			</div>
+
+		  </div>
+		</div>
+
+	
+
 		{{#if currentUser}}
-		<form id="contactSalesPerson">Send Message
-			<div class="form-group"><textarea id="message" class="form-control"></textarea></div>
-			<button class="btn btn-primary" type="submit">Submit</button> 
-		</form>
+		<div>
+			<h3>Send Message</h3>
+			<form id="contactSalesPerson">
+				<div class="form-group"><textarea id="message" class="form-control"></textarea></div>
+				<button class="btn btn-primary" type="submit">Send Message</button> 
+			</form>
+		</div>
 		{{/if}}
 </template>
 
@@ -53,13 +77,35 @@
 
 	<form id="updateSalesForm"> 
 		<fieldset>
+		<div class="row">
+			<div class="form-group">
+		    	<div class="col-sm-6">
+		    		<label for="firstName" class="control-label">First Name</label>
+		    		<input id="firstName" class="form-control" value="{{this.profile.firstName}}" />
+		    	</div>
+		    	<div class="col-sm-6">
+		    		<label for="lastName" class="control-label">Last Name</label>
+		    		<input id="lastName" class="form-control" value="{{this.profile.lastName}}" />
+		    	</div>
+	  		</div>
+	  	</div>
+  		<div class="form-group">
+	    	<label for="website" class="control-label">Headline</label>
+	    	<input type="text" name="headline" id="headline" class="form-control" value="{{this.profile.headline}}"/>
+  		</div>
   		<div class="form-group">
 	    	<label for="bio" class="control-label">Bio</label>
 	    	<textarea id="bio" class="form-control">{{this.profile.bio}}</textarea>
+	    	<p class="help-block">Include sales accomplishments, key accounts and valuable connections.</p>
   		</div>
   		<div class="form-group">
-	    	<label for="website" class="control-label">LinkedIn or Website</label>
-	    	<input type="url" name="website" id="website" class="form-control" value="{{this.profile.website}}"/>
+	    	<label for="keywords" class="control-label">Keywords</label>
+	    	<textarea id="keywords" class="form-control">{{keywords}}</textarea>
+	    	<p class="help-block">Be sure to include industries of specialization and key company connections.</p>
+  		</div>
+  		<div class="form-group">
+	    	<label for="website" class="control-label">LinkedIn Profile</label>
+	    	<input type="url" name="publicProfileUrl" id="website" class="form-control" value="{{this.profile.publicProfileUrl}}" readonly="readonly"/>
   		</div>
   		</fieldset>
   		<input type="hidden" name="profileStatus" id="profileStatus" value="{{this.profile.profileStatus}}" />

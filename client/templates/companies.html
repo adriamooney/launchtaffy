@@ -6,13 +6,26 @@
 
 	<div class="panel panel-default">
 		<div class="panel-body">
-				<h3 class="panel-title"><a href="/company/{{this._id}}">{{name}}</a></h3>
-				{{# if logoUrl}} <img src="{{logoUrl}}" alt="{{name}}" />{{/if}}
-				{{#if description}}
-				<div>{{description}}</div>
-				{{else}}
-					<p>No Description for this Company</p>
-				{{/if}}
+				
+				<div class="media">
+				  <div class="media-left">
+				    <a href="/company/{{this._id}}">
+				      {{# if logoUrl}}
+				      	<img class="media-object" src="{{logoUrl}}" alt="{{name}}" />
+				      	{{else}}
+				      	<img class="media-object" src="" alt="" style="width:60px;height:60px;background:#ccc;border:1px solid #666"/>
+				      {{/if}}
+				    </a>
+				  </div>
+				  <div class="media-body">
+				    <h4 class="media-heading"><a href="/company/{{this._id}}">{{name}}</a></h4>
+				    	{{#if description}}
+							<p>{{description}}</p>
+							{{else}}
+							<p>No Description for this Company</p>
+						{{/if}}
+				  </div>
+				</div>
 
 		</div>
 	</div>

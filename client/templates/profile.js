@@ -79,6 +79,10 @@ Template.updateSalesForm.events({
 			//fullName: template.find('#fullName').value,
 			"profile.website": template.find('#website').value,
 			"profile.bio": template.find('#bio').value,
+			"profile.firstName": template.find('#firstName').value,
+			"profile.lastName": template.find('#lastName').value,
+			"profile.headline": template.find('#headline').value,
+			"profile.keywords": template.find('#keywords').value,
 			"profile.userType": 'salesperson',
 			"profile.isActive": true,//make this an option this later so user can cancel
 			"profile.profileStatus": profileStatus  
@@ -98,6 +102,18 @@ Template.updateSalesForm.events({
 	            //.go('/');
 	          }
 		});
+	}
+});
+
+Template.updateSalesForm.helpers({
+	keywords: function() {
+		var keywordsArr = this.profile.skills.values;
+		var newArr = [];
+		for(var i=0; i< keywordsArr.length; i++) {
+			newArr.push(keywordsArr[i].skill.name);
+		}
+		return newArr.toString();
+		
 	}
 });
 

@@ -4,16 +4,26 @@
 		{{#each salespeople}}
 
 			<div class="panel panel-default">
-				<div class="panel-heading">
-			        <h3 class="panel-title"><a href="/profile/{{_id}}">{{username}} {{profile.firstName}}</a></h3>
-			    </div>
+				
 				<div class="panel-body">
 					
-						{{#if profile.bio}}
-						<div>{{profile.bio}}</div>
-						{{else}}
-							<p>No Bio for this Sales Person</p>
-						{{/if}}
+						<div class="media">
+						  <div class="media-left">
+						    <a href="/profile/{{_id}}">
+						      {{# if profile.pictureUrl}}
+						      	<img class="media-object" src="{{profile.pictureUrl}}" alt="{{profile.firstName}} {{profile.lastName}} Picture" />
+						      	{{else}}
+						      	<img class="media-object" src="" alt="" style="width:60px;height:60px;background:#ccc;border:1px solid #666"/>
+						      {{/if}}
+						    </a>
+						  </div>
+						  <div class="media-body">
+						    <h4 class="media-heading"><a href="/profile/{{_id}}">{{profile.firstName}} {{profile.lastName}}</a></h4>
+						    	{{#if profile.headline}}
+								<p>{{profile.headline}}</p>
+								{{/if}}
+						  </div>
+						</div>
 
 				</div>
 			</div>
@@ -27,6 +37,9 @@
 
 
 </template>
+
+
+
 
 
 

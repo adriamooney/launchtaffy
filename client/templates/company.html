@@ -4,42 +4,72 @@
   	{{>updateCompanyForm}}
   	
   	{{ else }}
-		<h1>{{this.name}} 
+
       {{#if isFavorite }}
       <!--<small class="pull-right"><a id="removeFromCompanyFavorites" href="#"><i class="glyphicon glyphicon-heart"></i>On your Favorites List</a></small>-->
       {{else}}
       <small class="pull-right"><a id="addToCompanyFavorites" href="#"><i class="glyphicon glyphicon-heart-empty"></i>Add to Favorites</a></small>
       {{/if}}
-    </h1>
-		<p>{{this.description}}</p>
-		<p><a href="{{this.websiteUrl}}">{{this.websiteUrl}}</a></p>
 
-    {{#if companyResources}}
-    <h3>Company Resources</h3>
-      <ul>
-        {{#if showPrivate}}
-          {{#each companyResources}}
-            
-                <li><a href="{{url}}">{{name}}</a></li>
 
-          {{/each}}
-        {{else}}
-          {{#each companyResources}}
-                {{#unless private}}
-                  <li><a href="{{url}}">{{name}}</a></li>
-                {{/unless}}
-          {{/each}}
+      <div class="media">
+      <div class="media-left">
+        <a href="/profile/{{_id}}">
+          {{# if this.logoUrl}}
+            <img class="media-object" src="{{this.logoUrl}}" alt="" />
+            {{else}}
+            <img class="media-object" src="" alt="" style="width:60px;height:60px;background:#ccc;border:1px solid #666"/>
+          {{/if}}
+        </a>
+      </div>
+      <div class="media-body">
+        <h4 class="media-heading">{{this.name}}</h4>
+          {{#if this.description}}
+          <h5>Description</h5>
+          <p>{{this.description}}</p>
         {{/if}}
-      </ul>
-    {{/if}}
+
+        {{#if websiteUrl}}
+        <h5>Company URL</h5>
+        <p>{{this.websiteUrl}}</p>
+        {{/if}}
+
+          {{#if companyResources}}
+          <h5>Company Resources</h5>
+            <ul>
+              {{#if showPrivate}}
+                {{#each companyResources}}
+                  
+                      <li><a href="{{url}}">{{name}}</a></li>
+
+                {{/each}}
+              {{else}}
+                {{#each companyResources}}
+                      {{#unless private}}
+                        <li><a href="{{url}}">{{name}}</a></li>
+                      {{/unless}}
+                {{/each}}
+              {{/if}}
+            </ul>
+          {{/if}}
+
+        {{#if this.keywords}}
+        <h5>Keywords</h5>
+        <p>{{this.keywords}}</p>
+        {{/if}}
+
+
+      </div>
+    </div>
+
 
 		{{#if currentUser}}
-    <div class="well"><h4>Send Message</h4>
-		<form id="contactCompany">
-			<div class="form-group"><textarea id="message" class="form-control"></textarea></div>
-			<button class="btn btn-primary" type="submit">Submit</button> 
-		</form>
-  </div>
+    <div><h3>Send Message</h3>
+  		<form id="contactCompany">
+  			<div class="form-group"><textarea id="message" class="form-control"></textarea></div>
+  			<button class="btn btn-primary" type="submit">Submit</button> 
+  		</form>
+    </div>
 		{{/if}}
   	{{/if}}
 

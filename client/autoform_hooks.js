@@ -32,7 +32,7 @@ AutoForm.hooks({
       var id = this.docId;
       console.log(id); 
 
-    Companies.update({_id: id}, {$set: {companyProfileStatus: companyProfileStatus}}); 
+      Companies.update({_id: id}, {$set: {companyProfileStatus: companyProfileStatus}}); 
 
 
     console.log(this)
