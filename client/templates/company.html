@@ -12,7 +12,7 @@
       {{/if}}
     </h1>
 		<p>{{this.description}}</p>
-		<p><a href="{{this.website}}">{{this.website}}</a></p>
+		<p><a href="{{this.websiteUrl}}">{{this.websiteUrl}}</a></p>
 
     {{#if companyResources}}
     <h3>Company Resources</h3>
@@ -66,15 +66,7 @@
   {{>getLinkedinInfo}}
 
   {{#autoForm collection="Companies" id="updateCompanyForm" type="update" doc=this}}
-  <fieldset>
-    <legend>Company Info</legend>
-    {{> afQuickField name='name' value=this.name id='name'}}
-    {{> afQuickField name='website' value=this.website}}
-    {{> afQuickField name='description' rows=6 value=this.description}}
-    {{> afArrayField name='companyResources'}}
-    {{> afFieldInput name='companyProfileStatus' type="hidden" value=this.companyProfileStatus}}
-  </fieldset>
-  <button type="submit" class="btn btn-primary">Submit</button>
+    {{>companyProfile}}
   {{/autoForm}}
 </template>
 
@@ -82,22 +74,28 @@
   {{>getLinkedinInfo}}
 
   {{#autoForm collection="Companies" id="updateCompanyForm" type="update" doc=usersCompany}}
-  <fieldset>
-    <legend>Company Info</legend>
-    {{> afQuickField name='name' value=this.name id='name'}}
-    {{> afQuickField name='website' value=this.website}}
-    {{> afQuickField name='description' rows=6 value=this.description}}
-    {{> afArrayField name='companyResources'}}
-    {{> afFieldInput name='accountIsActive' value=this.accountIsActive}}
-    {{> afFieldInput name='companyProfileStatus' type="hidden" value=this.companyProfileStatus}}   
-  </fieldset>
-  <button type="submit" class="btn btn-primary">Submit</button>
+    {{>companyProfile}}
   {{/autoForm}}
 </template>
 
 
+
 <template name="companyProfile">
-  {{>insertCompanyForm}}
+     <fieldset>
+      <legend>Company Info</legend>
+      {{> afQuickField name='name' value=this.name id='name'}}
+      {{> afQuickField name='websiteUrl' value=this.websiteUrl}}
+      {{> afQuickField name='logoUrl' value=this.logoUrl}}
+      <img {{logoAtts}} />
+      {{> afQuickField name='description' rows=6 value=this.description}}
+      {{> afQuickField name='keywords' rows=4 value=this.keywords}}
+    <h4>Provide links to resources such as documenation and training, sales literature, whitepapers, etc.  Antyhing that would be helpful
+        for sales people to know about your company and products.</h4>
+      {{> afArrayField name='companyResources'}}
+      {{> afFieldInput name='accountIsActive' value=this.accountIsActive}}
+      {{> afFieldInput name='companyProfileStatus' type="hidden" value=this.companyProfileStatus}}   
+    </fieldset>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </template>
 
 <template name="insertCompanyForm">
@@ -108,8 +106,11 @@
   <fieldset>
     <legend>Company Info</legend>
     {{> afQuickField name='name' value=''}}
-    {{> afQuickField name='website' value=''}}
+    {{> afQuickField name='websiteUrl' value=''}}
+    {{> afQuickField name='logoUrl' }}
     {{> afQuickField name='description' rows=6 value=''}}
+    {{> afQuickField name='keywords' rows=4}}
+    <h4>Provide links to resources such as documenation and training, demos, sales literature, whitepapers, etc.  <br />Anything that would be helpful to educate sales people about your company and products:</h4>
     {{> afArrayField name='companyResources'}}
     {{> afFieldInput name='accountIsActive' type='hidden' value='true'}}
 

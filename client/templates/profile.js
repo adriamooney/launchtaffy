@@ -60,9 +60,6 @@ Template.profile.helpers({
 		return this.profile.userType;
 	}
 
-		
-
-
 });
 
 Template.updateSalesForm.events({

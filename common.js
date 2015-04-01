@@ -189,7 +189,7 @@ Companies.attachSchema(new SimpleSchema({
 		optional:false,
 		label: 'Company Name'
 	},
-	website: {
+	websiteUrl: {
         type: String,
         regEx: SimpleSchema.RegEx.Url,
         optional: true
@@ -198,6 +198,25 @@ Companies.attachSchema(new SimpleSchema({
     	type: String,
     	label: 'Company Description'
     },
+    logoUrl: {
+        type: String,
+        label: 'Company Logo',
+        optional:true
+    },
+    keywords: {
+        type: String,
+        label: 'Keywords',
+        optional:true
+    },
+    /*keywords: {
+        type: [Object],
+        optional:true,
+        min:0,
+        blackbox: true
+    },
+    "keywords.$": {
+        type: String
+    }, */
     companyResources: {
         type: [Object],
         optional:true,

@@ -81,12 +81,34 @@ Meteor.methods({
         //console.log(company);
           var name = company.name;
           var description = company.description;
+          var websiteUrl=company.websiteUrl;
+          var logoUrl= company.logoUrl;
+          var keywordsArr = company.specialties.values;
+          var keywords = keywordsArr.toString();
+
+          //var keywords = _.extend({}, keywordsArr);
+
+
+          console.log(keywords);
           
           if(!err) {
             
-            Companies.insert({name: name, description: description, accountIsActive: true, companyId: userId, companyProfileStatus:1});
+            Companies.insert(
+              {
+                name: name, 
+                description: description, 
+                websiteUrl: websiteUrl,
+                logoUrl: logoUrl,
+                //keywords: [keywords],
+                keywords: keywords,
+                accountIsActive: true, 
+                companyId: userId, 
+                companyProfileStatus:1
+              });
 
-          }
+            //Companies.update({companyId: userId}, {$push: {keywords:keywords}});
+
+          } 
 
         }));
       }
@@ -102,11 +124,21 @@ Meteor.methods({
         //console.log(company);
           var name = company.name;
           var description = company.description;
+          var websiteUrl=company.websiteUrl;
+          var logoUrl= company.logoUrl;
+          var keywordsArr = company.specialties.values;
+          var keywords = keywordsArr.toString();
           
           if(!err) {
             
 
-            Companies.update({companyId: id}, {$set: {name: name, description: description}});
+            Companies.update({companyId: id}, {$set: {
+              name: name, 
+              description: description,
+              websiteUrl: websiteUrl,
+              logoUrl: logoUrl,
+              keywords: keywords
+            }});
 
 
           }

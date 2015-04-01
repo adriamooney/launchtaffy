@@ -42,7 +42,7 @@
 		
 });  */
 
-Template.registerHelper('currentUserIsCompany', function() {
+Template.registerHelper('currentUserIsCompany', function() {   //TODO: these functions can be combined to use an argument  http://meteorcapture.com/spacebars/
 	var user = Meteor.user().profile.userType;
 	if (user == 'company') {
 		return true;

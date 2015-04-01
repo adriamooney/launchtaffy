@@ -24,7 +24,7 @@
 
 <template name="dashboard">
 	{{>messages}}
-	{{# if emptyProfile }}
+	{{# if emptyProfile }}<!--this needs to be updated.  think about how companies and salespeople profiles should differ-->
 		{{>welcome}}
 		{{else}}
 			<p>Your profile is complete</p>
@@ -32,20 +32,24 @@
 </template>
 
 <template name="welcome">
+    <h1>Welcome to SalesCrowd!</h1>
     {{#if noUserType}}
             {{>chooseUserType}}
-    {{else}}
-    	<h1>Welcome to SalesCrowd!</h1>
-    	<p>Head on over to create your profile so {{#if currentUserIsSales}}companies{{/if}}{{#if currentUserIsCompany}}sales people{{/if}} can find you.</p>
+    {{/if}}
+    {{#if currentUserIsSales}}
+    	<p>Head on over to create your profile so companies can find you.</p>
     	<p>
            <a class="btn btn-primary" href="/profile/{{currentUser._id}}">Profile</a>
         </p>
-        {{#if currentUserIsCompany}}
-            {{#unless userHasCompany}}
-                {{>getLinkedinInfo}}
-            {{/unless}}
-        {{/if}}
     {{/if}}
+
+     {{#if currentUserIsCompany}}
+        {{#unless userHasCompany}}
+        <p class="lead">Enter your company name as it appears on your LinkedIn company URL (<i>https://www.linkedin.com/company/<b>yourcompanyname</b></i>) to automatically populate your company profile.  You can always change it later, but this makes getting set up a snap!</p>
+            {{>getLinkedinInfo}}
+        {{/unless}}
+     {{/if}}
+    
 </template>
 
 <template name="chooseUserType">

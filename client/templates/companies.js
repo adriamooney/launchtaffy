@@ -73,7 +73,23 @@ Template.updateCompanyFormOnProfile.helpers({ //probably could be moved to a gen
 		var company = Companies.findOne({companyId: userId});
 		return company;
 	}
+	
 });
+
+Template.companyProfile.helpers({
+	logoAtts: function () {
+		var userId = Meteor.userId();
+		var company = Companies.findOne({companyId: userId});
+		var logoUrl = company.logoUrl;
+		var logoAlt = company.name+' logo';
+	    return {
+	      src: logoUrl,
+	      alt: logoAlt
+	    }
+  	}
+});
+
+
 
 Template.company.events({
 	'submit #contactCompany': function(event, template) {
