@@ -7,7 +7,7 @@ AutoForm.hooks({
       var company = Companies.findOne({_id: result});
       //var email = company.email;
 
-      Meteor.users.update({_id: company.companyId}, {$set: {'profile.companyId': result}});
+      Meteor.users.update({_id: company.companyId}, {$set: {'profile.companyId': result, 'profile.profileStatus': 1}});
 
       //Router.go('/');
 
@@ -22,7 +22,6 @@ AutoForm.hooks({
     onSuccess: function(formType, result) {
     var companyProfileStatus;
 
-    //it doesn't work because template is not available here.  have to find another way to get it.
       if (this.template.find('#name').value == '') {  //TODO: flesh this out later so profile can be done by a %
         companyProfileStatus = 0;
       }
@@ -30,12 +29,9 @@ AutoForm.hooks({
         companyProfileStatus = 1;
       } 
       var id = this.docId;
-      console.log(id); 
 
       Companies.update({_id: id}, {$set: {companyProfileStatus: companyProfileStatus}}); 
 
-
-    console.log(this)
 
     }
   },

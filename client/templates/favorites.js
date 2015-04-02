@@ -29,7 +29,6 @@ Template.favorites.helpers({
 		if( (user.favoriteSalesPeople && user.favoriteSalesPeople.length >0)) {
 			var salesIds = user.favoriteSalesPeople;
 			var salespeople = Meteor.users.find({_id: {$in: salesIds}});
-			console.log(salespeople);
 			return salespeople;
 				
 		}

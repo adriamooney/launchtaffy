@@ -20,26 +20,31 @@ Template.messages.helpers({
 		}
 		//return Messages.find({$and: [{from: Meteor.userId()},{status: 'unread'}]}, {sort: {timeStamp: -1}});
 	},
-	anyMessages: function() {
-		var messages =  Messages.find({$or: [{from: Meteor.userId()},{to: Meteor.userId()}]}, {sort: {timeStamp: -1}});
-		if (messages.count() > 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
-
-	},
 	fromId: function() {
 		var fromId = this.from;
 		var from =  Meteor.users.findOne({_id: fromId});
-		var person = from.username;
+		if(from.profile.userType == 'company') {
+			var companyId = from.profile.companyId;
+			var company = Companies.findOne({_id: companyId});
+			var person = company.name;
+		}
+		else {
+			var person = from.profile.firstName+' '+ from.profile.lastName;
+		}
 		return person;
 	},
 	toId: function() {
 		var toId = this.to;
 		var to =  Meteor.users.findOne({_id: toId});
-		var person = to.username;
+		console.log(to);
+		if(to.profile.userType == 'company') {
+			var companyId = to.profile.companyId;
+			var company = Companies.findOne({_id: companyId});
+			var person = company.name;
+		}
+		else {
+			var person = to.profile.firstName +' '+ to.profile.lastName;
+		}
 		return person;
 	}
 });
@@ -48,13 +53,28 @@ Template.searchBox.helpers({
 	fromId: function() {
 		var fromId = this.from;
 		var from =  Meteor.users.findOne({_id: fromId});
-		var person = from.username;
+		if(from.profile.userType == 'company') {
+			var companyId = from.profile.companyId;
+			var company = Companies.findOne({_id: companyId});
+			var person = company.name;
+		}
+		else {
+			var person = from.profile.firstName+' '+ from.profile.lastName;
+		}
+		
 		return person;
 	},
 	toId: function() {
 		var toId = this.to;
 		var to =  Meteor.users.findOne({_id: toId});
-		var person = to.username;
+		if(to.profile.userType == 'company') {
+			var companyId = to.profile.companyId;
+			var company = Companies.findOne({_id: companyId});
+			var person = company.name;
+		}
+		else {
+			var person = to.profile.firstName +' '+ to.profile.LastName;
+		}
 		return person;
 	}
 });
@@ -101,6 +121,7 @@ Template.reply.events({
 			Meteor.call('replyToMessage', this._id, senderId, toId, msg, function(err) {
 				if(!err) {
 					AppMessages.throw('your messages was sent', 'success');
+					msg = '';
 					Meteor.call('sendEmail', to, 'noreply@meteor.com', 'You have a SalesCrowd Message', 'You have a SalesCrowd Message');
 				}
 				else {

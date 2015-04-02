@@ -90,4 +90,24 @@ Template.registerHelper('userHasCompany', function() {
 	}
 });
 
+Template.registerHelper('anyMessages', function() {
+	var messages =  Messages.find({$or: [{from: Meteor.userId()},{to: Meteor.userId()}]}, {sort: {timeStamp: -1}});
+	if (messages.count() > 0) {
+		return true;
+	}
+	else {
+		return false;
+	}
+});
+
+Template.registerHelper('numNewMessages', function() {
+	var messages = Messages.find({$and: [{to: Meteor.userId()},{'status': 'unread'}]}, {sort: {timeStamp: -1}});
+	if (messages.count() > 0) {
+		return messages.count();
+	}
+	else {
+		return false;
+	}
+});
+
 

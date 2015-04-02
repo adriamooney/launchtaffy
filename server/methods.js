@@ -30,6 +30,9 @@ Meteor.methods({
   unarchiveMessage: function(id) {
     Messages.update({_id:id}, {$set: {'status': 'read'}});
   },
+  readMessages: function() {
+     Messages.update({to: Meteor.userId()}, {$set: {'status': 'read'}}, { multi: true });
+  },
   sendEmail: function (to, from, subject, text) {
     check([to, from, subject, text], [String]);
 

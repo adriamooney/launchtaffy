@@ -51,6 +51,10 @@ Router.route('/salespeople/', {
     name: 'salespeople'
 });
 
+Router.route('/messages/', {
+    name: 'messages'
+});
+
 Router.route('/favorites/:_id', {
     name: 'favorites',
     data: function() {
