@@ -78,7 +78,13 @@ Template.salesProfile.events({
 		var companyName = company.name;
 
 		var userId = this._id;
-		var useremail = this.emails[0].address;
+		var useremail = this.emails;
+		if(!useremail) {
+			useremail = this.profile.emailAddress;
+		}
+		else {
+			useremail = this.emails[0].address;
+		}
 
 
 		if(companyId) {
@@ -109,7 +115,13 @@ Template.salesProfile.events({
 		var companyName = company.name;
 
 		var userId = this._id;
-		var useremail = this.emails[0].address;
+		var useremail = this.emails;
+		if(!useremail) {
+			useremail = this.profile.emailAddress;
+		}
+		else {
+			useremail = this.emails[0].address;
+		}
 
 		if(companyId) {
 			Meteor.call('removeSalesPerson', companyId, userId, function(err) {
@@ -146,12 +158,9 @@ Template.salesProfile.events({
 Template.updateSalesForm.helpers({
 	approvedCompanies: function() {
 		var companiesArr = this.profile.approvedCompanies;
-		if(companiesArr) {
+		if(companiesArr.length>0) {
 			var ids = companiesArr;
-			console.log(ids);
-
 			var companies = Companies.find({_id: {$in: ids}});
-			console.log(companies);
 			return companies;
 		}
 		else {

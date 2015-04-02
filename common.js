@@ -5,6 +5,8 @@ Messages = new Mongo.Collection("messages");
 //https://atmospherejs.com/matteodem/easy-search
 Messages.initEasySearch('message');
 
+//Meteor.users.initEasySearch(['profile.keywords', 'profile.bio', 'profile.headline']);
+
 if (Meteor.isClient) {
     AutoForm.setDefaultTemplateForType('afArrayField', 'myArray');
 }

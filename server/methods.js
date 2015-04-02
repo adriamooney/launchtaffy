@@ -55,11 +55,13 @@ Meteor.methods({
   },
   approveSalesPerson: function(companyId, userId) {
     //Meteor.users.update({_id: userId}, {$addToSet: {'profile.approvedCompanies': {'company': companyId
-    Meteor.users.update({_id: userId}, {$addToSet: {'profile.approvedCompanies': companyId}});  
+    Meteor.users.update({_id: userId}, {$addToSet: {'profile.approvedCompanies': companyId}}); 
+    Meteor.users.update({_id: this.userId}, {$addToSet: {'profile.approvedSalesPeople': userId}});  
   },
   removeSalesPerson: function(companyId, userId) {
    // Meteor.users.update({_id: userId}, {$pull: {'profile.approvedCompanies': {'company': companyId}}});
-   Meteor.users.update({_id: userId}, {$pull: {'profile.approvedCompanies': companyId}});
+    Meteor.users.update({_id: userId}, {$pull: {'profile.approvedCompanies': companyId}});
+    Meteor.users.update({_id: this.userId}, {$pull: {'profile.approvedSalesPeople': userId}}); 
   },
   addToCompanyFavorites: function(companyId, userId) {
     Meteor.users.update({_id: userId}, {$addToSet: {'profile.favoriteCompanies': companyId}});

@@ -72,10 +72,10 @@
 <template name="updateSalesForm">
 
 	{{#if approvedCompanies}}
-		<p>Companies I can sell for:</p>
-		<ul>
+		<h4>Companies I can sell for:</h4>
+		<ul class="list-group">
 		{{#each approvedCompanies}}
-			<li>{{name}}</li>
+			<li class="list-group-item">{{name}}</li>
 		{{/each}}
 		</ul>
 	{{/if}}

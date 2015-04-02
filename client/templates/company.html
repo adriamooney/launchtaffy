@@ -1,6 +1,7 @@
 <template name="company">
   
   	{{# if thisCompany}}
+
   	{{>updateCompanyForm}}
   	
   	{{ else }}
@@ -36,12 +37,10 @@
 
           {{#if companyResources}}
           <h5>Company Resources</h5>
-            <ul>
+            <ul class="list-group">
               {{#if showPrivate}}
                 {{#each companyResources}}
-                  
-                      <li><a href="{{url}}">{{name}}</a></li>
-
+                    <li class="list-group-item"><a href="{{url}}">{{name}}</a></li>
                 {{/each}}
               {{else}}
                 {{#each companyResources}}
@@ -93,6 +92,8 @@
 
 <template name="updateCompanyForm">
 
+  {{>approvedSalesPeople}}
+
   {{>getLinkedinInfo}}
 
   {{#autoForm collection="Companies" id="updateCompanyForm" type="update" doc=this}}
@@ -101,6 +102,9 @@
 </template>
 
 <template name="updateCompanyFormOnProfile">
+  
+  {{>approvedSalesPeople}}
+
   {{>getLinkedinInfo}}
 
   {{#autoForm collection="Companies" id="updateCompanyForm" type="update" doc=usersCompany}}
@@ -108,7 +112,16 @@
   {{/autoForm}}
 </template>
 
-
+<template name="approvedSalesPeople">
+  {{#if approvedSalesPeople}}
+    <h4>Your Approved Sales People </h4>
+      <ul class="list-group">
+      {{#each approvedSalesPeople}}
+        <li class="list-group-item"><a href="/profile/{{_id}}">{{profile.firstName}} {{profile.lastName}}</a></li>
+      {{/each}}
+      </ul>
+  {{/if}}
+</template>
 
 <template name="companyProfile">
      <fieldset>

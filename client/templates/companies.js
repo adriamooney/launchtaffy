@@ -76,6 +76,19 @@ Template.updateCompanyFormOnProfile.helpers({ //probably could be moved to a gen
 	
 });
 
+Template.approvedSalesPeople.helpers({
+	approvedSalesPeople: function() {
+		var salesPeopleArr = Meteor.user().profile.approvedSalesPeople;
+		var salespeople = Meteor.users.find({_id: {$in: salesPeopleArr}});
+		if(salesPeopleArr.length>0) {
+			return salespeople; 
+		}
+		else {
+			return false;
+		}
+	}
+});
+
 Template.companyProfile.helpers({
 	logoAtts: function () {
 		var userId = Meteor.userId();
