@@ -49,22 +49,15 @@ this.SalesPages = new Meteor.Pagination(Sales, {
         limit: true,
         sort: true
     },
-    auth: function() {
-        console.log(this.userId);
-        return Sales.find({salesPersonId: this.userId}); 
+    auth: function(skip, sub) {
+        return Sales.find({salesPersonId: sub.userId}); 
     },
     itemTemplate: "salesItem",
     templateName: "salesTypeSales",
     perPage: 3
 });
 
-SalesPages.set({
-  perPage: 10,
-  auth: function() {
-    console.log(this.userId);
-        return Sales.find({salesPersonId: this.userId}); 
-    }
-});
+
 
 
 this.CompanySalesPages = new Meteor.Pagination(Sales, {
@@ -72,20 +65,19 @@ this.CompanySalesPages = new Meteor.Pagination(Sales, {
         limit: true,
         sort: true
     },
-    auth: function() {
-        return Sales.find({companyUserId: this.userId}); 
+    auth: function(skip, sub) {
+        return Sales.find({companyUserId: sub.userId}); 
     },
     itemTemplate: "salesItem",
     templateName: "companyTypeSales",
-    perPage: 3
+    infinite: true,
+    infiniteTrigger: .9,
+    infiniteRateLimit: 1,
+    infiniteStep: 1,
+    perPage: 10
 });
 
-CompanySalesPages.set({
-  perPage: 10,
-  auth: function() {
-        return Sales.find({companyUserId: this.userId}); 
-    }
-});
+
 
 
 
