@@ -10,3 +10,13 @@ Meteor.publish("users", function () {
 Meteor.publish("messages", function () {
 	return Messages.find({});
 });
+
+Meteor.publish("sales", function () {
+	var user = this.userId;
+	return Sales.find({salesPersonId: user}); 
+});
+
+Meteor.publish("companyTypeSales", function () {
+	var user = this.userId;
+	return Sales.find({companyUserId: user}); 
+});

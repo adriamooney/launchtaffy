@@ -1,9 +1,15 @@
 <template name="companies">
 	{{#if companies}}
 
-	{{#each companies}}
+    		{{> pages}}
+    		{{> pagesNav}}  <!--navigation-->
 
+	{{else}}
+		<div class="alert alert-info" role="alert"><strong>We're sorry,</strong> there are no active companies at this time. Check again soon.</div>
+	{{/if}}
+</template>
 
+<template name="companyItem">
 	<div class="panel panel-default">
 		<div class="panel-body">
 				
@@ -29,11 +35,4 @@
 
 		</div>
 	</div>
-
-
-	{{/each}}
-
-	{{else}}
-		<div class="alert alert-info" role="alert"><strong>We're sorry,</strong> there are no active companies at this time. Check again soon.</div>
-	{{/if}}
 </template>

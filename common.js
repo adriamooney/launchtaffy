@@ -1,4 +1,4 @@
-Invoices = new Mongo.Collection("invoices");
+Sales = new Mongo.Collection("sales");
 Companies = new Mongo.Collection("companies");
 Messages = new Mongo.Collection("messages");
 //easy search:
@@ -10,6 +10,84 @@ Messages.initEasySearch('message');
 if (Meteor.isClient) {
     AutoForm.setDefaultTemplateForType('afArrayField', 'myArray');
 }
+
+this.Companypages = new Meteor.Pagination(Companies, {
+    debug: true,
+    availableSettings: {
+        limit: true,
+        sort: true
+    },
+  
+    itemTemplate: "companyItem",
+    infinite: true,
+    infiniteTrigger: .9,
+    infiniteRateLimit: 1,
+    infiniteStep: 1,
+    perPage: 10,
+    sort: {
+        name: -1
+    }
+});
+
+this.SalesPersonPages = new Meteor.Pagination(Meteor.users, {
+    availableSettings: {
+        limit: true,
+        sort: true
+    },
+  
+    itemTemplate: "salespeopleItem",
+    templateName: "salespeople",
+    infinite: true,
+    infiniteTrigger: .9,
+    infiniteRateLimit: 1,
+    infiniteStep: 1,
+    perPage: 10
+});
+
+this.SalesPages = new Meteor.Pagination(Sales, {
+    availableSettings: {
+        limit: true,
+        sort: true
+    },
+    auth: function() {
+        console.log(this.userId);
+        return Sales.find({salesPersonId: this.userId}); 
+    },
+    itemTemplate: "salesItem",
+    templateName: "salesTypeSales",
+    perPage: 3
+});
+
+SalesPages.set({
+  perPage: 10,
+  auth: function() {
+    console.log(this.userId);
+        return Sales.find({salesPersonId: this.userId}); 
+    }
+});
+
+
+this.CompanySalesPages = new Meteor.Pagination(Sales, {
+    availableSettings: {
+        limit: true,
+        sort: true
+    },
+    auth: function() {
+        return Sales.find({companyUserId: this.userId}); 
+    },
+    itemTemplate: "salesItem",
+    templateName: "companyTypeSales",
+    perPage: 3
+});
+
+CompanySalesPages.set({
+  perPage: 10,
+  auth: function() {
+        return Sales.find({companyUserId: this.userId}); 
+    }
+});
+
+
 
 var Schema = {};
 
@@ -254,8 +332,60 @@ Companies.attachSchema(new SimpleSchema({
 
 }));
 
+Sales.attachSchema(new SimpleSchema({
+    status: {
+        type: String,
+        allowedValues: ['pending', 'approved']
+    },
+    leadCompanyName: {
+        type:String
+    },
+    leadName: {
+        type: String
+    },
+    leadEmail: {
+        type: String,
+        regEx: SimpleSchema.RegEx.Email
+    },
+    leadPhone: {
+        type: String,
+        regEx: /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/,
+        optional: true
+    },
+    productName: {
+        type:String
+    },
+    productPrice: {
+        type: String,
+        regEx: /^(?!0\.00)[1-9]\d{0,2}(\d{3})*(\.\d\d)?$/
+    },
+    productBillingFrequency: {
+        type:String,
+        label: 'Product Billing Frequency',
+        allowedValues: ['monthly', 'annually', 'one-time']
+    },
+    companyId: {
+        type:String
+    },
+    companyUserId: {
+        type:String,
+        optional:true
+    }, 
+    companyName: {
+        type:String,
+        optional:true
+    }, 
+    salesPersonId: {
+        type:String
+    },
+    salesPersonName: {
+        type:String
+    } 
 
-Invoices.attachSchema(new SimpleSchema({
+}));
+
+
+/*Invoices.attachSchema(new SimpleSchema({
 	lineItems: {
 		type: [Object],
 		minCount: 1
@@ -287,4 +417,4 @@ Invoices.attachSchema(new SimpleSchema({
 		type: Boolean
 	}
 
-}));
+})); */

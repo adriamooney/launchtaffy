@@ -1,10 +1,21 @@
 <template name="salespeople">
 
 	{{#if salespeople}}
+			
+			{{> pages}}
+    		{{> pagesNav}}  <!--navigation-->
 
-		{{#each salespeople}}
+	{{else}}
+		<div class="alert alert-info" role="alert"><strong>We're sorry,</strong> there are no active salespeople at this time. Check again soon.</div>
 
-			<div class="panel panel-default">
+	{{/if}}
+
+
+</template>
+
+<template name="salespeopleItem">
+
+	<div class="panel panel-default">
 				
 				<div class="panel-body">
 					
@@ -28,14 +39,6 @@
 
 				</div>
 			</div>
-
-		{{/each}}
-
-		{{else}}
-			<div class="alert alert-info" role="alert"><strong>We're sorry,</strong> there are no active salespeople at this time. Check again soon.</div>
-
-		{{/if}}
-
 
 </template>
 

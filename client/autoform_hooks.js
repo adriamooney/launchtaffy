@@ -22,6 +22,8 @@ AutoForm.hooks({
     onSuccess: function(formType, result) {
     var companyProfileStatus;
 
+    //TODO: this is not needed. probably doesn't work anyway:
+
       if (this.template.find('#name').value == '') {  //TODO: flesh this out later so profile can be done by a %
         companyProfileStatus = 0;
       }
@@ -35,6 +37,47 @@ AutoForm.hooks({
 
     }
   },
+  addSaleForm: {
+    before: {
+    // Replace `formType` with the form `type` attribute to which this hook applies
+    insert: function(doc, result) {
+      // Potentially alter the doc
+
+
+      var companyName = this.template.$('#companyId option:selected').text();
+      var cId = this.template.find('#companyId').value;
+
+      var company = Companies.findOne({_id: cId});
+      var companyUserId = company.companyId;
+
+
+     // doc = _.extend(doc, { companyName: companyName });
+      doc.companyName = companyName;
+      doc.companyUserId = companyUserId;
+
+      this.result(doc);  //why isn't this working?
+      return doc;
+
+      // Then return it or pass it to this.result()
+      //return doc; (synchronous)
+      //return false; (synchronous, cancel)
+      //this.result(doc); (asynchronous)
+      //this.result(false); (asynchronous, cancel)
+      }
+    },
+    after: {
+    //Send email here
+      insert: function(error, result) {
+        console.log(result);
+      }
+    },
+    onSuccess: function(formType, result) {
+      console.log(result);
+
+      //TODO: SEND EMAIL TO email associated with companyUserId.  provide a way for them to approve the sale,
+      // which will change status to 'approved';
+    }
+  }
 /*  updateCompanyForm: {
       onSuccess: function(formType, result) {
         console.log(this.docId);

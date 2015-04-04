@@ -1,0 +1,71 @@
+<template name="sales">
+
+	{{#if currentUserIsCompany}}
+		{{>companyTypeSales}}
+	{{/if}}
+
+	{{#if currentUserIsSales}}
+		{{>salesTypeSales}}
+	{{/if}}
+
+</template>
+
+<template name="salesTypeSales">
+	<div class="row">
+		<div class="col-sm-6">{{>addSale}}</div>
+		<div class="col-sm-6">
+			{{>pages}}
+			{{>pagesNav}}
+		</div>
+	</div>
+</template>
+
+<template name="companyTypeSales">
+	{{>pages}}
+	{{>pagesNav}}
+</template>
+
+<template name="salesItem">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<h4>{{leadCompanyName}} <small><span class="label label-info">{{status}}</span></small></h4>
+			<p><b>Lead Contact: </b>{{leadName}} {{leadEmail}} {{leadPhone}}</p>
+			<p><b>Sale Details: </b>{{productName}} {{productPrice}} / {{productBillingFrequency}}</p>
+			<p><b>Sales Person: </b><a href="/profile/{{salesPersonId}}">{{salesPersonName}}</a></p>
+			<p><b>Company: </b> <a href="/company/{{companyId}}">{{companyName}}</a></p>
+
+		</div>
+	</div>
+	
+</template>
+
+
+<template name="addSale">
+
+  {{#autoForm collection="Sales" id="addSaleForm" type="insert"}}
+  <fieldset>
+    <legend>Add Sale</legend>
+
+    {{> afQuickField name='leadCompanyName' }}
+    {{> afQuickField name='leadName' }}
+    {{> afQuickField name='leadEmail' }}
+    {{> afQuickField name='leadPhone' }}
+    {{> afQuickField name='productName' }}
+    {{> afQuickField name='productPrice' }}
+
+    {{> afFieldInput name="productBillingFrequency" options=billingOptions firstOption="Billing Frequency" }}
+
+    {{> afFieldInput id="companyId" name="companyId" options=approvedCompaniesNames firstOption="Company"}}
+    
+    {{> afFieldInput name='salesPersonId' type='hidden' value=currentUser._id}}
+    {{> afFieldInput name='salesPersonName' type='hidden' value=salesPersonFullName}}
+    {{> afFieldInput name='status' type='hidden' value='pending'}}
+  </fieldset>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  {{/autoForm}}
+
+</template>
+
+
+
+

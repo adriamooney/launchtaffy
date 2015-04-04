@@ -23,18 +23,43 @@
 
 
 <template name="dashboard">
-	{{# if emptyProfile }}<!--this needs to be updated.  think about how companies and salespeople profiles should differ-->
-		{{>welcome}}
-		{{else}}
-			<p>Your profile is complete</p>
+    <h1>Dashboard</h1>
+    {{#if noUserType}}
+            {{>chooseUserType}}
+    {{else}}     
+    <div class="row">
+        <div class="col-sm-6">
+            {{#if emptyProfile }}<!--this needs to be updated.  think about how companies and salespeople profiles should differ-->
+                {{>welcome}}
+            {{/if}}
+        </div>
+        <div class="col-sm-6">
+            
+                {{#if currentUserIsSales}}
+                    {{#if approvedCompanies}}
+                    <div class="well">
+                        <h4>My Companies</h4>
+                        <ul class="list-group">
+                        {{#each approvedCompanies}}
+                            <li class="list-group-item"><a href="/company/{{_id}}">{{name}}</a></li>
+                        {{/each}}
+                        </ul>
+                    </div>
+                    {{/if}}
+                {{/if}}
+
+                {{#if currentUserIsCompany}}
+                <div class="well">
+                    {{>approvedSalesPeople}}
+                </div>
+                {{/if}}
+            </div>
+
+    </div>
 	{{/if}}
 </template>
 
 <template name="welcome">
-    <h1>Welcome to SalesCrowd!</h1>
-    {{#if noUserType}}
-            {{>chooseUserType}}
-    {{/if}}
     {{#if currentUserIsSales}}
     	<p>Head on over to create your profile so companies can find you.</p>
     	<p>

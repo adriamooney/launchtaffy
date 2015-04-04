@@ -75,10 +75,12 @@
 		<h4>Companies I can sell for:</h4>
 		<ul class="list-group">
 		{{#each approvedCompanies}}
-			<li class="list-group-item">{{name}}</li>
+			<li class="list-group-item"><a href="/company/{{_id}}">{{name}}</a></li>
 		{{/each}}
 		</ul>
 	{{/if}}
+
+	{{>addSale}}
 
 	<form id="updateSalesForm"> 
 		<fieldset>
