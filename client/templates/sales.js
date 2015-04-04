@@ -6,8 +6,6 @@ Template.addSale.helpers({
 	        {label: "one-time", value: 'one-time'}
     	];
 	},
-	//TODO: this only works if currently loggedin user is salesperson. 
-	//we also need a page for companies to view all of their sales. probably need to make another route or subscription
 	approvedCompaniesNames: function() {
 		var companiesArr = Meteor.user().profile.approvedCompanies;
 		var user = Meteor.user();
@@ -32,6 +30,148 @@ Template.addSale.helpers({
 		return fName+ ' '+lName;
 	}
 });
+
+Template.companyTypeSales.helpers({
+	companyTypeSales: function() {
+		var user = Meteor.userId();
+		return Sales.find({companyUserId: user}); 
+	},
+    settings: function () {
+
+        return {
+            rowsPerPage: 10,
+            showFilter: true,
+            fields: [
+	            { key: 'status', label: 'Status',
+	            	fn: function(value,object) {
+	            		var label;
+	            		var review;
+	            		if(value == 'pending') {
+	            			label = 'info';
+	            		}
+	            		else if(value == 'approved') {
+	            			label = 'success';
+	            		}
+
+	    				return new Spacebars.SafeString('<span class="label label-'+label+'">'+value+ '</span><small><a href="/sale/'+object._id+'"> review</a></small>' ); 
+	    			}
+	             },
+	            { key: 'salesPersonFullName', label: 'Sales Person Name' },
+	 			{ key: 'leadCompanyName', label: 'Lead Company Name' },
+	    		{ key: 'leadEmail', label: 'Lead Email' },
+	    		{ key: 'leadPhone', label: 'Lead Phone' },
+	    		{ key: 'productName', label: 'Product Name' },
+	    		{ key: 'productPrice', label: 'Product Price',
+	    			fn: function(value,object) {
+	    				return new Spacebars.SafeString('$'+object.productPrice +'/'+object.productBillingFrequency); 
+	    			}
+	    		 }
+
+            ]
+        }; 
+    }
+});
+
+Template.salesTypeSales.helpers({
+	salesTypeSales: function() {
+		var user = Meteor.userId();
+		return Sales.find({salesPersonId: user}); 
+	},
+    settings: function () {
+
+        return {
+            rowsPerPage: 10,
+            showFilter: true,
+            fields: [
+	            { key: 'status', label: 'Status',
+	            	fn: function(value,object) {
+	            		var label;
+	            		if(value == 'pending') {
+	            			label = 'info';
+	            		}
+	            		else if(value == 'approved') {
+	            			label = 'success';
+	            		}
+	    				return new Spacebars.SafeString('<span class="label label-'+label+'">'+value+ '</span>'); 
+	    			}
+	        	},
+	            { key: 'companyName', label: 'Company Name' },
+	 			{ key: 'leadCompanyName', label: 'Lead Company Name' },
+	    		{ key: 'leadEmail', label: 'Lead Email' },
+	    		{ key: 'leadPhone', label: 'Lead Phone' },
+	    		{ key: 'productName', label: 'Product Name' },
+	    		{ key: 'productPrice', label: 'Product Price',
+	    			fn: function(value,object) {
+	    				return new Spacebars.SafeString('$'+object.productPrice +'/'+object.productBillingFrequency); 
+	    			}
+	    		 }
+
+            ]
+        }; 
+    }
+});
+
+Template.sale.events({
+	'click #approveSale': function(event, template) {
+		var self = this;
+		Meteor.call('updateSaleStatus', this._id, 'approved', function(err){
+			if(!err) {
+				AppMessages.throw('Sale approved!', 'success');
+				var salesPersonId = self.salesPersonId;
+				console.log(self);
+				var user = Meteor.users.findOne({_id: salesPersonId});
+
+				if(!user.emails) {
+			        var userEmail = user.profile.emailAddress;
+			     }
+			     else {
+			        var userEmail = user.emails[0].address;
+			    }
+      			var salesPerson = self.salesPersonName;
+
+				Meteor.call('sendEmail', userEmail, 'SalesCrowd <no-reply@salescrowd.com>', 'Your sale has been approved!', salesPerson+', <br />your sale has been approved. <br /><a href="http://localhost:3000/sale/'+self._id+'">Click here</a> to review the sale'); 
+
+			}
+		});
+
+	}
+});
+
+Template.sale.helpers({
+	statusIs: function(status) {
+    	return this.status === status;
+  	},
+  	statusLabel: function() {
+  		if(this.status == 'pending') {
+  			return 'info';
+  		}
+  		else if(this.status == 'approved' || this.status == 'paid') {
+  			return 'success';
+  		}
+  		else if(this.status == 'rejected' || this.status == 'dispute') {
+  			return 'danger';
+  		}
+  		else {
+  			return 'default';
+  		}
+  	}
+
+});
+
+/*
+	"leadCompanyName" : "jengasoft",
+	"leadName" : "jan",
+	"leadEmail" : "jan@jengasoft.com",
+	"leadPhone" : "123-456-3245",
+	"productName" : "jengastuff",
+	"productPrice" : "788.54",
+	"productBillingFrequency" : "annually",
+	"companyId" : "xcRYJGKcqXHRud9o7",
+	"salesPersonId" : "EAswGjBn3ZMjh7ku3",
+	"salesPersonName" : "Adria Mooney",
+	"status" : "pending",
+	"companyName" : "acme",
+	"companyUserId" : "FSiKQ2rie3psHHHkM" */
 
 /*Template.sales.helpers({
 	sales: function() {

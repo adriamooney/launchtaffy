@@ -69,6 +69,13 @@ Router.route('/sales/:_id', {
     }
 });
 
+Router.route('/sale/:_id', {
+    name: 'sale',
+    data: function() {
+        return Sales.findOne(this.params._id);
+    }
+});
+
 Router.route('/login/', {
     name: 'login',
     after: function () {

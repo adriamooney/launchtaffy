@@ -73,6 +73,28 @@ AutoForm.hooks({
     },
     onSuccess: function(formType, result) {
       console.log(result);
+      var sale = Sales.findOne({_id: result});
+      var companyUserId = sale.companyUserId;
+      var companyUser = Meteor.users.findOne({_id: companyUserId});
+      var companyName = sale.companyName;
+
+      if(!companyUser.emails) {
+        var userEmail = companyUser.profile.emailAddress;
+      }
+      else {
+        var userEmail = companyUser.emails[0].address;
+      }
+      var salesPerson = sale.salesPersonName;
+
+      Meteor.call('sendEmail', userEmail, 'SalesCrowd <no-reply@salescrowd.com>', salesPerson+' got a new sale!', salesPerson+' got a new sale!<br /> <a href="http://localhost:3000/sale/'+result+'">Click here</a> to review and approve the sale', function(err) {
+        if(!err) {
+            AppMessages.throw('Message sent to '+companyName+' that you got a sale!', 'success');
+        }
+        else {
+          console.log(err.reason);
+        }
+      }); 
+
 
       //TODO: SEND EMAIL TO email associated with companyUserId.  provide a way for them to approve the sale,
       // which will change status to 'approved';

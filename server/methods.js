@@ -43,7 +43,8 @@ Meteor.methods({
         to: to,
         from: from,
         subject: subject,
-        text: text
+        html: text
+        //text: text
     });
 
     /*Email.send({
@@ -62,6 +63,9 @@ Meteor.methods({
    // Meteor.users.update({_id: userId}, {$pull: {'profile.approvedCompanies': {'company': companyId}}});
     Meteor.users.update({_id: userId}, {$pull: {'profile.approvedCompanies': companyId}});
     Meteor.users.update({_id: this.userId}, {$pull: {'profile.approvedSalesPeople': userId}}); 
+  },
+  updateSaleStatus: function(saleId, status) {
+    Sales.update({_id: saleId}, {$set: {'status': status}});
   },
   addToCompanyFavorites: function(companyId, userId) {
     Meteor.users.update({_id: userId}, {$addToSet: {'profile.favoriteCompanies': companyId}});

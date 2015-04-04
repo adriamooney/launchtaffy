@@ -10,20 +10,25 @@
 
 </template>
 
-<template name="salesTypeSales">
+<template name="companyTypeSales">
 	<div class="row">
-		<div class="col-sm-6">{{>addSale}}</div>
-		<div class="col-sm-6">
-			{{>pages}}
-			{{>pagesNav}}
+		<div class="col-sm-12">
+    		{{> reactiveTable settings=settings collection=companyTypeSales class="table table-striped table-hover"}}
 		</div>
 	</div>
 </template>
 
-<template name="companyTypeSales">
-	{{>pages}}
-	{{>pagesNav}}
+<template name="salesTypeSales">
+	<div class="row">
+		<div class="col-sm-12">
+			
+			<h3>My Sales</h3>
+			{{> reactiveTable settings=settings collection=salesTypeSales class="table table-striped table-hover" rowsPerPage=5}}
+			{{>addSale}}
+		</div>
+	</div>
 </template>
+
 
 <template name="salesItem">
 	<div class="panel panel-default">
@@ -37,6 +42,28 @@
 		</div>
 	</div>
 	
+</template>
+
+<template name="sale">
+
+	<!--<div class="form-group">
+		<label class="control-label">Update Sale Status</label>
+		<select class="form-control">
+			<option value="approved">approved</option>
+			<option value="dispute">dispute</option>
+		</select>
+	</div>-->
+
+	<div class="panel panel-default">
+		<div class="panel-body">
+			{{#if statusIs 'pending'}}<button class="btn btn-primary pull-right" id="approveSale">approve this sale</button>{{/if}}
+			<h4>{{leadCompanyName}} <small><span class="label label-{{statusLabel}}">{{status}}</span></small></h4>
+			<p><b>Lead Contact: </b>{{leadName}} {{leadEmail}} {{leadPhone}}</p>
+			<p><b>Sale Details: </b>{{productName}} {{productPrice}} / {{productBillingFrequency}}</p>
+			<p><b>Sales Person: </b><a href="/profile/{{salesPersonId}}">{{salesPersonName}}</a></p>
+			<p><b>Company: </b> <a href="/company/{{companyId}}">{{companyName}}</a></p>
+		</div>
+	</div>
 </template>
 
 
@@ -53,9 +80,9 @@
     {{> afQuickField name='productName' }}
     {{> afQuickField name='productPrice' }}
 
-    {{> afFieldInput name="productBillingFrequency" options=billingOptions firstOption="Billing Frequency" }}
+    {{> afQuickField name="productBillingFrequency" options=billingOptions }}
 
-    {{> afFieldInput id="companyId" name="companyId" options=approvedCompaniesNames firstOption="Company"}}
+    {{> afQuickField id="companyId" name="companyId" options=approvedCompaniesNames }}
     
     {{> afFieldInput name='salesPersonId' type='hidden' value=currentUser._id}}
     {{> afFieldInput name='salesPersonName' type='hidden' value=salesPersonFullName}}

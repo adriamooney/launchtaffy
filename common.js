@@ -44,7 +44,7 @@ this.SalesPersonPages = new Meteor.Pagination(Meteor.users, {
     perPage: 10
 });
 
-this.SalesPages = new Meteor.Pagination(Sales, {
+/*this.SalesPages = new Meteor.Pagination(Sales, {
     availableSettings: {
         limit: true,
         sort: true
@@ -58,9 +58,9 @@ this.SalesPages = new Meteor.Pagination(Sales, {
 });
 
 
+*/
 
-
-this.CompanySalesPages = new Meteor.Pagination(Sales, {
+/*this.CompanySalesPages = new Meteor.Pagination(Sales, {
     availableSettings: {
         limit: true,
         sort: true
@@ -75,7 +75,7 @@ this.CompanySalesPages = new Meteor.Pagination(Sales, {
     infiniteRateLimit: 1,
     infiniteStep: 1,
     perPage: 10
-});
+}); */
 
 
 
@@ -327,7 +327,7 @@ Companies.attachSchema(new SimpleSchema({
 Sales.attachSchema(new SimpleSchema({
     status: {
         type: String,
-        allowedValues: ['pending', 'approved']
+        allowedValues: ['pending', 'approved', 'dispute', 'paid', 'rejected']
     },
     leadCompanyName: {
         type:String
