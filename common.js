@@ -418,6 +418,9 @@ News.attachSchema(new SimpleSchema({
         autoform: {
           rows: 5
         }
+    },
+    isActive: {
+        type:Boolean
     }
 }));
 

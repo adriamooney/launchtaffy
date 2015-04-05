@@ -4,6 +4,15 @@
 
 <template name="news">
 	{{>addNews}}
+	{{>editnews}}
+</template>
+
+<template name="editnews">
+	{{#each news}}
+	<ul>
+		<li><a href="/news/{{_id}}">{{date}} - {{heading}}</a> {{#if isActive}}<span class="label label-success">active</span>{{else}}<span class="label label-default">archived</span>{{/if}}</li>
+	</ul>
+	{{/each}}
 </template>
 
 <template name="allnews">
@@ -13,4 +22,8 @@
 		{{{text}}}
 	</div>
 	{{/each}}
+</template>
+
+<template name="updateNews">
+	{{> quickForm collection="News" id="updateNewsForm" type="update" doc=this}}
 </template>

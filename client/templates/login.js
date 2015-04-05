@@ -41,7 +41,7 @@ Template.forgotPassword.events({
 
 Accounts.onLogin(function(options) {
 
-    Router.go('/');
+    Router.go('/dashboard/');
 
   /*Meteor.users.update({ _id: options.user._id }, {
     $set: { lastActiveAt: new Date() }

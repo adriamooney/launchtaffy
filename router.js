@@ -16,7 +16,13 @@ Router.configure({
 });
 
 Router.route('/', {
-  name: 'home'
+    name: 'home',
+    layoutTemplate:'homepageLayout'
+});
+
+
+Router.route('/dashboard', {
+    name: 'dashboard'
 });
 
 Router.route('/forgot-password/', {
@@ -57,6 +63,13 @@ Router.route('/messages/', {
 
 Router.route('/news/', {
     name: 'news'
+});
+
+Router.route('/news/:_id', {
+    name: 'updateNews',
+    data: function() {
+        return News.findOne(this.params._id);
+    }
 });
 
 Router.route('/favorites/:_id', {
@@ -101,5 +114,7 @@ Router.route('/profile/:_id', {
         return Meteor.users.findOne(this.params._id);
     }
 });
+
+
 
 

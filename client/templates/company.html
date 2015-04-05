@@ -7,7 +7,9 @@
   	{{ else }}
 
       {{#unless isFavorite }}
+      {{#if currentUser}}
       <small class="pull-right"><a id="addToCompanyFavorites" href="#"><i class="glyphicon glyphicon-heart-empty"></i>Add to Favorites</a></small>
+      {{/if}}
       {{/unless}}
 
 
@@ -30,7 +32,7 @@
 
         {{#if websiteUrl}}
         <h5>Company URL</h5>
-        <p>{{this.websiteUrl}}</p>
+        <p><a href="{{this.websiteUrl}}" target="_blank">{{this.websiteUrl}}</a></p>
         {{/if}}
 
           {{#if companyResources}}

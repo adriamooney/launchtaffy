@@ -143,7 +143,7 @@ Template.getLinkedinInfo.events({
 		
 		});
 
-		//TODO: this one will work for initial insert only.  need a different event for update
+
 
 	},
 	'click #updateCompanyInfo': function(event, template) {

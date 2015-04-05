@@ -56,6 +56,7 @@ mobile-status-bar@1.0.3
 momentjs:moment@2.8.4
 mongo@1.1.0
 mongo-livedata@1.0.8
+mrt:bootswatch-yeti@0.3.8
 npm-bcrypt@0.7.8_1
 oauth@1.1.4
 oauth2@1.1.3

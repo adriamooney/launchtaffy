@@ -1,7 +1,9 @@
 <template name="salesProfile">
 
 		{{#unless isFavorite }}
+		{{#if currentUser}}
       	<small class="pull-right"><a id="addToFavorites" href="#"><i class="glyphicon glyphicon-heart-empty"></i>Add to Favorites</a></small>
+      	{{/if}}
       	{{/unless}}
 
 
