@@ -20,3 +20,7 @@ Meteor.publish("companyTypeSales", function () {
 	var user = this.userId;
 	return Sales.find({companyUserId: user}); 
 });
+
+Meteor.publish('news', function(){
+    return News.find();
+});

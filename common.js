@@ -1,11 +1,26 @@
 Sales = new Mongo.Collection("sales");
 Companies = new Mongo.Collection("companies");
 Messages = new Mongo.Collection("messages");
+News = new Mongo.Collection("news");
 //easy search:
 //https://atmospherejs.com/matteodem/easy-search
 Messages.initEasySearch('message');
 
-//Meteor.users.initEasySearch(['profile.keywords', 'profile.bio', 'profile.headline']);
+EasySearch.createSearchIndex('salesPeopleIndex', {
+        'field': ['profile.keywords', 'profile.bio', 'profile.headline'],
+        'collection': Meteor.users,
+        'use': 'mongo-db'
+});
+
+Meteor.users.initEasySearch('usersIndex');
+
+//Companies.initEasySearch('companies');
+
+EasySearch.createSearchIndex('companiesIndex', {
+        'field': ['name', 'description', 'keywords'],
+        'collection': Companies,
+        'use': 'mongo-db'
+});
 
 if (Meteor.isClient) {
     AutoForm.setDefaultTemplateForType('afArrayField', 'myArray');
@@ -16,6 +31,9 @@ this.Companypages = new Meteor.Pagination(Companies, {
     availableSettings: {
         limit: true,
         sort: true
+    },
+    auth: function(skip, sub) {
+        return Companies.find({accountIsActive: true});
     },
   
     itemTemplate: "companyItem",
@@ -33,6 +51,9 @@ this.SalesPersonPages = new Meteor.Pagination(Meteor.users, {
     availableSettings: {
         limit: true,
         sort: true
+    },
+    auth: function(skip, sub) {
+        return Meteor.users.find({ $and: [ {'profile.userType': 'salesperson'}, {'profile.isActive': true} ] } ); 
     },
   
     itemTemplate: "salespeopleItem",
@@ -374,6 +395,30 @@ Sales.attachSchema(new SimpleSchema({
         type:String
     } 
 
+}));
+
+News.attachSchema(new SimpleSchema({
+    date: {
+        type: Date,
+          autoValue: function() {
+            if (this.isInsert) {
+              return new Date;
+            } else if (this.isUpsert) {
+              return {$setOnInsert: new Date};
+            } else {
+              this.unset();
+            }
+          }
+    },
+    heading: {
+        type:String
+    },
+    text: {
+        type: String,
+        autoform: {
+          rows: 5
+        }
+    }
 }));
 
 

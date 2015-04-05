@@ -13,6 +13,17 @@ Template.salespeople.helpers({
 		}
 
 	}
+	
+});
+
+Template.salespeopleItem.helpers({
+	numSales: function() {
+		var sales = Sales.find({salesPersonId: this._id}).count();
+		if(sales > 0 ) {
+			return sales +' sales';
+		}
+		
+	}
 });
 
 Template.salesProfile.helpers({

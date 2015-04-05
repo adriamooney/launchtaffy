@@ -1,5 +1,12 @@
 <template name="companies">
+
+	<div class="page-header">
+	  <h1>Browse Companies</h1>
+	</div>
+
 	{{#if companies}}
+
+			{{>companySearch}}
 
     		{{> pages}}
     		{{> pagesNav}}  <!--navigation-->
@@ -35,4 +42,23 @@
 
 		</div>
 	</div>
+</template>
+
+<template name="companySearch">
+    <div class="form-group">{{> esInput index="companiesIndex" placeholder="Search..." class="form-control"}}</div>
+
+    {{#esEach index="companiesIndex"}}
+        {{>companyItem}}
+    {{/esEach}}
+
+
+    {{> esLoadMoreButton index="companiesIndex"}}
+
+    {{#ifEsHasNoResults index="companiesIndex"}}
+        <div class="no-results">No results found!</div>
+    {{/ifEsHasNoResults}}
+
+    {{#ifEsIsSearching index="companiesIndex"}}
+            <div>Loading...</div>
+    {{/ifEsIsSearching}}
 </template>

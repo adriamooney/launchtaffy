@@ -7,7 +7,7 @@ Router.configure({
   },
   //wait for the data to be rendered before showing the layout
   waitOn: function() { 
-  	return [Meteor.subscribe('companies'), Meteor.subscribe('users'), Meteor.subscribe('messages'), Meteor.subscribe('sales'), Meteor.subscribe('companyTypeSales')];
+  	return [Meteor.subscribe('companies'), Meteor.subscribe('users'), Meteor.subscribe('messages'), Meteor.subscribe('sales'), Meteor.subscribe('companyTypeSales'), Meteor.subscribe('news')];
   	//return [Meteor.subscribe('accountplans')];
   	//return Meteor.subscribe('companies');
 
@@ -53,6 +53,10 @@ Router.route('/salespeople/', {
 
 Router.route('/messages/', {
     name: 'messages'
+});
+
+Router.route('/news/', {
+    name: 'news'
 });
 
 Router.route('/favorites/:_id', {

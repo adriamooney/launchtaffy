@@ -1,5 +1,9 @@
 <template name="sales">
 
+	<div class="page-header">
+	  <h1>My Sales</h1>
+	</div>
+
 	{{#if currentUserIsCompany}}
 		{{>companyTypeSales}}
 	{{/if}}
@@ -21,8 +25,6 @@
 <template name="salesTypeSales">
 	<div class="row">
 		<div class="col-sm-12">
-			
-			<h3>My Sales</h3>
 			{{> reactiveTable settings=settings collection=salesTypeSales class="table table-striped table-hover" rowsPerPage=5}}
 			{{>addSale}}
 		</div>

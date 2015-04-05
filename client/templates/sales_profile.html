@@ -71,50 +71,59 @@
 
 <template name="updateSalesForm">
 
-	{{#if approvedCompanies}}
-		<h4>Companies I can sell for:</h4>
-		<ul class="list-group">
-		{{#each approvedCompanies}}
-			<li class="list-group-item"><a href="/company/{{_id}}">{{name}}</a></li>
-		{{/each}}
-		</ul>
-	{{/if}}
+	<div class="page-header">
+	  <h1>Profile</h1>
+	</div>
 
-	<form id="updateSalesForm"> 
-		<fieldset>
-		<div class="row">
-			<div class="form-group">
-		    	<div class="col-sm-6">
-		    		<label for="firstName" class="control-label">First Name</label>
-		    		<input id="firstName" class="form-control" value="{{this.profile.firstName}}" />
-		    	</div>
-		    	<div class="col-sm-6">
-		    		<label for="lastName" class="control-label">Last Name</label>
-		    		<input id="lastName" class="form-control" value="{{this.profile.lastName}}" />
-		    	</div>
-	  		</div>
-	  	</div>
-  		<div class="form-group">
-	    	<label for="headline" class="control-label">Headline</label>
-	    	<input type="text" name="headline" id="headline" class="form-control" value="{{this.profile.headline}}"/>
-  		</div>
-  		<div class="form-group">
-	    	<label for="bio" class="control-label">Bio</label>
-	    	<textarea id="bio" class="form-control">{{this.profile.bio}}</textarea>
-	    	<p class="help-block">Include sales accomplishments, key accounts and valuable connections.</p>
-  		</div>
-  		<div class="form-group">
-	    	<label for="keywords" class="control-label">Keywords</label>
-	    	<textarea id="keywords" class="form-control">{{keywords}}</textarea>
-	    	<p class="help-block">Be sure to include industries of specialization and key company connections.</p>
-  		</div>
-  		<div class="form-group">
-	    	<label for="website" class="control-label">LinkedIn Profile</label>
-	    	<input type="url" name="publicProfileUrl" id="website" class="form-control" value="{{this.profile.publicProfileUrl}}" readonly="readonly"/>
-  		</div>
-  		</fieldset>
-  		<input type="hidden" name="profileStatus" id="profileStatus" value="{{this.profile.profileStatus}}" />
-  		<button type="submit" class="btn btn-primary">Submit</button>
-	</form>
+	<div class="row">
+		<div class="col-sm-6">
+				<form id="updateSalesForm"> 
+				<fieldset>
+				<div class="row">
+					<div class="form-group">
+				    	<div class="col-sm-6">
+				    		<label for="firstName" class="control-label">First Name</label>
+				    		<input id="firstName" class="form-control" readonly="readonly" value="{{this.profile.firstName}}" />
+				    	</div>
+				    	<div class="col-sm-6">
+				    		<label for="lastName" class="control-label">Last Name</label>
+				    		<input id="lastName" class="form-control" readonly="readonly" value="{{this.profile.lastName}}" />
+				    	</div>
+			  		</div>
+			  	</div>
+		  		<div class="form-group">
+			    	<label for="headline" class="control-label">Headline</label>
+			    	<input type="text" name="headline" id="headline" class="form-control" value="{{this.profile.headline}}"/>
+		  		</div>
+		  		<div class="form-group">
+			    	<label for="bio" class="control-label">Bio</label>
+			    	<textarea id="bio" class="form-control">{{this.profile.bio}}</textarea>
+			    	<p class="help-block">Include sales accomplishments, key accounts and valuable connections.</p>
+		  		</div>
+		  		<div class="form-group">
+			    	<label for="keywords" class="control-label">Keywords</label>
+			    	<textarea id="keywords" class="form-control">{{keywords}}</textarea>
+			    	<p class="help-block">Be sure to include industries of specialization and key company connections.</p>
+		  		</div>
+		  		<div class="form-group">
+			    	<label for="website" class="control-label">LinkedIn Profile</label>
+			    	<input type="url" name="publicProfileUrl" id="website" class="form-control" value="{{this.profile.publicProfileUrl}}" readonly="readonly"/>
+		  		</div>
+		  		</fieldset>
+		  		<input type="hidden" name="profileStatus" id="profileStatus" value="{{this.profile.profileStatus}}" />
+		  		<button type="submit" class="btn btn-primary">Update</button>
+			</form>
+		</div>
+		<div class="col-sm-6">
+			{{#if approvedCompanies}}
+				<h4>Companies I can sell for:</h4>
+				<ul class="list-group">
+				{{#each approvedCompanies}}
+					<li class="list-group-item"><a href="/company/{{_id}}">{{name}}</a></li>
+				{{/each}}
+				</ul>
+			{{/if}}
+		</div>
+	</div>
 
 </template>

@@ -1,0 +1,16 @@
+<template name="addNews">
+	{{> quickForm collection="News" id="insertNewsForm" type="insert"}}
+</template>
+
+<template name="news">
+	{{>addNews}}
+</template>
+
+<template name="allnews">
+	{{#each news}}
+	<div class="well">
+		<h4>{{heading}}</h4>
+		{{{text}}}
+	</div>
+	{{/each}}
+</template>
