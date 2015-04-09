@@ -36,7 +36,7 @@ Template.messages.helpers({
 	toId: function() {
 		var toId = this.to;
 		var to =  Meteor.users.findOne({_id: toId});
-		console.log(to);
+		console.log(toId);
 		if(to.profile.userType == 'company') {
 			var companyId = to.profile.companyId;
 			var company = Companies.findOne({_id: companyId});
@@ -109,11 +109,28 @@ Template.reply.events({
 		event.preventDefault();
 		var senderId = Meteor.userId();  //should be same as this.to
 
-		//console.log(this);
+		console.log(this);
 
-		var toId = this.from;
+		var toId;
+		if (this.replies) {
+			var lastReplyArr = this.replies.pop();
+			toId = lastReplyArr.from;
+		}
+		else {
+			toId = this.from;
+		}
+		
+		console.log(toId);
+
 		var user =  Meteor.users.findOne({_id: toId});
-		var to = user.emails[0].address;
+
+		var to = user.emails;
+		if(!to) {
+			to = user.profile.emailAddress;
+		}
+		else {
+			to = user.emails[0].address;
+		}
 
 		var msg = template.find('#message').value;
 		console.log(msg);

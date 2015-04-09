@@ -5,7 +5,7 @@
 </template>
 
 <template name="unloggedinHome">
-    <div class="jumbotron">
+    <div class="jumbotron home">
        <div class="container">
             <div class="text-center">
                 <h1 class="text-center">Rockstar Sales People<br /> + <br />Super Star Software </h1>
@@ -82,30 +82,40 @@
 
 
 <template name="dashboard">
-    <h1>Dashboard</h1>
+    <div class="page-header">
+        <h1>Dashboard</h1>
+    </div>
     {{#if noUserType}}
             {{>chooseUserType}}
     {{else}}     
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-12">
             {{#if emptyProfile }}<!--this needs to be updated.  think about how companies and salespeople profiles should differ-->
                 {{>welcome}}
             {{/if}}
+        </div>
+        <div class="col-sm-6">
             {{>allnews}}
         </div>
         <div class="col-sm-6">
             
                 {{#if currentUserIsSales}}
-                    {{#if approvedCompanies}}
+                    
                     <div class="well">
                         <h4>My Companies</h4>
+                        {{#if approvedCompanies}}
                         <ul class="list-group">
                         {{#each approvedCompanies}}
                             <li class="list-group-item"><a href="/company/{{_id}}">{{name}}</a></li>
                         {{/each}}
                         </ul>
+                        {{/if}}
+                        {{#unless approvedCompanies}}
+                        <p>Message <a href="/companies/">companies</a> you're interested to start the process of becoming an approved seller. </p>
+                        {{/unless}}
+                        
                     </div>
-                    {{/if}}
+                    
                 {{/if}}
 
                 {{#if currentUserIsCompany}}
@@ -121,10 +131,7 @@
 
 <template name="welcome">
     {{#if currentUserIsSales}}
-    	<p>Head on over to create your profile so companies can find you.</p>
-    	<p>
-           <a class="btn btn-primary" href="/profile/{{currentUser._id}}">Profile</a>
-        </p>
+    	<p class="lead"><b>Don't forget to update your <a href="/profile/{{currentUser._id}}">profile!</a></b><br /> Highlight your sales accomplishments, key accounts, industries, and valuable connections.</p>
     {{/if}}
 
      {{#if currentUserIsCompany}}

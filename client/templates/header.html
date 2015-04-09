@@ -15,29 +15,18 @@
         <div class="collapse navbar-collapse" id="navigation">
           <ul class="nav navbar-nav navbar-right">
             <!--spacebars equivalent of Meter.user()-->
-            {{#if currentUser}}<li><a href="/dashboard/">Dashboard</a></li>{{/if}}
+            {{#if currentUser}}<li><a href="/dashboard/">Dashboard</a></li><li><a href="/news/">News</a></li>
             {{#if anyMessages}}<li><a id="inbox" href="/messages/">Inbox <span class="badge">{{numNewMessages}}</span></a></li>{{/if}}
-            {{#if currentUser}}<li><a href="/sales/{{currentUser._id}}">My Sales</a></li>{{/if}}
-            {{#if currentUser}}{{# if hasFavorites}}<li><a href="/favorites/{{currentUser._id}}">Favorites</a></li>{{/if}}{{/if}}
-            {{#if currentUser}}<li><a href="/profile/{{currentUser._id}}">Profile</a></li>{{/if}}
+            <li><a href="/sales/{{currentUser._id}}">My Sales</a></li>
+            {{# if hasFavorites}}<li><a href="/favorites/{{currentUser._id}}">Favorites</a></li>{{/if}}
+            <li><a href="/profile/{{currentUser._id}}">Profile</a></li>
             <li><a href="/salespeople/">Browse Salespeople</a></li>
             <li><a href="/companies/">Browse Companies</a></li>
-
-            {{#if currentUser}}
             <li><a href="#" class="logout">Logout</a></li>
-            <li>
-
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="fa fa-cog"></span>Menu</a>
-                <ul class="dropdown-menu" role="menu">
-
-                  <!--<li><a href="/organization/{{currentUser.profile.orgId}}">{{currentUser.profile.orgName}}</a></li>-->
-                  <li><a href="/profile/{{currentUser._id}}">Profile</a></li>
-                  <li><a href="#" class="logout">Logout</a></li>
-                </ul>
-            </li>
             {{else}}
             <li><a href="/login">Login</a></li>
             {{/if}}
+            
           </ul>
 
         </div>

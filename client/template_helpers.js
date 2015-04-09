@@ -101,9 +101,13 @@ Template.registerHelper('anyMessages', function() {
 });
 
 Template.registerHelper('numNewMessages', function() {
-	var messages = Messages.find({$and: [{to: Meteor.userId()},{'status': 'unread'}]}, {sort: {timeStamp: -1}});
-	if (messages.count() > 0) {
-		return messages.count();
+	var messages = Messages.find({$and: [{to: Meteor.userId()},{'status': 'unread'}]});
+
+	var messageReplies = Messages.find({$and: [{'replies.to': Meteor.userId()}, {'replies.status': 'unread'}]});
+	console.log(messageReplies.count());
+
+	if (messages.count() > 0 || messageReplies.count()>0) {
+		return messages.count() + messageReplies.count();
 	}
 	else {
 		return false;
@@ -112,7 +116,7 @@ Template.registerHelper('numNewMessages', function() {
 
 Template.registerHelper('approvedCompanies', function() {
 	var companiesArr = Meteor.user().profile.approvedCompanies;
-	if(companiesArr.length>0) {
+	if(companiesArr && companiesArr.length>0) {
 		var ids = companiesArr;
 		var companies = Companies.find({_id: {$in: ids}});
 		return companies;

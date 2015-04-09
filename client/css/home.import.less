@@ -1,8 +1,14 @@
 .jumbotron {
-	background: url(/home_header.jpg) center center no-repeat;
-	background-size: cover;
-	background-attachment: fixed;
+	
 	margin-bottom:0;
+	&.home {
+		background: url(/home_header.jpg) center center no-repeat;
+		background-size: cover;
+		background-attachment: fixed;
+	}
+	&.signup {
+		background:transparent;
+	}
 	h1 {
 		font-family: 'Open Sans Condensed', sans-serif;
 	  	font-weight: 700;
@@ -13,6 +19,9 @@
 	}
 	h1, h2 {
 		color: @white;
+	}
+	&.signup h1, &.signup h2 {
+		color: @gray-dark;
 	}
 	h2 {
 		margin-bottom:40px;
