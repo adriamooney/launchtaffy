@@ -24,23 +24,26 @@ Meteor.methods({
   },
   //TODO: updates this stuff for new threads/message architecture
   //also need to update helper function and templates
-  replyToMessage: function(id, senderId, toId, msg) {
-    Messages.update( {_id: id}, {$push: {'replies': {'to': toId, 'status': 'unread', 'message': msg, 'from': senderId} }});
-
-    Messages.update({_id: id}, {$inc: {'newReplies': 1}});
+  replyToMessage: function(id, senderId, toId, msg, threadId) {
+   // Messages.update( {_id: id}, {$push: {'replies': {'to': toId, 'status': 'unread', 'message': msg, 'from': senderId} }});
+    var now = new Date().getTime();
+    Messages.insert({'threadId': threadId, 'message': msg, 'from': senderId, 'to': toId, 'status': 'unread', 'timeStamp': new Date(now - 7 * 3600 * 1000)} );
+    //Threads.update({_id: threadId}, {$set:'status'})
   },
   deleteMessage: function(id) {
-    Messages.remove(id);
+    Threads.remove(id);
   },
   archiveMessage: function(id) {
-    Messages.update({_id:id}, {$set: {'status': 'archived'}});
+    Threads.update({_id:id}, {$set: {'status': 'archived'}});
+    Messages.update({threadId: id}, {$set: {'status': 'archived'}}, { multi: true });
   },
   unarchiveMessage: function(id) {
-    Messages.update({_id:id}, {$set: {'status': 'read'}});
+    Threads.update({_id:id}, {$set: {'status': 'active'}});
+    Messages.update({threadId: id}, {$set: {'status': 'read'}}, { multi: true });
   },
   readMessages: function() {
-     Messages.update({to: Meteor.userId()}, {$set: {'status': 'read', 'newReplies': 0}}, { multi: true });
-     Messages.update({'replies.to': Meteor.userId()}, {$set: {'newReplies': 0}}, { multi: true });
+     Messages.update({to: Meteor.userId()}, {$set: {'status': 'read'}}, { multi: true } );
+     //Messages.update({'replies.to': Meteor.userId()}, {$set: {'newReplies': 0}}, { multi: true });
   },
   sendEmail: function (to, from, subject, text) {
     check([to, from, subject, text], [String]);

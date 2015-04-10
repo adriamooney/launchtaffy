@@ -5,7 +5,6 @@ Threads = new Mongo.Collection("threads");
 News = new Mongo.Collection("news");
 //easy search:
 //https://atmospherejs.com/matteodem/easy-search
-Messages.initEasySearch('message');
 
 EasySearch.createSearchIndex('salesPeopleIndex', {
         'field': ['profile.keywords', 'profile.bio', 'profile.headline'],
@@ -13,7 +12,13 @@ EasySearch.createSearchIndex('salesPeopleIndex', {
         'use': 'mongo-db'
 });
 
-Meteor.users.initEasySearch('usersIndex');
+EasySearch.createSearchIndex('messages', {
+        'field': ['message'],
+        'collection': Messages,
+        'use': 'mongo-db'
+});
+
+//Meteor.users.initEasySearch('usersIndex');
 
 //Companies.initEasySearch('companies');
 

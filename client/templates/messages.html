@@ -3,6 +3,7 @@
       <h1>Messages</h1>
     </div>
 
+
     {{# if anyMessages}}
         {{>searchBox}}
     {{/if}}
@@ -11,6 +12,23 @@
     {{else}}
     <p>No messages</p>
     {{/if}}
+
+    {{#each threads}}
+    <div class="col-sm-4">
+        <div class="thread well">
+            <small><span class="pull-right"><a href="#" class="glyphicon glyphicon-trash delete-msg" title="delete"></a> <a href="#" class="glyphicon glyphicon glyphicon-folder-close archive-msg" title="archive"></a></span></small>
+            <h5><b>{{toId}} and {{fromId}}:</b></h5>
+            {{#each messages}}
+            <div class="msg">
+                <b><a href="/profile/{{from}}">{{fromId}}</a>:</b> {{message}}
+            </div>
+            {{/each}}
+            {{>reply}}
+        </div>
+    </div>
+    {{/each}}
+
+    <!--
 
     {{#if messagesToMe}}
     <h4>Messages Recieved</h4>
@@ -52,9 +70,27 @@
         </div>
     </div>
     {{/each}}
-    {{/if}}
+    {{/if}}-->
 
 </template>
+
+<!--<template name="threads">
+    {{#each threads}}
+        {{>thread}}
+    {{/each}}
+</template>
+
+<template name="thread">
+     <div class="thread">
+        Message between {{to}} and {{from}}
+        {{#each messages}}
+        <div class="msg">
+            <b><a href="/profile/{{from}}">{{fromId}}</a></b> {{message}}
+        </div>
+        {{/each}}
+        {{>reply}}
+    </div>
+</template>-->
 
 <template name="reply">
 	<form id="replyToMessage"><h5>Reply:</h5>
@@ -65,22 +101,24 @@
 
 <template name="searchBox">
     <div class="form-group">{{> esInput index="messages" placeholder="Search..." class="form-control"}}</div>
-
+        <div class="col-md-12">
 
         {{#esEach index="messages"}}
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">To: {{toId}}<span class="pull-right"><a href="#" class="glyphicon glyphicon-trash delete-msg" title="delete"></a> <a href="#" class="glyphicon glyphicon glyphicon-folder-open unarchive-msg" title="unarchive"></a></span></h3>
+            
+                <div class="col-sm-4">
+                    <div class="thread well">
+
+                        {{#if messageStatus 'archived'}}     
+                        <small><span class="pull-right"><a href="#" class="glyphicon glyphicon glyphicon-folder-open unarchive-msg" title="unarchive"></a></span></small>
+                        {{/if}}
+
+                        <div class="msg">
+                            <b><a href="/profile/{{from}}">{{fromId}}</a>:</b> {{message}}
+                        </div>
+
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <p><b>{{fromId}}: </b>{{{message}}}</p>
-                    <ul>
-                    {{#each replies}}
-                        <li><b>{{fromId}}: </b> {{{this.message}}}</li>
-                    {{/each}}
-                    </ul>
-                </div>
-            </div>
+   
         {{/esEach}}
 
          {{> esLoadMoreButton index="messages"}}
@@ -92,6 +130,6 @@
         {{#ifEsIsSearching index="messages"}}
                 <div>Loading...</div>
         {{/ifEsIsSearching}}
-
+        </div>
 </template>
 
