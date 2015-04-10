@@ -103,11 +103,13 @@ Template.registerHelper('anyMessages', function() {
 Template.registerHelper('numNewMessages', function() {
 	var messages = Messages.find({$and: [{to: Meteor.userId()},{'status': 'unread'}]});
 
-	var messageReplies = Messages.find({$and: [{'replies.to': Meteor.userId()}, {'replies.status': 'unread'}]});
-	console.log(messageReplies.count());
+	var newReplies = Messages.find({$and:  [{'replies.to': Meteor.userId()},{'newReplies': {$gt: 0}}]});
+	console.log(newReplies);
+	console.log(newReplies.count());
 
-	if (messages.count() > 0 || messageReplies.count()>0) {
-		return messages.count() + messageReplies.count();
+
+	if (messages.count() > 0 || newReplies.count()>0) {
+		return messages.count() + newReplies.count();
 	}
 	else {
 		return false;

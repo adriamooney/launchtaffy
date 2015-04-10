@@ -75,7 +75,10 @@ Template.companyTypeSales.helpers({
 Template.salesTypeSales.helpers({
 	salesTypeSales: function() {
 		var user = Meteor.userId();
-		return Sales.find({salesPersonId: user}); 
+		var sales = Sales.find({salesPersonId: user}); 
+		if(sales.count() > 0) {
+			return sales;
+		}
 	},
     settings: function () {
 

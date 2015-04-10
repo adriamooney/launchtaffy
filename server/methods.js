@@ -16,13 +16,18 @@ Meteor.methods({
   sendMessage: function(senderId, toId, msg) {
     //senderId, companyId, msg
     var now = new Date().getTime();
-    Messages.insert({'message': msg, 'from': senderId, 'to': toId, 'status': 'unread', 'timeStamp': new Date(now - 7 * 3600 * 1000)} );
+
+    Threads.insert({'from': senderId, 'to': toId, 'status': 'active'}, function(err,doc) {
+      Messages.insert({'threadId': doc, 'message': msg, 'from': senderId, 'to': toId, 'status': 'unread', 'timeStamp': new Date(now - 7 * 3600 * 1000)} );
+    });
+
   },
+  //TODO: updates this stuff for new threads/message architecture
+  //also need to update helper function and templates
   replyToMessage: function(id, senderId, toId, msg) {
     Messages.update( {_id: id}, {$push: {'replies': {'to': toId, 'status': 'unread', 'message': msg, 'from': senderId} }});
-   // Messages.update( {_id: id}, {$set: {'status': 'unread'}});
-   //TODO: add some sort of incrmented flag for new replies, so we can use it to get numNewMessages. this flag will get rest when readMessages is hit
 
+    Messages.update({_id: id}, {$inc: {'newReplies': 1}});
   },
   deleteMessage: function(id) {
     Messages.remove(id);
@@ -34,19 +39,8 @@ Meteor.methods({
     Messages.update({_id:id}, {$set: {'status': 'read'}});
   },
   readMessages: function() {
-     Messages.update({to: Meteor.userId()}, {$set: {'status': 'read'}}, { multi: true });
-
-      Messages.find({'replies.status': 'unread'}).forEach( function(doc) {
-            doc.replies.forEach(function(reply){
-                console.log(doc._id);
-               
-                //this is not working!
-                //TODO: INSTEAD OF THIS, JUST ADD SOMETHING AT THE MESSAGES LEVEL LIKE NUMBER OF NEW REPLIES, AND INCREMENT ON THAT
-               Messages.update({_id: doc._id}, {$set: {'replies.$.status': 'read'}});
-        });
-        });
-
-
+     Messages.update({to: Meteor.userId()}, {$set: {'status': 'read', 'newReplies': 0}}, { multi: true });
+     Messages.update({'replies.to': Meteor.userId()}, {$set: {'newReplies': 0}}, { multi: true });
   },
   sendEmail: function (to, from, subject, text) {
     check([to, from, subject, text], [String]);

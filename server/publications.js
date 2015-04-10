@@ -24,3 +24,7 @@ Meteor.publish("companyTypeSales", function () {
 Meteor.publish('news', function(){
     return News.find();
 });
+
+Meteor.publish('threads', function(){
+    return Threads.find();
+});

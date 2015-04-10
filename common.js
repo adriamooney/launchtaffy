@@ -1,6 +1,7 @@
 Sales = new Mongo.Collection("sales");
 Companies = new Mongo.Collection("companies");
 Messages = new Mongo.Collection("messages");
+Threads = new Mongo.Collection("threads");
 News = new Mongo.Collection("news");
 //easy search:
 //https://atmospherejs.com/matteodem/easy-search
@@ -252,9 +253,16 @@ Messages.attachSchema(new SimpleSchema({
     to: {
         type: String
     },
-    replies: {
+    threadId: {
+        type:String
+    }
+    /*replies: {
         type: [Object],
         min: 0,
+        optional:true
+    },
+    newReplies: {
+        type: Number,
         optional:true
     },
     "replies.$.status": {
@@ -268,6 +276,18 @@ Messages.attachSchema(new SimpleSchema({
     },
     "replies.$.message": {
         type:String
+    } */
+}));
+
+Threads.attachSchema(new SimpleSchema({
+    status: {
+        type: String
+    },
+    from: {
+        type: String
+    },
+    to: {
+        type: String
     }
 }));
 
