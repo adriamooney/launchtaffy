@@ -32,6 +32,7 @@ Meteor.methods({
   },
   deleteMessage: function(id) {
     Threads.remove(id);
+    Messages.remove({threadId: id}, {multi:true});
   },
   archiveMessage: function(id) {
     Threads.update({_id:id}, {$set: {'status': 'archived'}});

@@ -127,7 +127,32 @@ Template.searchBox.helpers({
 	messageStatus: function(status) {
 		console.log(status);
     	return this.status === status;
+  	},
+  	expandThread: function() {
+  		//var threadId = Session.get('threadId');
+  		var threadId = this.threadId;
+  		var allMsgs = Messages.find({threadId: threadId}, {sort: {timeStamp: 1}});
+  		return allMsgs;
+  	},
+  	threadIsExpanded: function() {
+  		var thisThread = this.threadId;
+  		var threadId = Session.get('threadId');
+  		if(thisThread == threadId) {
+  			return true;
+  		}
+  		else {
+  			return false;
+  		}
   	}
+});
+
+Template.searchBox.events({
+	'click .expand-thread': function(event, template) {
+		event.preventDefault();
+		var threadId = this.threadId;
+		Session.set('threadId', threadId);
+		//var allMsgs = Messages.find({threadId: threadId});
+	}
 });
 
 Template.messages.events({
@@ -162,7 +187,6 @@ Template.reply.events({
 		event.preventDefault();
 		var senderId = Meteor.userId();  //should be same as this.to
 
-		console.log(this);
 		var threadId = (this._id);
 		console.log(threadId);
 
@@ -175,12 +199,12 @@ Template.reply.events({
 			toId = this.from;
 		} */
 		
-		var toId = this.from;
 		//to should be the person who last said something.
 
 		var threadId = this._id;
-		var lastMsg = Messages.find({threadId: threadId}, {sort: {timeStamp: -1}, limit:1});
-		console.log(lastMsg.from);
+		var lastMsg = Messages.find({threadId: threadId}, {sort: {timeStamp: -1}, limit:1}).fetch();
+
+		var toId = lastMsg[0].from;
 
 
 		var user =  Meteor.users.findOne({_id: toId});

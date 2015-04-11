@@ -103,22 +103,23 @@
     <div class="form-group">{{> esInput index="messages" placeholder="Search..." class="form-control"}}</div>
         <div class="col-md-12">
 
-        {{#esEach index="messages"}}
-            
-                <div class="col-sm-4">
+        {{#esEach index="messages"}} 
+                
                     <div class="thread well">
-
+                        <!--<small><a href="#" class="expand-thread">show full thread</a></small>-->
                         {{#if messageStatus 'archived'}}     
                         <small><span class="pull-right"><a href="#" class="glyphicon glyphicon glyphicon-folder-open unarchive-msg" title="unarchive"></a></span></small>
                         {{/if}}
 
-                        <div class="msg">
-                            <b><a href="/profile/{{from}}">{{fromId}}</a>:</b> {{message}}
-                        </div>
+                       
+                             {{#each expandThread}}
+                                <div class="msg">
+                                    <b><a href="/profile/{{from}}">{{fromId}}</a>:</b> {{message}}
+                                </div>
+                            {{/each}}
 
                     </div>
-                </div>
-   
+
         {{/esEach}}
 
          {{> esLoadMoreButton index="messages"}}
