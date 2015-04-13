@@ -1,5 +1,9 @@
 <template name="salesProfile">
 
+		<div class="page-header">
+			<h1>{{profile.firstName}} {{profile.lastName}}</h1>
+		</div>
+
 		{{#unless isFavorite }}
 		{{#if currentUser}}
       	<small class="pull-right"><a id="addToFavorites" href="#"><i class="glyphicon glyphicon-heart-empty"></i>Add to Favorites</a></small>
@@ -9,19 +13,19 @@
 
       	<div class="media">
 		  <div class="media-left">
-		    <a href="/profile/{{_id}}">
+
 		      {{# if profile.pictureUrl}}
 		      	<img class="media-object" src="{{profile.pictureUrl}}" alt="{{profile.firstName}} {{profile.lastName}} Picture" />
 		      	{{else}}
 		      	<img class="media-object" src="" alt="" style="width:60px;height:60px;background:#ccc;border:1px solid #666"/>
 		      {{/if}}
-		    </a>
+
 		    {{# if this.profile.publicProfileUrl}}
-				<span class="label label-info"><a href="{{this.profile.publicProfileUrl}}" target="_blank">LinkedIn</a></span>
+				<a class="label-link block" href="{{this.profile.publicProfileUrl}}" target="_blank"><span class="label label-info block">LinkedIn</span></a>
 			{{/if}}
 		  </div>
 		  <div class="media-body">
-		    <h4 class="media-heading">{{profile.firstName}} {{profile.lastName}}</h4>
+		    
 		    	{{#if profile.headline}}
 		    	<h5>Headline</h5>
 				<p>{{profile.headline}}</p>

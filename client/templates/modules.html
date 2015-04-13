@@ -1,0 +1,27 @@
+<template name="approvedCompanies">
+	<h4>My Companies</h4>
+    {{#if approvedCompanies}}
+    <ul class="list-group">
+    {{#each approvedCompanies}}
+        <li class="list-group-item"><a href="/company/{{_id}}">{{name}}</a></li>
+    {{/each}}
+    </ul>
+    {{/if}}
+    {{#unless approvedCompanies}}
+    <p>Message <a href="/companies/">companies</a> you're interested to start the process of becoming an approved seller. </p>
+    {{/unless}}
+</template>
+
+<template name="approvedSalesPeople">
+	<h4>My Approved Sales People </h4>
+  {{#if approvedSalesPeople}}
+      <ul class="list-group">
+      {{#each approvedSalesPeople}}
+        <li class="list-group-item"><a href="/profile/{{_id}}">{{profile.firstName}} {{profile.lastName}}</a></li>
+      {{/each}}
+      </ul>
+  {{/if}}
+  {{#unless approvedSalesPeople}}
+    <p>Message <a href="/salespeople/">sales people</a> you're interested working with. </p>
+  {{/unless}}
+</template>

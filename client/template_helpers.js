@@ -125,4 +125,18 @@ Template.registerHelper('approvedCompanies', function() {
 	
 });
 
+Template.registerHelper('approvedSalesPeople', function() {
+
+	var salesPeopleArr = Meteor.user().profile.approvedSalesPeople;
+	if(salesPeopleArr && salesPeopleArr.length>0) {
+		var salespeople = Meteor.users.find({_id: {$in: salesPeopleArr}});
+		return salespeople; 
+	}
+	
+	else {
+		return false;
+	}
+
+});
+
 

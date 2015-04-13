@@ -17,7 +17,11 @@
 <template name="companyTypeSales">
 	<div class="row">
 		<div class="col-sm-12">
-    		{{> reactiveTable settings=settings collection=companyTypeSales class="table table-striped table-hover"}}
+			{{# if companyTypeSales}}
+    			{{> reactiveTable settings=settings collection=companyTypeSales class="table table-striped table-hover"}}
+    		{{else}}
+    		<div class="alert alert-warning">You have no sales yet.</div>
+    		{{/if}}
 		</div>
 	</div>
 </template>
@@ -34,7 +38,19 @@
 </template>
 
 <template name="salesTypeSalesWidget">
-	{{> reactiveTable settings=settings collection=sales class="table table-striped table-hover" rowsPerPage=5 showNavigation='never' showFilter=false}}
+	{{#if sales}}
+    {{> reactiveTable settings=settings collection=sales class="table table-striped table-hover" rowsPerPage=5 showNavigation='never' showFilter=false}}
+    {{else}}
+    <p>You have no pending sales.  Time to pick up the phone!</p>
+    {{/if}}
+</template>
+
+<template name="companyTypeSalesWidget">
+	{{#if sales}}
+    {{> reactiveTable settings=settings collection=sales class="table table-striped table-hover" rowsPerPage=5 showNavigation='never' showFilter=false}}
+    {{else}}
+    <p>You have no pending sales.</p>
+    {{/if}}
 </template>
 
 
@@ -64,7 +80,8 @@
 
 	<div class="panel panel-default">
 		<div class="panel-body">
-			{{#if statusIs 'pending'}}<button class="btn btn-primary pull-right" id="approveSale">approve this sale</button>{{/if}}
+			{{#if currentUserIsCompany}}{{#if statusIs 'pending'}}<button class="btn btn-primary pull-right" id="approveSale">approve this sale</button>{{/if}}{{/if}}
+			{{#if currentUserIsSales}}{{#if statusIs 'approved'}}<button class="btn btn-primary pull-right" id="paidSale">Mark as Paid</button>{{/if}}{{/if}}
 			<h4>{{leadCompanyName}} <small><span class="label label-{{statusLabel}}">{{status}}</span></small></h4>
 			<p><b>Lead Contact: </b>{{leadName}} {{leadEmail}} {{leadPhone}}</p>
 			<p><b>Sale Details: </b>{{productName}} {{productPrice}} / {{productBillingFrequency}}</p>

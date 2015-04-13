@@ -10,6 +10,22 @@ Template.companies.helpers({
 	}
 });
 
+Template.companyItem.helpers({
+	numSales: function() {
+		var sales = Sales.find({$and: [ { companyId: this._id}, { status: 'approved' } ] }).count();   
+		if(sales === 1) {
+			return sales +' sale';
+		}
+		else if(sales>1){
+			return sales +' sales';
+		}
+		else {
+			return false;
+		}
+		
+	}
+});
+
 Template.company.helpers({
 	thisCompany: function() {
 		if (Meteor.user()) {
@@ -74,19 +90,6 @@ Template.updateCompanyFormOnProfile.helpers({ //probably could be moved to a gen
 		return company;
 	}
 	
-});
-
-Template.approvedSalesPeople.helpers({
-	approvedSalesPeople: function() {
-		var salesPeopleArr = Meteor.user().profile.approvedSalesPeople;
-		var salespeople = Meteor.users.find({_id: {$in: salesPeopleArr}});
-		if(salesPeopleArr.length>0) {
-			return salespeople; 
-		}
-		else {
-			return false;
-		}
-	}
 });
 
 Template.companyProfile.helpers({

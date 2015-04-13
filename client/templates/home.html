@@ -102,27 +102,25 @@
                 {{#if currentUserIsSales}}
                     
                     <div class="well">
-                        <h4>My Companies</h4>
-                        {{#if approvedCompanies}}
-                        <ul class="list-group">
-                        {{#each approvedCompanies}}
-                            <li class="list-group-item"><a href="/company/{{_id}}">{{name}}</a></li>
-                        {{/each}}
-                        </ul>
-                        {{/if}}
-                        {{#unless approvedCompanies}}
-                        <p>Message <a href="/companies/">companies</a> you're interested to start the process of becoming an approved seller. </p>
-                        {{/unless}}
-                        
+                        {{>approvedCompanies}} 
                     </div>
 
-                    {{>salesTypeSalesWidget}}
+
+                    <div class="well">
+                        <h4>Sales <small>(Pending Approval)</small></h4>
+                        {{>salesTypeSalesWidget}}
+                    </div>
                     
+                
                 {{/if}}
 
                 {{#if currentUserIsCompany}}
                 <div class="well">
                     {{>approvedSalesPeople}}
+                </div>
+                 <div class="well">
+                        <h4>Sales <small>(Pending Approval)</small></h4>
+                        {{>companyTypeSalesWidget}}
                 </div>
                 {{/if}}
             </div>

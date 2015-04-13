@@ -38,7 +38,13 @@ Template.addSale.helpers({
 Template.companyTypeSales.helpers({
 	companyTypeSales: function() {
 		var user = Meteor.userId();
-		return Sales.find({companyUserId: user}); 
+		var sales= Sales.find({companyUserId: user}); 
+		if(sales.count() > 0) {
+			return sales;
+		}
+		else {
+			return false;
+		}
 	},
     settings: function () {
 
@@ -49,18 +55,17 @@ Template.companyTypeSales.helpers({
 	            { key: 'status', label: 'Status',
 	            	fn: function(value,object) {
 	            		var label;
-	            		var review;
 	            		if(value == 'pending') {
 	            			label = 'info';
 	            		}
-	            		else if(value == 'approved') {
+	            		else if(value == 'approved' || value=='paid') {
 	            			label = 'success';
 	            		}
 
-	    				return new Spacebars.SafeString('<span class="label label-'+label+'">'+value+ '</span><small><a href="/sale/'+object._id+'"> review</a></small>' ); 
+	    				return new Spacebars.SafeString('<a href="/sale/'+object._id+'"><span class="label label-'+label+'">'+value+ '</span></a>' ); 
 	    			}
 	             },
-	            { key: 'salesPersonFullName', label: 'Sales Person Name' },
+	            { key: 'salesPersonName', label: 'Sales Person Name' },
 	 			{ key: 'leadCompanyName', label: 'Lead Company Name' },
 	    		{ key: 'leadEmail', label: 'Lead Email' },
 	    		{ key: 'leadPhone', label: 'Lead Phone' },
@@ -76,6 +81,37 @@ Template.companyTypeSales.helpers({
     }
 });
 
+Template.companyTypeSalesWidget.helpers({
+	sales: function() {
+		var user = Meteor.userId();
+		var sales = Sales.find({$and: [ { companyUserId: user }, { status: 'pending' } ] }, {sort: {timeStamp: -1}});
+		if(sales.count() > 0) {
+			return sales;
+		}
+		else {
+			return false;
+		}
+	},
+	settings: function () {
+
+        return {
+            rowsPerPage: 10,
+            showFilter: true,
+            fields: [
+	            { key: 'status', label: 'Status',
+	            	fn: function(value,object) {
+	    				return new Spacebars.SafeString('<a href="/sale/'+object._id+'"><span class="label label-info">'+value+ '</span></a>'); 
+	    			}
+	        	},
+	 			{ key: 'leadCompanyName', label: 'Lead Company Name' },
+	 			{ key: 'salesPersonName', label: 'Sales Person Name' }
+
+            ]
+        }; 
+    }
+
+});
+
 Template.salesTypeSalesWidget.helpers({
 	sales: function() {
 		var user = Meteor.userId();
@@ -85,7 +121,40 @@ Template.salesTypeSalesWidget.helpers({
 		if(sales.count() > 0) {
 			return sales;
 		}
-	}
+		else {
+			return false;
+		}
+	},
+	settings: function () {
+
+        return {
+            rowsPerPage: 10,
+            showFilter: true,
+            fields: [
+	            { key: 'status', label: 'Status',
+	            	fn: function(value,object) {
+	            		var label;
+	            		if(value == 'pending') {
+	            			label = 'info';
+	            		}
+	            		else if(value == 'approved' || value == 'paid') {
+	            			label = 'success';
+	            		}
+
+	    				return new Spacebars.SafeString('<span class="label label-'+label+'">'+value+ '</span>'); 
+	    			}
+	        	},
+	            { key: 'companyName', label: 'Company Name' },
+	 			{ key: 'leadCompanyName', label: 'Lead Company Name' },
+	    		{ key: 'productPrice', label: 'Product Price',
+	    			fn: function(value,object) {
+	    				return new Spacebars.SafeString('$'+object.productPrice +'/'+object.productBillingFrequency); 
+	    			}
+	    		 }
+
+            ]
+        }; 
+    }
 
 });
 
@@ -109,10 +178,12 @@ Template.salesTypeSales.helpers({
 	            		if(value == 'pending') {
 	            			label = 'info';
 	            		}
-	            		else if(value == 'approved') {
+	            		else if(value == 'approved' || value== 'paid') {
 	            			label = 'success';
 	            		}
-	    				return new Spacebars.SafeString('<span class="label label-'+label+'">'+value+ '</span>'); 
+	    				//return new Spacebars.SafeString('<span class="label label-'+label+'">'+value+ '</span>'); 
+	    				return new Spacebars.SafeString('<a href="/sale/'+object._id+'"><span class="label label-'+label+'">'+value+ '</span></a>' ); 
+
 	    			}
 	        	},
 	            { key: 'companyName', label: 'Company Name' },
@@ -140,6 +211,7 @@ Template.sale.events({
 				var salesPersonId = self.salesPersonId;
 				console.log(self);
 				var user = Meteor.users.findOne({_id: salesPersonId});
+				console.log(user);
 
 				if(!user.emails) {
 			        var userEmail = user.profile.emailAddress;
@@ -154,6 +226,28 @@ Template.sale.events({
 			}
 		});
 
+	},
+	'click #paidSale': function() {
+		var self = this;
+		Meteor.call('updateSaleStatus', this._id, 'paid', function(err){
+			if(!err) {
+				AppMessages.throw('Sale marked as paid!', 'success');
+				var companyUserId = self.companyUserId;
+
+				var user = Meteor.users.findOne({_id: companyUserId});
+
+				if(!user.emails) {
+			        var userEmail = user.profile.emailAddress;
+			     }
+			     else {
+			        var userEmail = user.emails[0].address;
+			    }
+      			var salesPerson = self.salesPersonName;
+
+				Meteor.call('sendEmail', userEmail, 'SalesCrowd <no-reply@salescrowd.com>', salesPerson+' has marked a recent sale as paid', salesPerson+' has marked a recent sale as paid, indicating your payment has been received.<br /><a href="http://localhost:3000/sale/'+self._id+'">Click here</a> to review the sale.'); 
+
+			}
+		});
 	}
 });
 

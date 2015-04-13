@@ -18,9 +18,15 @@ Template.salespeople.helpers({
 
 Template.salespeopleItem.helpers({
 	numSales: function() {
-		var sales = Sales.find({salesPersonId: this._id}).count();
-		if(sales > 0 ) {
+		var sales = Sales.find({$and: [ { salesPersonId: this._id}, { status: 'approved' } ] }).count();   
+		if(sales === 1) {
+			return sales +' sale';
+		}
+		else if(sales>1){
 			return sales +' sales';
+		}
+		else {
+			return false;
 		}
 		
 	}
@@ -105,7 +111,7 @@ Template.salesProfile.events({
 				}
 				else {
 					AppMessages.throw('You have now approved this salesperson.', 'success');
-					Meteor.call('sendEmail', useremail, 'SalesCrowd <no-reply@salescrowd.com>', 'You have been approved!', 'You have been approved by '+companyName, function(err) {
+					Meteor.call('sendEmail', useremail, 'LaunchTaffy <no-reply@launchtaffy.com>', 'You have been approved!', 'You have been approved by '+companyName, function(err) {
 						if(err) {
 							console.log(err);
 						}
@@ -142,7 +148,7 @@ Template.salesProfile.events({
 				}
 				else {
 					AppMessages.throw('You have revoked approval this salesperson.', 'success');
-					Meteor.call('sendEmail', useremail, 'SalesCrowd <no-reply@salescrowd.com>', 'Your approval has been revoked', 'Your approval to sell for '+companyName+' has been revoked.  You are no long authorized to sell for this company.', function(err) {
+					Meteor.call('sendEmail', useremail, 'LaunchTaffy <no-reply@launchtaffy.com>', 'Your approval has been revoked', 'Your approval to sell for '+companyName+' has been revoked.  You are no long authorized to sell for this company.', function(err) {
 						if(err) {
 							console.log(err);
 						}
