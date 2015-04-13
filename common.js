@@ -418,7 +418,10 @@ Sales.attachSchema(new SimpleSchema({
     },
     salesPersonName: {
         type:String
-    } 
+    },
+    timeStamp: {
+        type: String
+    }
 
 }));
 

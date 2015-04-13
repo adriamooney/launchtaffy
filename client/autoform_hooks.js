@@ -40,6 +40,7 @@ AutoForm.hooks({
 
       var companyName = this.template.$('#companyId option:selected').text();
       var cId = this.template.find('#companyId').value;
+      console.log(cId);
 
       var company = Companies.findOne({_id: cId});
       var companyUserId = company.companyId;

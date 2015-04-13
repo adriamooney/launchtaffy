@@ -6,6 +6,10 @@ Template.addSale.helpers({
 	        {label: "one-time", value: 'one-time'}
     	];
 	},
+	timeStamp: function() {
+		var now = new Date().getTime();
+		return new Date(now - 7 * 3600 * 1000);
+	},
 	approvedCompaniesNames: function() {
 		var companiesArr = Meteor.user().profile.approvedCompanies;
 		var user = Meteor.user();
@@ -70,6 +74,19 @@ Template.companyTypeSales.helpers({
             ]
         }; 
     }
+});
+
+Template.salesTypeSalesWidget.helpers({
+	sales: function() {
+		var user = Meteor.userId();
+		var sales = Sales.find({$and: [ { salesPersonId: user }, { status: 'pending' } ] }, {sort: {timeStamp: -1}});
+
+
+		if(sales.count() > 0) {
+			return sales;
+		}
+	}
+
 });
 
 Template.salesTypeSales.helpers({
