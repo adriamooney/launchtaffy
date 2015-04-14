@@ -125,7 +125,7 @@ Meteor.methods({
                 keywords: keywords,
                 accountIsActive: true, 
                 companyId: userId, 
-                companyProfileStatus:1
+                companyProfileStatus:0
               });
 
             //Companies.update({companyId: userId}, {$push: {keywords:keywords}});

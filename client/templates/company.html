@@ -78,19 +78,14 @@
 </template>
 
 <template name="getLinkedinInfo">
-  
-    <a class="btn btn-primary" data-toggle="collapse" href="#companyName">Get company Info from LinkedIn</a>
-    <div id="companyName" class="collapse">
-        <input type="text" value="" id="companyNameVal" />
+    <div id="companyName" class="form-group">
+        <input type="text" value="" id="companyNameVal" placeholder="Company Name as it appears in your LinkedIn URL" class="form-control" />
         {{#if userHasCompany}}
-          <button class="btn btn-primary" id="updateCompanyInfo">Update</button>
+          <button class="btn btn-primary" id="updateCompanyInfo">Update company Info from LinkedIn</button>
           {{else}}
-          <button class="btn btn-primary" id="getCompanyInfo">Go</button>
+          <button class="btn btn-primary" id="getCompanyInfo">Get company Info from LinkedIn</button>
         {{/if}}
     </div>
-    
-
-
 </template>
 
 <template name="updateCompanyForm">
@@ -100,15 +95,15 @@
   </div>
 
   <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-8">
 
       {{#autoForm collection="Companies" id="updateCompanyForm" type="update" doc=this}}
         {{>companyProfile}}
       {{/autoForm}}
     </div>
-    <div class="col-sm-6">
-      {{>getLinkedinInfo}}
-      {{>approvedSalesPeople}} 
+    <div class="col-sm-4">
+      <!--{{>getLinkedinInfo}}-->
+      <div class="well">{{>approvedSalesPeople}} </div>
 
     </div>
   </div>
@@ -123,14 +118,14 @@
   </div>
 
   <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-8">
        {{#autoForm collection="Companies" id="updateCompanyForm" type="update" doc=usersCompany}}
         {{>companyProfile}}
       {{/autoForm}}
    </div>
-    <div class="col-sm-6">
-      {{>getLinkedinInfo}}
-      {{>approvedSalesPeople}} 
+    <div class="col-sm-4">
+      <!--{{>getLinkedinInfo}}-->
+      <div class="well">{{>approvedSalesPeople}} </div>
 
     </div>
   </div>
@@ -140,14 +135,14 @@
 
 <template name="companyProfile">
      <fieldset>
+      <div class="form-group"><img class="logo pull-right" {{logoAtts}} /></div>
       {{> afQuickField name='name' value=this.name id='name'}}
       {{> afQuickField name='websiteUrl' value=this.websiteUrl}}
-      {{> afQuickField name='logoUrl' value=this.logoUrl}}
-      <img {{logoAtts}} />
+      {{> afQuickField name='logoUrl' value=this.logoUrl type='hidden'}}
       {{> afQuickField name='description' rows=6 value=this.description}}
       {{> afQuickField name='keywords' rows=4 value=this.keywords}}
-    <h4>Provide links to resources such as documenation and training, sales literature, whitepapers, etc.  Antyhing that would be helpful
-        for sales people to know about your company and products.</h4>
+      <h4 class="form-hd">Resources for Sales People</h4>
+      <p>Provide links to resources such as documenation and training, demos, sales literature, whitepapers.  Anything that would be helpful for sales people to know about your company and products.</p>
       {{> afArrayField name='companyResources'}}
       {{> afFieldInput name='accountIsActive' value=this.accountIsActive}}
       {{> afFieldInput name='companyProfileStatus' type="hidden" value=this.companyProfileStatus}}   
@@ -157,17 +152,17 @@
 
 <template name="insertCompanyForm">
 
-  {{>getLinkedinInfo}}
+  <!--{{>getLinkedinInfo}}-->
 
   {{#autoForm collection="Companies" id="insertCompanyForm" type="insert"}}
   <fieldset>
     <legend>Company Info</legend>
     {{> afQuickField name='name' value=''}}
     {{> afQuickField name='websiteUrl' value=''}}
-    {{> afQuickField name='logoUrl' }}
+    {{> afQuickField name='logoUrl' type='hidden'}}
     {{> afQuickField name='description' rows=6 value=''}}
     {{> afQuickField name='keywords' rows=4}}
-    <h4>Provide links to resources such as documenation and training, demos, sales literature, whitepapers, etc.  <br />Anything that would be helpful to educate sales people about your company and products:</h4>
+    <p>Provide links to resources such as documenation and training, demos, sales literature, whitepapers, etc.  <br />Anything that would be helpful to educate sales people about your company and products:</p>
     {{> afArrayField name='companyResources'}}
     {{> afFieldInput name='accountIsActive' type='hidden' value='true'}}
 
@@ -180,7 +175,7 @@
 <!--TODO: move this somewhere else-->
 
 <template name="afArrayField_myArray">
-  <div class="panel panel-default">
+  <div class="panel panel-default arrayFieldPanel">
     <div class="panel-heading">{{afFieldLabelText name=this.atts.name}}</div>
     {{#if afFieldIsInvalid name=this.atts.name}}
     <div class="panel-body has-error">

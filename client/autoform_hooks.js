@@ -7,7 +7,7 @@ AutoForm.hooks({
       var company = Companies.findOne({_id: result});
       //var email = company.email;
 
-      Meteor.users.update({_id: company.companyId}, {$set: {'profile.companyId': result, 'profile.profileStatus': 1}});
+      Meteor.users.update({_id: company.companyId}, {$set: {'profile.companyId': result}});
 
 
     }
@@ -16,18 +16,17 @@ AutoForm.hooks({
     onSuccess: function(formType, result) {
     var companyProfileStatus;
 
-    //TODO: this is not needed. probably doesn't work anyway:
+    var id = this.docId;
+    var company = Companies.findOne({_id: id});
+    company.companyResources;
+    if(company.companyResources) {
+      companyProfileStatus = 1;
+    }
+    else {
+      companyProfileStatus = 0;
+    }
 
-      if (this.template.find('#name').value == '') {  //TODO: flesh this out later so profile can be done by a %
-        companyProfileStatus = 0;
-      }
-      else {
-        companyProfileStatus = 1;
-      } 
-      var id = this.docId;
-
-      Companies.update({_id: id}, {$set: {companyProfileStatus: companyProfileStatus}}); 
-
+    Companies.update({_id: id}, {$set: {companyProfileStatus: companyProfileStatus}}); 
 
     }
   },

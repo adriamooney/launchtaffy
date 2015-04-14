@@ -97,8 +97,8 @@
         <div class="col-sm-6">
             {{>allnews}}
         </div>
+        
         <div class="col-sm-6">
-            
                 {{#if currentUserIsSales}}
                     
                     <div class="well">
@@ -115,13 +115,25 @@
                 {{/if}}
 
                 {{#if currentUserIsCompany}}
-                <div class="well">
-                    {{>approvedSalesPeople}}
-                </div>
-                 <div class="well">
-                        <h4>Sales <small>(Pending Approval)</small></h4>
-                        {{>companyTypeSalesWidget}}
-                </div>
+                    {{# unless userHasCompany }}
+                         <p class="lead">To get started, enter your company name as it appears on the end of your LinkedIn company URL </p><p class="lead"><i>https://www.linkedin.com/company/<b>yourcompanyname</b></i></p>
+                        <div class="form-group">
+                            <input class="form-control" type="text" value="" id="companyNameVal" />
+                        </div>
+                        <button class="btn btn-primary" id="getCompanyInfo">Get company Info from LinkedIn</button>
+                    {{else}}
+                    {{#if emptyCompanyProfile}}
+                    <p class="lead">Don't forget to update your <a href="/profile/{{currentUser._id}}/">profile</a> and add some resources for sales people to learn about your products.   </p>
+                    {{else}}
+                    <div class="well">
+                        {{>approvedSalesPeople}}
+                    </div>
+                    <div class="well">
+                            <h4>Sales <small>(Pending Approval)</small></h4>
+                            {{>companyTypeSalesWidget}}
+                    </div>
+                    {{/if}}
+                    {{/unless}}
                 {{/if}}
             </div>
 
@@ -132,15 +144,7 @@
 <template name="welcome">
     {{#if currentUserIsSales}}
     	<p class="lead"><b>Don't forget to update your <a href="/profile/{{currentUser._id}}">profile!</a></b><br /> Highlight your sales accomplishments, key accounts, industries, and valuable connections.</p>
-    {{/if}}
-
-     {{#if currentUserIsCompany}}
-        {{#unless userHasCompany}}
-        <p class="lead">Enter your company name as it appears on your LinkedIn company URL (<i>https://www.linkedin.com/company/<b>yourcompanyname</b></i>) to automatically populate your company profile.  You can always change it later, but this makes getting set up a snap!</p>
-            {{>getLinkedinInfo}}
-        {{/unless}}
-     {{/if}}
-    
+    {{/if}} 
 </template>
 
 <template name="chooseUserType">

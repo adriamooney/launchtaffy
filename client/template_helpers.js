@@ -86,7 +86,7 @@ Template.registerHelper('userHasCompany', function() {
 		}
 	}
 	else {
-		return false;
+		return true;
 	}
 });
 
@@ -137,6 +137,24 @@ Template.registerHelper('approvedSalesPeople', function() {
 		return false;
 	}
 
+});
+
+Template.registerHelper('emptyCompanyProfile', function() {
+    var userId = Meteor.userId();
+    var userType = Meteor.user().profile.userType;
+
+    var myCompany = Companies.findOne({'companyId': userId});
+    if(userType == 'company') {
+        if (myCompany.companyProfileStatus == 0 ) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        return true;
+    }
 });
 
 
