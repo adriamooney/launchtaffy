@@ -224,7 +224,7 @@ Template.reply.events({
 				if(!err) {
 					AppMessages.throw('your messages was sent', 'success');
 					msg = '';
-					Meteor.call('sendEmail', to, 'noreply@meteor.com', 'You have a SalesCrowd Message', 'You have a SalesCrowd Message');
+					Meteor.call('sendEmail', to, 'noreply@launchtaffy.com', 'You have a LaunchTaffy Message', 'You have a LaunchTaffy Message');
 				}
 				else {
 					AppMessages.throw(err.reason, 'danger');

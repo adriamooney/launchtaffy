@@ -19,7 +19,7 @@
             {{#if currentUser}}
             {{#if userHasCompany}}
             {{#unless emptyCompanyProfile}}
-            <li><a href="/dashboard/">Dashboard</a></li><li><a href="/news/">News</a></li>
+            <!--<li><a href="/dashboard/">Dashboard</a></li><li><a href="/news/">News</a></li>-->
             {{#if anyMessages}}<li><a id="inbox" href="/messages/">Inbox <span class="badge">{{numNewMessages}}</span></a></li>{{/if}}
             <li><a href="/sales/{{currentUser._id}}">My Sales</a></li>
             {{# if hasFavorites}}<li><a href="/favorites/{{currentUser._id}}">Favorites</a></li>{{/if}}

@@ -153,7 +153,7 @@ Template.registerHelper('emptyCompanyProfile', function() {
         }
     }
     else {
-        return true;
+        return false;
     }
 });
 

@@ -10,10 +10,10 @@ Meteor.startup(function () {
 */
 
 	// By default, the email is sent from no-reply@meteor.com. If you wish to receive email from users asking for help with their account, be sure to set this to an email address that you can receive email at.
-	  Accounts.emailTemplates.from = 'SalesCrowd <no-reply@salescrowd.com>';
+	  Accounts.emailTemplates.from = 'LaunchTaffy <no-reply@launchtaffy.com>';
 
 	  // The public name of your application. Defaults to the DNS name of the application (eg: awesome.meteor.com).
-	  Accounts.emailTemplates.siteName = 'SalesCrowd';
+	  Accounts.emailTemplates.siteName = 'LaunchTaffy';
 
 	  // A Function that takes a user object and returns a String for the subject line of the email.
 	  Accounts.emailTemplates.verifyEmail.subject = function(user) {
