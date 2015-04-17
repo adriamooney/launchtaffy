@@ -19,15 +19,18 @@
             {{#if currentUser}}
             {{#if userHasCompany}}
             {{#unless emptyCompanyProfile}}
-            <!--<li><a href="/dashboard/">Dashboard</a></li><li><a href="/news/">News</a></li>-->
+            <li><a href="/dashboard/">Dashboard</a></li>
+            <!--<li><a href="/news/">News</a></li>-->
             {{#if anyMessages}}<li><a id="inbox" href="/messages/">Inbox <span class="badge">{{numNewMessages}}</span></a></li>{{/if}}
-            <li><a href="/sales/{{currentUser._id}}">My Sales</a></li>
+            {{#unless noUserType}}<li><a href="/sales/{{currentUser._id}}">My Sales</a></li>{{/unless}}
             {{# if hasFavorites}}<li><a href="/favorites/{{currentUser._id}}">Favorites</a></li>{{/if}}
             {{/unless}}
-            <li><a href="/profile/{{currentUser._id}}">Profile</a></li>
+            {{#unless noUserType}}<li><a href="/profile/{{currentUser._id}}">Profile</a></li>{{/unless}}
             {{#unless emptyCompanyProfile}}
+            {{#unless noUserType}}
             <li><a href="/salespeople/">Browse Salespeople</a></li>
             <li><a href="/companies/">Browse Companies</a></li>
+            {{/unless}}
             {{/unless}}
             {{/if}}
             <li><a href="#" class="logout">Logout</a></li>

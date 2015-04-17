@@ -1,0 +1,28 @@
+<template name="contact">
+	<div class="page-header">
+		<h1>Contact</h1>
+	</div>
+	<form id="contactForm">
+		<div class="form-group">
+			<label>Subject</label>
+			<input class="form-control" type="text" placeholder="Subject" id="subject" />
+		</div>
+		<div class="form-group">
+			<label>Message Type</label>
+			<select class="form-control" id="contactType">
+				<option value="customer_feedback">Feedback / Suggestion</option>
+				<option value="customer_question">Question</option>
+				<option value="customer_bug">Report a Bug</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label>Message</label>
+			<textarea class="form-control" id="message"></textarea>
+		</div>
+		{{#if buttonClicked}}
+			<button type="submit" class="btn btn-info" disabled="disabled">Waiting...</button>
+		{{else}}
+			<button type="submit" class="btn btn-primary">Submit</button>
+		{{/if}}
+	</form>
+</template>

@@ -46,8 +46,8 @@ Meteor.methods({
      Messages.update({to: Meteor.userId()}, {$set: {'status': 'read'}}, { multi: true } );
      //Messages.update({'replies.to': Meteor.userId()}, {$set: {'newReplies': 0}}, { multi: true });
   },
-  sendEmail: function (to, from, subject, text) {
-    check([to, from, subject, text], [String]);
+  sendEmail: function (to, from, subject, html, text) {
+    check([to, from, subject, html], [String]);
 
     // Let other method calls from the same client start running,
     // without waiting for the email sending to complete.
@@ -56,8 +56,8 @@ Meteor.methods({
         to: to,
         from: from,
         subject: subject,
-        html: text
-        //text: text
+        html: html,
+        text: text
     });
 
     /*Email.send({

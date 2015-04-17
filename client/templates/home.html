@@ -143,23 +143,14 @@
 
 <template name="welcome">
     {{#if currentUserIsSales}}
-    	<p class="lead"><b>Don't forget to update your <a href="/profile/{{currentUser._id}}">profile!</a></b><br /> Highlight your sales accomplishments, key accounts, industries, and valuable connections.</p>
+    	<p class="lead">Don't forget to update your <a href="/profile/{{currentUser._id}}">profile!</a><br /> Highlight your sales accomplishments, key accounts, industries, and valuable connections. </p>
     {{/if}} 
 </template>
 
 <template name="chooseUserType">
-    <h1>Are you a company or a salesperson?</h1>
-     
-    <div class="col-md-6">
-            <div class="well">
-                <div class="text-center"><button class="btn btn-success" id="chooseSalesperson">Salesperson</button></div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="well">
-                <div class="text-center"><button class="btn btn-success" id="chooseCompany">Company</button></div>
-            </div>
-        </div>   
+    <p class="lead">We still need to know a bit more about you before we can continue.</p>
+    <div class="col-md-4"><button class="btn btn-info btn-lg" id="chooseSalesperson">I'm a Sales Person</button></div>
+    <div class="col-md-4"><button class="btn btn-primary btn-lg" id="chooseCompany">I'm a Company</button></div>
 </template>
 
 
