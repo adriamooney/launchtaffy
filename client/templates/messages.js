@@ -200,6 +200,7 @@ Template.reply.events({
 		} */
 		
 		//to should be the person who last said something.
+		var self = this;
 
 		var threadId = this._id;
 		var lastMsg = Messages.find({threadId: threadId}, {sort: {timeStamp: -1}, limit:1}).fetch();
@@ -222,9 +223,20 @@ Template.reply.events({
 		if (msg != '') {
 			Meteor.call('replyToMessage', this._id, senderId, toId, msg, threadId, function(err) {
 				if(!err) {
-					AppMessages.throw('your messages was sent', 'success');
-					msg = '';
-					Meteor.call('sendEmail', to, 'noreply@launchtaffy.com', 'You have a LaunchTaffy Message', 'You have a LaunchTaffy Message');
+
+					var rootUrl;
+					Meteor.call('getRootUrl', function(err, result) {
+				     rootUrl = result;
+				     console.log(rootUrl);
+				   });
+					console.log(rootUrl);//this is undefined
+
+					/*AppMessages.throw('your messages was sent', 'success');
+					// sendEmail: function (to, from, subject, html, text) {
+					
+					var cleanmsg = msg.replace(/'/g, '&lsquo;');
+					Meteor.call('sendEmail', to, 'noreply@launchtaffy.com', 'You have a LaunchTaffy Message', 'You have a LaunchTaffy Message:<br />'+cleanmsg+'<br /><a href="'+rootUrl+'/message/'+self._id+'">Reply</a>', 'You have a LaunchTaffy Message. Log in and check your inbox.');
+					template.find('#message').value = ''; */
 				}
 				else {
 					AppMessages.throw(err.reason, 'danger');

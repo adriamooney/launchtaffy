@@ -1,4 +1,8 @@
 Meteor.methods({
+  getRootUrl: function(){
+    var rootUrl = process.env.ROOT_URL;
+    return rootUrl;
+  },
 	sendInitialEmail: function(result) {
 		return Accounts.sendEnrollmentEmail(result);
 	},

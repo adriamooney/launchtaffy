@@ -81,6 +81,7 @@ Template.salesProfile.events({
 		var msg = template.find('#message').value;
 		Meteor.call('sendMessage', senderId, toId, msg, function(err) {
 			if(!err) {
+				template.find('#message').value = '';
 				AppMessages.throw('your messages was sent', 'success');
 			}
 			else {
