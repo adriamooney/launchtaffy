@@ -46,6 +46,10 @@ Template.messages.helpers({
 			return false;
 		}
 	},
+	timeAgo: function() {
+		var time = this.timeStamp;
+		return moment(time).fromNow();
+	},
 	messagesToMe: function() {
 		//return Messages.find({$and: [{to: Meteor.userId()},{status: 'unread'}]}, {sort: {timeStamp: -1}});
 		var messages = Messages.find({$or: [{$and: [{to: Meteor.userId()},{'status': 'unread'}]}, {$and: [{to: Meteor.userId()},{'status': 'read'}]}]},  {sort: {timeStamp: -1}});
@@ -176,6 +180,18 @@ Template.messages.events({
 			AppMessages.throw('Message thread unarchived', 'success');
 		});
 
+	},
+	'click .expandThread': function(event, template) {
+		var id = this._id;
+		$(event.currentTarget).closest('.panel').find('.panel-body').removeClass('hidden');
+		$('#toggle-'+id).html('<button class="hideThread pull-left btn btn-xs btn-info"><i class="glyphicon glyphicon-minus"></i></button>');
+		//TODO: update Thread status to 'read';
+
+	},
+	'click .hideThread': function(event, template) {
+		var id = this._id;
+		$(event.currentTarget).closest('.panel').find('.panel-body').addClass('hidden');
+		$('#toggle-'+id).html('<button class="expandThread pull-left btn btn-xs btn-info"><i class="glyphicon glyphicon-plus"></i></button>');
 	}
 
 });
@@ -185,6 +201,7 @@ Template.messages.events({
 Template.reply.events({
 	'submit #replyToMessage': function(event, template) {
 		event.preventDefault();
+
 		var senderId = Meteor.userId();  //should be same as this.to
 
 		var threadId = (this._id);
@@ -223,20 +240,14 @@ Template.reply.events({
 		if (msg != '') {
 			Meteor.call('replyToMessage', this._id, senderId, toId, msg, threadId, function(err) {
 				if(!err) {
-
-					var rootUrl;
-					Meteor.call('getRootUrl', function(err, result) {
-				     rootUrl = result;
-				     console.log(rootUrl);
-				   });
-					console.log(rootUrl);//this is undefined
-
-					/*AppMessages.throw('your messages was sent', 'success');
-					// sendEmail: function (to, from, subject, html, text) {
 					
+
+					AppMessages.throw('your messages was sent', 'success');
+					// sendEmail: function (to, from, subject, html, text) {
+					var rootUrl = Session.get('rootUrl');
 					var cleanmsg = msg.replace(/'/g, '&lsquo;');
-					Meteor.call('sendEmail', to, 'noreply@launchtaffy.com', 'You have a LaunchTaffy Message', 'You have a LaunchTaffy Message:<br />'+cleanmsg+'<br /><a href="'+rootUrl+'/message/'+self._id+'">Reply</a>', 'You have a LaunchTaffy Message. Log in and check your inbox.');
-					template.find('#message').value = ''; */
+					Meteor.call('sendEmail', to, 'noreply@launchtaffy.com', 'You have a LaunchTaffy Message', 'You have a LaunchTaffy Message:<br />'+cleanmsg+'<br /><a href="'+rootUrl+'message/'+self._id+'">Reply</a>', 'You have a LaunchTaffy Message. Log in and check your inbox.');
+					template.find('#message').value = ''; 
 				}
 				else {
 					AppMessages.throw(err.reason, 'danger');

@@ -14,13 +14,16 @@
     {{/if}}
 
     {{#each threads}}
-    <div class="col-sm-4">
-        <div class="thread well">
+    <div class="panel panel-default">
+        <div class="panel-heading {{status}}">
             <small><span class="pull-right"><a href="#" class="glyphicon glyphicon-trash delete-msg" title="delete"></a> <a href="#" class="glyphicon glyphicon glyphicon-folder-close archive-msg" title="archive"></a></span></small>
+            <span id="toggle-{{_id}}"><button class="expandThread pull-left btn btn-xs btn-info"><i class="glyphicon glyphicon-plus"></i></button></span>
             <h5><b>{{toId}} and {{fromId}}:</b></h5>
+        </div>
+        <div class="panel-body hidden">
             {{#each messages}}
             <div class="msg">
-                <b><a href="/profile/{{from}}">{{fromId}}</a>:</b> {{message}}
+                <b><a href="/profile/{{from}}">{{fromId}}</a>:</b> {{message}}  <small>{{timeAgo}}</small>
             </div>
             {{/each}}
             {{>reply}}
