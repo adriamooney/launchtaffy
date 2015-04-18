@@ -17,7 +17,7 @@ Template.contact.events({
 
 		if (subject != '' && msg != '') {
 
-			Meteor.call('sendEmail', 'adriamooney1+qyotoksclv0pyk3jjg4y@boards.trello.com', 'LaunchTaffy <no-reply@launchtaffy.com>', subject+label+' '+userEmail, html, html, function(err) {
+			Meteor.call('sendEmail', 'adriamooney1+0hvfgipstdp9djry6ujn@boards.trello.com', 'LaunchTaffy <no-reply@launchtaffy.com>', subject+label+' '+userEmail, html, html, function(err) {
 				if(!err) {
 					AppMessages.throw('your messages was sent. We will be in touch as soon as possible.', 'success');
 					Session.set('buttonClicked', false);
