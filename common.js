@@ -293,6 +293,9 @@ Threads.attachSchema(new SimpleSchema({
     },
     to: {
         type: String
+    },
+    timeStamp: {
+        type:String
     }
 }));
 

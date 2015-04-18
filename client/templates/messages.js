@@ -100,6 +100,48 @@ Template.messages.helpers({
 	}
 });
 
+Template.thread.helpers({
+	fromId: function() {
+		var fromId = this.from;
+		console.log(this);
+		var from =  Meteor.users.findOne({_id: fromId});
+		if(from.profile.userType == 'company') {
+			var companyId = from.profile.companyId;
+			var company = Companies.findOne({_id: companyId});
+			var person = company.name;
+		}
+		else {
+			var person = from.profile.firstName+' '+ from.profile.lastName;
+		}
+		return person;
+	},
+	toId: function() {
+		var toId = this.to;
+		var to =  Meteor.users.findOne({_id: toId});
+		console.log(toId);
+		if(to.profile.userType == 'company') {
+			var companyId = to.profile.companyId;
+			var company = Companies.findOne({_id: companyId});
+			var person = company.name;
+		}
+		else {
+			var person = to.profile.firstName +' '+ to.profile.lastName;
+		}
+		return person;
+	},
+	messages: function() {
+		var threadId = this._id;
+		var messages = Messages.find({$or: [{$and: [{threadId: threadId},{'status': 'unread'}]}, {$and: [{threadId: threadId},{'status': 'read'}]}]},  {sort: {timeStamp: -1}});
+		if (messages.count() > 0) {
+			return messages;
+		}
+		else {
+			return false;
+		}
+
+	}
+});
+
 Template.searchBox.helpers({
 	fromId: function() {
 		var fromId = this.from;
@@ -124,7 +166,7 @@ Template.searchBox.helpers({
 			var person = company.name;
 		}
 		else {
-			var person = to.profile.firstName +' '+ to.profile.LastName;
+			var person = to.profile.firstName +' '+ to.profile.lastName;
 		}
 		return person;
 	},
@@ -168,6 +210,7 @@ Template.messages.events({
 		});
 	},
 	'click .archive-msg': function(event, template) {
+		console.log('clicked');
 		event.preventDefault();
 		Meteor.call('archiveMessage', this._id, function() {
 			AppMessages.throw('Message thread archived', 'success');
@@ -185,7 +228,7 @@ Template.messages.events({
 		var id = this._id;
 		$(event.currentTarget).closest('.panel').find('.panel-body').removeClass('hidden');
 		$('#toggle-'+id).html('<button class="hideThread pull-left btn btn-xs btn-info"><i class="glyphicon glyphicon-minus"></i></button>');
-		//TODO: update Thread status to 'read';
+		//todo: use a session to show thread is read?  not sure how to handle this
 
 	},
 	'click .hideThread': function(event, template) {
@@ -235,6 +278,8 @@ Template.reply.events({
 			to = user.emails[0].address;
 		}
 
+		//var from = Meteor.user().profile.emailAddress;
+
 		var msg = template.find('#message').value;
 
 		if (msg != '') {
@@ -246,7 +291,7 @@ Template.reply.events({
 					// sendEmail: function (to, from, subject, html, text) {
 					var rootUrl = Session.get('rootUrl');
 					var cleanmsg = msg.replace(/'/g, '&lsquo;');
-					Meteor.call('sendEmail', to, 'noreply@launchtaffy.com', 'You have a LaunchTaffy Message', 'You have a LaunchTaffy Message:<br />'+cleanmsg+'<br /><a href="'+rootUrl+'message/'+self._id+'">Reply</a>', 'You have a LaunchTaffy Message. Log in and check your inbox.');
+					Meteor.call('sendEmail', to, 'noreply@launchtaffy.com', 'You have a LaunchTaffy Message', 'You have a LaunchTaffy Message:<br /><br />'+cleanmsg+'<br /><br /><a href="'+rootUrl+'message/'+self._id+'">Reply</a>', 'You have a LaunchTaffy Message. Log in and check your inbox.');
 					template.find('#message').value = ''; 
 				}
 				else {

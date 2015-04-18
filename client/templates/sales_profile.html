@@ -69,7 +69,11 @@
 			<h3>Send Message</h3>
 			<form id="contactSalesPerson">
 				<div class="form-group"><textarea id="message" class="form-control"></textarea></div>
-				<button class="btn btn-primary" type="submit">Send Message</button> 
+				{{#if buttonClicked}}
+					<button type="submit" class="btn btn-info" disabled="disabled">Waiting...</button>
+				{{else}}
+					<button class="btn btn-primary" type="submit">Send Message</button> 
+				{{/if}}
 			</form>
 		</div>
 		{{/if}}

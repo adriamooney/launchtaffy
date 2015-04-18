@@ -41,7 +41,7 @@ Template.forgotPassword.events({
 
 Accounts.onLogin(function(options) {
 
-    //Router.go('/dashboard/');  does this cause the problem of redirecting on refresh?
+    Router.go('/dashboard/');  //does this cause the problem of redirecting on refresh?
 
   /*Meteor.users.update({ _id: options.user._id }, {
     $set: { lastActiveAt: new Date() }

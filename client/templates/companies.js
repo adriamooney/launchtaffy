@@ -114,15 +114,43 @@ Template.company.events({
 		console.log(senderId);
 		var toId = this.companyId;
 		var msg = template.find('#message').value;
-		Meteor.call('sendMessage', senderId, toId, msg, function(err) {
-			if(!err) {
-				template.find('#message').value = '';
-				AppMessages.throw('your messages was sent', 'success');
-			}
-			else {
-				AppMessages.throw(err.reason, 'danger');
-			}
-		});
+
+		var user =  Meteor.users.findOne({_id: toId});
+
+		var to = user.emails;
+		if(!to) {
+			to = user.profile.emailAddress;
+		}
+		else {
+			to = user.emails[0].address;
+		}
+
+
+		if (msg != '') {
+
+			Meteor.call('sendMessage', senderId, toId, msg, function(err, result) {
+				if(!err) {
+					console.log(result);
+					var rootUrl = Session.get('rootUrl');
+					var cleanmsg = msg.replace(/'/g, '&lsquo;');
+					AppMessages.throw('your messages was sent', 'success');
+					Meteor.call('sendEmail', to, 'noreply@launchtaffy.com', 'You have a LaunchTaffy Message', 'You have a LaunchTaffy Message:<br /><br />'+cleanmsg+'<br /><br /><a href="'+rootUrl+'message/'+result+'">Reply</a>', 'You have a LaunchTaffy Message. Log in and check your inbox.');
+					Session.set('buttonClicked', false);
+					template.find('#message').value = '';
+				}
+				else {
+					AppMessages.throw(err.reason, 'danger');
+					Session.set('buttonClicked', false);
+				}
+			});
+		}
+
+		else {
+			AppMessages.throw('You forgot to write a message.', 'danger');
+		}
+
+
+
 	},
 	'click #addToCompanyFavorites': function(event, template) {
 		event.preventDefault();

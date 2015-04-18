@@ -21,10 +21,11 @@ Meteor.methods({
     //senderId, companyId, msg
     var now = new Date().getTime();
 
-    Threads.insert({'from': senderId, 'to': toId, 'status': 'active'}, function(err,doc) {
+    var thread = Threads.insert({'from': senderId, 'to': toId, 'status': 'active', timeStamp: new Date(now - 7 * 3600 * 1000)}, function(err,doc) {
       Messages.insert({'threadId': doc, 'message': msg, 'from': senderId, 'to': toId, 'status': 'unread', 'timeStamp': new Date(now - 7 * 3600 * 1000)} );
     });
 
+    return thread;
   },
   //TODO: updates this stuff for new threads/message architecture
   //also need to update helper function and templates
@@ -32,11 +33,11 @@ Meteor.methods({
    // Messages.update( {_id: id}, {$push: {'replies': {'to': toId, 'status': 'unread', 'message': msg, 'from': senderId} }});
     var now = new Date().getTime();
     Messages.insert({'threadId': threadId, 'message': msg, 'from': senderId, 'to': toId, 'status': 'unread', 'timeStamp': new Date(now - 7 * 3600 * 1000)} );
-    //Threads.update({_id: threadId}, {$set:'status'})
+    Threads.update({_id: threadId}, {$set:{'timeStamp': new Date(now - 7 * 3600 * 1000)}})
   },
   deleteMessage: function(id) {
-    Threads.remove(id);
-    Messages.remove({threadId: id}, {multi:true});
+    Threads.remove({_id:id});
+    Messages.remove({threadId: id}); 
   },
   archiveMessage: function(id) {
     Threads.update({_id:id}, {$set: {'status': 'archived'}});

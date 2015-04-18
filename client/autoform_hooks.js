@@ -9,7 +9,7 @@ AutoForm.hooks({
 
       Meteor.users.update({_id: company.companyId}, {$set: {'profile.companyId': result}});
 
-
+      AppMessages.throw('Your company profile has been updated.', 'success');
     }
   },
   updateCompanyForm: {
@@ -27,6 +27,8 @@ AutoForm.hooks({
     }
 
     Companies.update({_id: id}, {$set: {companyProfileStatus: companyProfileStatus}}); 
+
+    AppMessages.throw('Your company profile has been updated.', 'success');
 
     }
   },

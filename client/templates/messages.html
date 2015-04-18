@@ -3,7 +3,6 @@
       <h1>Messages</h1>
     </div>
 
-
     {{# if anyMessages}}
         {{>searchBox}}
     {{/if}}
@@ -12,116 +11,56 @@
     {{else}}
     <p>No messages</p>
     {{/if}}
+    <div class="col-md-12">
+        <div class="row">
 
-    {{#each threads}}
-    <div class="panel panel-default">
-        <div class="panel-heading {{status}}">
-            <small><span class="pull-right"><a href="#" class="glyphicon glyphicon-trash delete-msg" title="delete"></a> <a href="#" class="glyphicon glyphicon glyphicon-folder-close archive-msg" title="archive"></a></span></small>
-            <span id="toggle-{{_id}}"><button class="expandThread pull-left btn btn-xs btn-info"><i class="glyphicon glyphicon-plus"></i></button></span>
-            <h5><b>{{toId}} and {{fromId}}:</b></h5>
-        </div>
-        <div class="panel-body hidden">
-            {{#each messages}}
-            <div class="msg">
-                <b><a href="/profile/{{from}}">{{fromId}}</a>:</b> {{message}}  <small>{{timeAgo}}</small>
+            {{#each threads}}
+            <div class="panel panel-default thread">
+                <div class="panel-heading {{status}}">
+                    <small><span class="pull-right"><a href="#" class="glyphicon glyphicon-trash delete-msg" title="delete"></a> <a href="#" class="glyphicon glyphicon glyphicon-folder-close archive-msg" title="archive"></a></span></small>
+                    <span id="toggle-{{_id}}"><button class="expandThread pull-left btn btn-xs btn-info"><i class="glyphicon glyphicon-plus"></i></button></span>
+                    <h5><b>{{toId}} and {{fromId}}</b></h5>
+                </div>
+                <div class="panel-body hidden">
+                    {{#each messages}}
+                    <div class="msg">
+                        <b><a href="/profile/{{from}}">{{fromId}}</a>:</b> {{message}}  <small>{{timeAgo}}</small>
+                    </div>
+                    {{/each}}
+                    {{>reply}}
+                </div>
             </div>
             {{/each}}
-            {{>reply}}
+
         </div>
     </div>
-    {{/each}}
-
-    <!--
-
-    {{#if messagesToMe}}
-    <h4>Messages Recieved</h4>
-
-    {{#each messagesToMe}} 
-    <div class="panel panel-default">
-        <div class="panel-heading clearfix {{status}}">
-            <h3 class="panel-title">{{timeStamp}}<span class="pull-right"><a href="#" class="glyphicon glyphicon-trash delete-msg" title="delete"></a> <a href="#" class="glyphicon glyphicon glyphicon-folder-close archive-msg" title="archive"></a></span></h3>
-        </div>
-        <div class="panel-body">
-            <p><b>{{fromId}}: </b>{{{message}}}</p>
-            <ul>
-            {{#each replies}}
-                <li><b>{{fromId}}: </b> {{{this.message}}}</li>
-            {{/each}}
-            </ul>
-            {{>reply}}
-        </div>
-    </div>
-    {{/each}}
-    {{/if}}
-
-    {{#if messagesFromMe}}
-    <h4>Messages Sent</h4>
-
-    {{#each messagesFromMe}} 
-    <div class="panel panel-default">
-        <div class="panel-heading {{status}}">
-            <h3 class="panel-title">To: {{toId}}<span class="pull-right"><a href="#" class="glyphicon glyphicon-trash delete-msg" title="delete"></a> <a href="#" class="glyphicon glyphicon glyphicon-folder-close archive-msg" title="archive"></a></span></h3>
-        </div>
-        <div class="panel-body">
-            <p><b>{{fromId}}: </b>{{{message}}}</p>
-            <ul>
-            {{#each replies}}
-                <li><b>{{fromId}}: </b> {{{this.message}}}</li>
-            {{/each}}
-            </ul>
-            {{>reply}}
-        </div>
-    </div>
-    {{/each}}
-    {{/if}}-->
 
 </template>
 
-<!--<template name="threads">
-    {{#each threads}}
-        {{>thread}}
-    {{/each}}
-</template>
-
-<template name="thread">
-     <div class="thread">
-        Message between {{to}} and {{from}}
-        {{#each messages}}
-        <div class="msg">
-            <b><a href="/profile/{{from}}">{{fromId}}</a></b> {{message}}
-        </div>
-        {{/each}}
-        {{>reply}}
-    </div>
-</template>-->
-
-<template name="reply">
-	<form id="replyToMessage"><h5>Reply:</h5>
-		<div class="form-group"><textarea id="message" class="form-control"></textarea></div>
-		<button class="btn btn-primary" type="submit">Submit</button> 
-	</form>
-</template>
 
 <template name="searchBox">
     <div class="form-group">{{> esInput index="messages" placeholder="Search..." class="form-control"}}</div>
         <div class="col-md-12">
-
+            <div class="row">
         {{#esEach index="messages"}} 
                 
-                    <div class="thread well">
+                    <div class="panel panel-default thread">
+                        <div class="panel-heading {{status}}">
                         <!--<small><a href="#" class="expand-thread">show full thread</a></small>-->
                         {{#if messageStatus 'archived'}}     
                         <small><span class="pull-right"><a href="#" class="glyphicon glyphicon glyphicon-folder-open unarchive-msg" title="unarchive"></a></span></small>
                         {{/if}}
-
-                       
-                             {{#each expandThread}}
-                                <div class="msg">
-                                    <b><a href="/profile/{{from}}">{{fromId}}</a>:</b> {{message}}
-                                </div>
-                            {{/each}}
-
+                        <span id="toggle-{{_id}}"><button class="hideThread pull-left btn btn-xs btn-info"><i class="glyphicon glyphicon-minus"></i></button></span>
+                        <h5><b>{{toId}} and {{fromId}}</b></h5>
                     </div>
+                    <div class="panel-body">
+                         {{#each expandThread}}
+                            <div class="msg">
+                                <b><a href="/profile/{{from}}">{{fromId}}</a>:</b> {{message}}
+                            </div>
+                        {{/each}}
+                    </div>
+                </div>
 
         {{/esEach}}
 
@@ -134,6 +73,16 @@
         {{#ifEsIsSearching index="messages"}}
                 <div>Loading...</div>
         {{/ifEsIsSearching}}
+            </div>
         </div>
+</template>
+
+
+
+<template name="reply">
+    <form id="replyToMessage"><h5>Reply:</h5>
+        <div class="form-group"><textarea id="message" class="form-control"></textarea></div>
+        <button class="btn btn-primary" type="submit">Submit</button> 
+    </form>
 </template>
 
