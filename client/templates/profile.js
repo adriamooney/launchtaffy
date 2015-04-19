@@ -107,12 +107,17 @@ Template.updateSalesForm.events({
 
 Template.updateSalesForm.helpers({
 	keywords: function() {
-		var keywordsArr = this.profile.skills.values;
-		var newArr = [];
-		for(var i=0; i< keywordsArr.length; i++) {
-			newArr.push(keywordsArr[i].skill.name);
+		if(this.profile.keywords) {
+			return this.profile.keywords;
 		}
-		return newArr.toString();
+		else {
+			var keywordsArr = this.profile.skills.values;
+			var newArr = [];
+			for(var i=0; i< keywordsArr.length; i++) {
+				newArr.push(keywordsArr[i].skill.name);
+			}
+			return newArr.toString();
+		}
 		
 	}
 });
