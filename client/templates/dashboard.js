@@ -13,6 +13,7 @@ Template.dashboard.events({
             Meteor.call("getLinkedCompanyProfile", val, function(err, result) {
                 if(err) {
                     AppMessages.throw(err.reason, 'danger');
+
                 }
             
             }); 

@@ -49,7 +49,7 @@ this.Companypages = new Meteor.Pagination(Companies, {
     infiniteStep: 1,
     perPage: 10,
     sort: {
-        name: -1
+        timeStamp: -1
     }
 });
 
@@ -328,6 +328,9 @@ Companies.attachSchema(new SimpleSchema({
         type: String,
         label: 'Keywords',
         optional:true
+    },
+    timeStamp: {
+        type:String
     },
     /*keywords: {
         type: [Object],

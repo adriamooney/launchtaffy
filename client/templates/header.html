@@ -18,9 +18,10 @@
 
             {{#if currentUser}}
             {{#if userHasCompany}}
-            {{#unless emptyCompanyProfile}}
+            
             <li><a href="/dashboard/">Dashboard</a></li>
             <!--<li><a href="/news/">News</a></li>-->
+            {{#unless emptyCompanyProfile}}
             {{#if anyMessages}}<li><a id="inbox" href="/messages/">Inbox <span class="badge badge-info">{{numNewMessages}}</span></a></li>{{/if}}
             {{#unless noUserType}}<li><a href="/sales/">My Sales</a></li>{{/unless}}
             {{# if hasFavorites}}<li><a href="/favorites/{{currentUser._id}}">Favorites</a></li>{{/if}}

@@ -40,12 +40,14 @@ Template.forgotPassword.events({
 
 
 Accounts.onLogin(function(options) {
-
+    var user = Meteor.userId();
     Router.go('/dashboard/');  //does this cause the problem of redirecting on refresh?
+    Meteor.call('lastLogin', user, function(err) {
+        if(err) {
+            console.log(err);
+        }
+    });
 
-  /*Meteor.users.update({ _id: options.user._id }, {
-    $set: { lastActiveAt: new Date() }
-  }); */
 });
 
 

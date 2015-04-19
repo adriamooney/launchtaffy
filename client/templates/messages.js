@@ -90,6 +90,7 @@ Template.messages.helpers({
 		console.log(toId);
 		if(to.profile.userType == 'company') {
 			var companyId = to.profile.companyId;
+			console.log(companyId);
 			var company = Companies.findOne({_id: companyId});
 			var person = company.name;
 		}
@@ -105,8 +106,10 @@ Template.thread.helpers({
 		var fromId = this.from;
 		console.log(this);
 		var from =  Meteor.users.findOne({_id: fromId});
+		console.log(from);
 		if(from.profile.userType == 'company') {
 			var companyId = from.profile.companyId;
+			console.log(companyId);
 			var company = Companies.findOne({_id: companyId});
 			var person = company.name;
 		}

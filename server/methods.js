@@ -97,12 +97,19 @@ Meteor.methods({
   removeFromSalesPeopleFavorites: function(salesId, userId) {
     Meteor.users.update({_id: userId}, {$pull: {'profile.favoriteSalesPeople': salesId}});
   },
+  lastLogin: function(id) {
+    var now = new Date().getTime();
+    Meteor.users.update({ _id: id }, {
+        $set: { 'profile.lastActiveOn': new Date(now - 7 * 3600 * 1000) }
+      }); 
+  },
   getLinkedCompanyProfile: function(companyName, id) {
 
       if( Meteor.user().services.linkedin.accessToken) {
         var accessToken = Meteor.user().services.linkedin.accessToken;
         var linkedin = Linkedin().init(accessToken);
         var userId = this.userId;
+        var self = this;
         linkedin.companies.name(companyName, Meteor.bindEnvironment(function(err, company) {
     // Here you go
         //console.log(company);
@@ -113,6 +120,8 @@ Meteor.methods({
           var keywordsArr = company.specialties.values;
           var keywords = keywordsArr.toString();
 
+          var userId = self.userId;
+
           //var keywords = _.extend({}, keywordsArr);
 
 
@@ -120,8 +129,7 @@ Meteor.methods({
           
           if(!err) {
             
-            Companies.insert(
-              {
+           Companies.insert({
                 name: name, 
                 description: description, 
                 websiteUrl: websiteUrl,
@@ -130,15 +138,18 @@ Meteor.methods({
                 keywords: keywords,
                 accountIsActive: true, 
                 companyId: userId, 
-                companyProfileStatus:0
+                companyProfileStatus:0,
+                timeStamp: new Date(),
+              }, function(err,doc) {
+                Meteor.users.update({_id: userId}, {$set: {'profile.companyId': doc}});
               });
 
-            //Companies.update({companyId: userId}, {$push: {keywords:keywords}});
 
           } 
 
         }));
       }
+
   },
   updateLinkedCompanyProfile: function(companyName, id) {
 
