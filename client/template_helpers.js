@@ -157,4 +157,23 @@ Template.registerHelper('emptyCompanyProfile', function() {
     }
 });
 
+Template.registerHelper('linkedInCompanyError', function() {
+        var error = ServerSession.get('linkedInCompanyError');
+        if(error != '') {
+        	return '<div class="alert alert-danger" role="alert"><button type="button" class="close">&times;</button>'+error+'</div>';
+        }
+        else {
+        	return false;
+        }
+});
+Template.registerHelper('linkedInCompanySuccess', function() {
+        var success = ServerSession.get('linkedInCompanySuccess');
+        if(success != '') {
+        	return '<div class="alert alert-success" role="alert"><button type="button" class="close">&times;</button>'+success+'</div>';
+        }
+        else {
+        	return false;
+        }
+});
+
 

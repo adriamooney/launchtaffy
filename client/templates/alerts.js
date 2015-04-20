@@ -19,3 +19,11 @@ Template.appMessage.rendered = function() {
     AppMessages.collection.remove(message._id);
   }, 6000);
 };
+
+Template.layout.events({
+    'click .close': function() {
+        console.log('boo');
+         ServerSession.set('linkedInCompanyError', '');
+         ServerSession.set('linkedInCompanySuccess', '');
+    }
+});

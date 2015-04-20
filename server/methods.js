@@ -103,7 +103,8 @@ Meteor.methods({
         $set: { 'profile.lastActiveOn': new Date(now - 7 * 3600 * 1000) }
       }); 
   },
-  getLinkedCompanyProfile: function(companyName, id) {
+  getLinkedCompanyProfile: function(companyName) {
+
 
       if( Meteor.user().services.linkedin.accessToken) {
         var accessToken = Meteor.user().services.linkedin.accessToken;
@@ -111,21 +112,56 @@ Meteor.methods({
         var userId = this.userId;
         var self = this;
         linkedin.companies.name(companyName, Meteor.bindEnvironment(function(err, company) {
+
+
+          if(!company.name) {
+
+            var err = company;
+
+            ServerSession.set('linkedInCompanyError', 'Your company was entered incorrectly');
+            //AppMessages.throw(err.message, 'danger');
+            throw new Meteor.Error( 500, err.message );
+
+            return err;
+          }
     // Here you go
         //console.log(company);
           var name = company.name;
-          var description = company.description;
-          var websiteUrl=company.websiteUrl;
-          var logoUrl= company.logoUrl;
-          var keywordsArr = company.specialties.values;
-          var keywords = keywordsArr.toString();
+
+          if(company.description) {
+            var description = company.description;
+          }
+          else {
+            var description = '';
+          }
+
+          if(company.websiteUrl) {
+            var websiteUrl=company.websiteUrl;
+          }
+          else {
+            var websiteUrl='';
+          }
+          
+          if(company.logoUrl) {
+            var logoUrl= company.logoUrl;
+          }
+          else {
+            var logoUrl = '';
+          }
+
+          if(company.specialties) {
+            var keywordsArr = company.specialties.values;
+            var keywords = keywordsArr.toString();
+          }
+          else {
+            var keywords = '';
+          }
+          
 
           var userId = self.userId;
 
           //var keywords = _.extend({}, keywordsArr);
 
-
-          console.log(keywords);
           
           if(!err) {
             
@@ -144,13 +180,19 @@ Meteor.methods({
                 Meteor.users.update({_id: userId}, {$set: {'profile.companyId': doc}});
               });
 
+            ServerSession.set('linkedInCompanyError', '');
+            ServerSession.set('linkedInCompanySuccess', 'Your company was entered successfully.');
 
           } 
+          else {
+            console.log(err);
+            
+          }
 
         }));
       }
 
-  },
+  }, 
   updateLinkedCompanyProfile: function(companyName, id) {
 
     if( Meteor.user().services.linkedin.accessToken) {
@@ -187,4 +229,94 @@ Meteor.methods({
   }
 
 });
+
+
+/* sync methods */
+
+/*Meteor.syncMethods({
+    getLinkedCompanyProfile: function(companyName, callback){
+        // do some async stuff
+        
+      if( Meteor.user().services.linkedin.accessToken) {
+        var accessToken = Meteor.user().services.linkedin.accessToken;
+        var linkedin = Linkedin().init(accessToken);
+        var userId = this.userId;
+        var self = this;
+        linkedin.companies.name(companyName, Meteor.bindEnvironment(function(err, company) {
+
+          console.log(company);
+          if(!company.name) {
+            var err = company;
+            console.log(err.message);
+            //AppMessages.throw(err.message, 'danger');
+            throw new Meteor.Error( 500, err.message );
+
+            return err;
+          }
+    // Here you go
+        //console.log(company);
+          var name = company.name;
+
+          if(company.description) {
+            var description = company.description;
+          }
+          else {
+            var description = '';
+          }
+
+          if(company.websiteUrl) {
+            var websiteUrl=company.websiteUrl;
+          }
+          else {
+            var websiteUrl='';
+          }
+          
+          if(company.logoUrl) {
+            var logoUrl= company.logoUrl;
+          }
+          else {
+            var logoUrl = '';
+          }
+
+          if(company.specialties) {
+            var keywordsArr = company.specialties.values;
+            var keywords = keywordsArr.toString();
+          }
+          else {
+            var keywords = '';
+          }
+          
+
+          var userId = self.userId;
+
+          //var keywords = _.extend({}, keywordsArr);
+
+          
+          if(!err) {
+            
+           Companies.insert({
+                name: name, 
+                description: description, 
+                websiteUrl: websiteUrl,
+                logoUrl: logoUrl,
+                //keywords: [keywords],
+                keywords: keywords,
+                accountIsActive: true, 
+                companyId: userId, 
+                companyProfileStatus:0,
+                timeStamp: new Date(),
+              }, function(err,doc) {
+                Meteor.users.update({_id: userId}, {$set: {'profile.companyId': doc}});
+              });
+
+
+          } 
+
+        }));
+      }
+
+        callback(err, result);
+    }
+}); */
+
 

@@ -9,13 +9,18 @@ Template.dashboard.events({
 
         //var reg = val.match(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
         //console.log(reg);
-        //if(reg !== null) {
+       // if(reg !== null) {
             Meteor.call("getLinkedCompanyProfile", val, function(err, result) {
-                if(err) {
+               /* if(err) {
                     AppMessages.throw(err.reason, 'danger');
 
-                }
-            
+                }  */
+
+               // else {
+                    //AppMessages.throw('Company added successfully', 'success');
+                    //Router.go('profile');
+               // }
+                console.log(result);
             }); 
        /* }
         else {
