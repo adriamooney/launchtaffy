@@ -12,3 +12,13 @@
     {{message}}
   </div>
 </template>
+
+<template name="linkedInCompanyMessages">
+	{{#each messages}}
+		{{>linkedInCompanyMessage}}
+	{{/each}}
+ </template>
+
+ <template name="linkedInCompanyMessage">
+ 	 <div id="message-{{_id}}" class="alert alert-{{messageType}}" role="alert"><button type="button" class="close">&times;</button>{{message}}</div>
+ </template>

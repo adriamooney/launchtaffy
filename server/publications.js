@@ -28,3 +28,7 @@ Meteor.publish('news', function(){
 Meteor.publish('threads', function(){
     return Threads.find();
 });
+
+Meteor.publish('linkedinmessages', function(){
+    return LinkedInMessages.find();
+});

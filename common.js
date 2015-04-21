@@ -3,6 +3,8 @@ Companies = new Mongo.Collection("companies");
 Messages = new Mongo.Collection("messages");
 Threads = new Mongo.Collection("threads");
 News = new Mongo.Collection("news");
+
+LinkedInMessages = new Mongo.Collection('linkedinmessages');
 //easy search:
 //https://atmospherejs.com/matteodem/easy-search
 

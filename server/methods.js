@@ -118,8 +118,8 @@ Meteor.methods({
 
             var err = company;
 
-            ServerSession.set('linkedInCompanyError', 'Your company was entered incorrectly');
-            //AppMessages.throw(err.message, 'danger');
+            LinkedInMessages.insert({message: 'Your company name was entered incorrectly', messageType: 'danger'});
+      
             throw new Meteor.Error( 500, err.message );
 
             return err;
@@ -177,11 +177,17 @@ Meteor.methods({
                 companyProfileStatus:0,
                 timeStamp: new Date(),
               }, function(err,doc) {
-                Meteor.users.update({_id: userId}, {$set: {'profile.companyId': doc}});
+                Meteor.users.update({_id: userId}, {$set: {'profile.companyId': doc}}, function(err, doc) {
+                  if(!err) {
+                    LinkedInMessages.insert({message: 'Your company has been entered successfully', messageType: 'success'});
+                  }
+                  else {
+                    LinkedInMessages.insert({message: 'There was an error submitting your company', messageType: 'danger'});
+                  }
+                });
               });
 
-            ServerSession.set('linkedInCompanyError', '');
-            ServerSession.set('linkedInCompanySuccess', 'Your company was entered successfully.');
+             
 
           } 
           else {
@@ -200,14 +206,49 @@ Meteor.methods({
         var linkedin = Linkedin().init(accessToken);
         var userId = this.userId;
         linkedin.companies.name(companyName, Meteor.bindEnvironment(function(err, company) {
+
+          if(!company.name) {
+
+            var err = company;
+
+            LinkedInMessages.insert({message: 'Your company name was entered incorrectly', messageType: 'danger'});
+      
+            throw new Meteor.Error( 500, err.message );
+
+            return err;
+          }
     // Here you go
         //console.log(company);
           var name = company.name;
-          var description = company.description;
-          var websiteUrl=company.websiteUrl;
-          var logoUrl= company.logoUrl;
-          var keywordsArr = company.specialties.values;
-          var keywords = keywordsArr.toString();
+
+          if(company.description) {
+            var description = company.description;
+          }
+          else {
+            var description = '';
+          }
+
+          if(company.websiteUrl) {
+            var websiteUrl=company.websiteUrl;
+          }
+          else {
+            var websiteUrl='';
+          }
+          
+          if(company.logoUrl) {
+            var logoUrl= company.logoUrl;
+          }
+          else {
+            var logoUrl = '';
+          }
+
+          if(company.specialties) {
+            var keywordsArr = company.specialties.values;
+            var keywords = keywordsArr.toString();
+          }
+          else {
+            var keywords = '';
+          }
           
           if(!err) {
             
@@ -218,8 +259,11 @@ Meteor.methods({
               websiteUrl: websiteUrl,
               logoUrl: logoUrl,
               keywords: keywords
-            }});
-
+            }}, function(err, doc) {
+                if(!err) {
+                  LinkedInMessages.insert({message: 'Your company has been updaged successfully', messageType: 'success'});
+                }
+            });
 
           }
 
