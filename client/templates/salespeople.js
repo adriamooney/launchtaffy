@@ -103,7 +103,7 @@ Template.salesProfile.events({
 					var rootUrl = Session.get('rootUrl');
 					var cleanmsg = msg.replace(/'/g, '&lsquo;');
 					AppMessages.throw('your messages was sent', 'success');
-					Meteor.call('sendEmail', to, 'noreply@launchtaffy.com', 'You have a LaunchTaffy Message', 'You have a LaunchTaffy Message:<br /><br />'+cleanmsg+'<br /><br /><a href="'+rootUrl+'message/'+result+'">Reply</a>', 'You have a LaunchTaffy Message. Log in and check your inbox.');
+					Meteor.call('sendEmail', to, 'noreply@launchtaffy.com', 'You have a LaunchTaffy Message', 'You have a LaunchTaffy Message:<br /><br />'+cleanmsg+'<br /><br /><a href="'+rootUrl+'/message/'+result+'">Reply</a>', 'You have a LaunchTaffy Message. Log in and check your inbox.');
 					Session.set('buttonClicked', false);
 					template.find('#message').value = '';
 				}
@@ -140,8 +140,9 @@ Template.salesProfile.events({
 					AppMessages.throw(err.reason, 'danger');
 				}
 				else {
+					var rootUrl = Session.get('rootUrl');
 					AppMessages.throw('You have now approved this salesperson.', 'success');
-					Meteor.call('sendEmail', useremail, 'LaunchTaffy <no-reply@launchtaffy.com>', 'You have been approved!', 'You have been approved by '+companyName, function(err) {
+					Meteor.call('sendEmail', useremail, 'LaunchTaffy <no-reply@launchtaffy.com>', 'You have been approved!', 'You have been approved by '+companyName+'<br /><br /><a href="'+rootUrl+'/company/'+company._id+'">View Company</a>', function(err) {
 						if(err) {
 							console.log(err);
 						}
@@ -177,8 +178,9 @@ Template.salesProfile.events({
 
 				}
 				else {
+					var rootUrl = Session.get('rootUrl');
 					AppMessages.throw('You have revoked approval this salesperson.', 'success');
-					Meteor.call('sendEmail', useremail, 'LaunchTaffy <no-reply@launchtaffy.com>', 'Your approval has been revoked', 'Your approval to sell for '+companyName+' has been revoked.  You are no long authorized to sell for this company.', function(err) {
+					Meteor.call('sendEmail', useremail, 'LaunchTaffy <no-reply@launchtaffy.com>', 'Your approval has been revoked', 'Your approval to sell for '+companyName+' has been revoked.  You are no long authorized to sell for <a href="'+rootUrl+'/company/'+company._id+'">'+company.name+'</a>.', function(err) {
 						if(err) {
 							console.log(err);
 						}

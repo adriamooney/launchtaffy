@@ -82,7 +82,9 @@ AutoForm.hooks({
       }
       var salesPerson = sale.salesPersonName;
 
-      Meteor.call('sendEmail', userEmail, 'LaunchTaffy <no-reply@launchtaffy.com>', salesPerson+' got a new sale!', salesPerson+' got a new sale!<br /> <a href="http://launchtaffy.com/sale/'+result+'">Click here</a> to review and approve the sale', function(err) {
+      var rootUrl = Session.get('rootUrl');
+
+      Meteor.call('sendEmail', userEmail, 'LaunchTaffy <no-reply@launchtaffy.com>', salesPerson+' got a new sale!', salesPerson+' got a new sale!<br /> <a href="'+rootUrl+'/sale/'+result+'">Click here</a> to review and approve the sale', function(err) {
         if(!err) {
             AppMessages.throw('Message sent to '+companyName+' that you got a sale!', 'success');
         }

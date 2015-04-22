@@ -7,7 +7,11 @@
   	{{ else }}
 
     <div class="page-header">
-      <h1>{{this.name}}</h1>
+      <h1>{{this.name}}  
+
+        {{#if currentUserIsSales}}{{#if companyApproved}}<small class="pull-right"><a class="btn btn-primary btn-sm" href="/sales/"><i class="glyphicon glyphicon-plus"></i> Add a Sale</a></small>{{/if}}{{/if}}
+
+      </h1>
     </div>
 
       {{#unless isFavorite }}

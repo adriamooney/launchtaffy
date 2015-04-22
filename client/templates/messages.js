@@ -48,7 +48,8 @@ Template.messages.helpers({
 	},
 	timeAgo: function() {
 		var time = this.timeStamp;
-		return moment(time).fromNow();
+		//return moment(time).fromNow();
+		return moment().format('L');
 	},
 	messagesToMe: function() {
 		//return Messages.find({$and: [{to: Meteor.userId()},{status: 'unread'}]}, {sort: {timeStamp: -1}});
@@ -131,6 +132,11 @@ Template.thread.helpers({
 			var person = to.profile.firstName +' '+ to.profile.lastName;
 		}
 		return person;
+	},
+	timeAgo: function() {
+		var time = this.timeStamp;
+		return moment().format('L');
+		//return moment(time).fromNow();
 	},
 	messages: function() {
 		var threadId = this._id;
@@ -294,7 +300,7 @@ Template.reply.events({
 					// sendEmail: function (to, from, subject, html, text) {
 					var rootUrl = Session.get('rootUrl');
 					var cleanmsg = msg.replace(/'/g, '&lsquo;');
-					Meteor.call('sendEmail', to, 'noreply@launchtaffy.com', 'You have a LaunchTaffy Message', 'You have a LaunchTaffy Message:<br /><br />'+cleanmsg+'<br /><br /><a href="'+rootUrl+'message/'+self._id+'">Reply</a>', 'You have a LaunchTaffy Message. Log in and check your inbox.');
+					Meteor.call('sendEmail', to, 'noreply@launchtaffy.com', 'You have a LaunchTaffy Message', 'You have a LaunchTaffy Message:<br /><br />'+cleanmsg+'<br /><br /><a href="'+rootUrl+'/message/'+self._id+'">Reply</a>', 'You have a LaunchTaffy Message. Log in and check your inbox.');
 					template.find('#message').value = ''; 
 				}
 				else {

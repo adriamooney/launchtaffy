@@ -403,7 +403,7 @@ Sales.attachSchema(new SimpleSchema({
     },
     productPrice: {
         type: String,
-        regEx: /^(?!0\.00)[1-9]\d{0,2}(\d{3})*(\.\d\d)?$/
+        regEx: /(?=.)^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|[0-9]+)?(\.[0-9]{1,2})?$/
     },
     productBillingFrequency: {
         type:String,

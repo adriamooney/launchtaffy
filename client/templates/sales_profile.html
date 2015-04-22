@@ -45,10 +45,10 @@
 
 
 				{{#if currentUserIsCompany}}
-					<div>
+					<div class="approve-salesperson-row">
 					{{#if salesPersonIsApproved}}
 					
-						<p>{{this.username}} is currently on your approved list of salespeople</p>
+						<p>{{this.profile.firstName}} {{this.profile.lastName}} is currently on your approved list of salespeople</p>
 						<button id="unapprove-salesprson" class="btn btn-danger btn-xs">Revoke approval</button>
 					
 					{{else}}

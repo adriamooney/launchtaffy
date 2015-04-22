@@ -221,7 +221,9 @@ Template.sale.events({
 			    }
       			var salesPerson = self.salesPersonName;
 
-				Meteor.call('sendEmail', userEmail, 'LaunchTaffy <no-reply@launchtaffy.com>', 'Your sale has been approved!', salesPerson+', <br />your sale has been approved. <br /><a href="http://launchtaffy.com/sale/'+self._id+'">Click here</a> to review the sale'); 
+      			var rootUrl = Session.get('rootUrl');
+
+				Meteor.call('sendEmail', userEmail, 'LaunchTaffy <no-reply@launchtaffy.com>', 'Your sale has been approved!', salesPerson+', <br />your sale has been approved. <br /><a href="'+rootUrl+'/sale/'+self._id+'">Click here</a> to review the sale'); 
 
 			}
 		});
@@ -244,7 +246,9 @@ Template.sale.events({
 			    }
       			var salesPerson = self.salesPersonName;
 
-				Meteor.call('sendEmail', userEmail, 'LaunchTaffy <no-reply@launchtaffy.com>', salesPerson+' has marked a recent sale as paid', salesPerson+' has marked a recent sale as paid, indicating your payment has been received.<br /><a href="http://launchtaffy.com/sale/'+self._id+'">Click here</a> to review the sale.'); 
+      			var rootUrl = Session.get('rootUrl');
+
+				Meteor.call('sendEmail', userEmail, 'LaunchTaffy <no-reply@launchtaffy.com>', salesPerson+' has marked a recent sale as paid', salesPerson+' has marked a recent sale as paid, indicating your payment has been received.<br /><a href="'+rootUrl+'/sale/'+self._id+'">Click here</a> to review the sale.'); 
 
 			}
 		});
