@@ -41,14 +41,23 @@ Template.company.helpers({
 	},
 	companyApproved: function() {
 		var company = this._id;
+		//console.log(company);
 		var companiesArr = Meteor.user().profile.approvedCompanies;
+
 		if(companiesArr && companiesArr.length>0) {
-		
+			//console.log(companiesArr);
+			var isInCompany;
+			var companies = Companies.find({_id: {$in: companiesArr}});
 			companies.forEach(function(doc){  //cursor.forEach
-				  if(doc == company) {
-				  	return true;
+				//console.log(doc._id);
+				//console.log(company);
+				  if(doc._id == company) {
+				  	isInCompany = true;
 				  }
 			});
+			if( isInCompany == true) {
+				return true;
+			}
 		}
 
 		else {
