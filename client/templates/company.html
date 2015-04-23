@@ -32,7 +32,7 @@
         </a>
       </div>
       <div class="media-body">
-          {{#if this.description}}
+        {{#if this.description}}
           <h5>Description</h5>
           <p>{{this.description}}</p>
         {{/if}}
@@ -40,6 +40,11 @@
         {{#if websiteUrl}}
         <h5>Company URL</h5>
         <p><a href="{{this.websiteUrl}}" target="_blank">{{this.websiteUrl}}</a></p>
+        {{/if}}
+
+        {{#if this.keywords}}
+        <h5>Keywords</h5>
+        <p>{{this.keywords}}</p>
         {{/if}}
 
           {{#if companyResources}}
@@ -58,11 +63,6 @@
               {{/if}}
             </ul>
           {{/if}}
-
-        {{#if this.keywords}}
-        <h5>Keywords</h5>
-        <p>{{this.keywords}}</p>
-        {{/if}}
 
 
       </div>

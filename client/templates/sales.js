@@ -96,7 +96,7 @@ Template.companyTypeSalesWidget.helpers({
 
         return {
             rowsPerPage: 10,
-            showFilter: true,
+            showFilter: false,
             fields: [
 	            { key: 'status', label: 'Status',
 	            	fn: function(value,object) {
@@ -129,7 +129,7 @@ Template.salesTypeSalesWidget.helpers({
 
         return {
             rowsPerPage: 10,
-            showFilter: true,
+            showFilter: false,
             fields: [
 	            { key: 'status', label: 'Status',
 	            	fn: function(value,object) {

@@ -77,10 +77,13 @@
 			<option value="dispute">dispute</option>
 		</select>
 	</div>-->
+	<div class="page-header">
+		<h1>Sale</h1>
+	</div>
 
 	<div class="panel panel-default">
 		<div class="panel-body">
-			{{#if currentUserIsCompany}}{{#if statusIs 'pending'}}<button class="btn btn-primary pull-right" id="approveSale">approve this sale</button>{{/if}}{{/if}}
+			{{#if currentUserIsCompany}}{{#if statusIs 'pending'}}<button class="btn btn-primary pull-right" id="approveSale">Approve this sale</button>{{/if}}{{/if}}
 			{{#if currentUserIsSales}}{{#if statusIs 'approved'}}<button class="btn btn-primary pull-right" id="paidSale">Mark as Paid</button>{{/if}}{{/if}}
 			<h4>{{leadCompanyName}} <small><span class="label label-{{statusLabel}}">{{status}}</span></small></h4>
 			<p><b>Lead Contact: </b>{{leadName}} {{leadEmail}} {{leadPhone}}</p>
