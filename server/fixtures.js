@@ -1,4 +1,4 @@
-if (!Meteor.users.findOne({'profile.emailAddress': 'adriamooney+sales1@gmail.com'})) {
+/*if (!Meteor.users.findOne({'profile.emailAddress': 'adriamooney+sales1@gmail.com'})) {
 	Meteor.users.insert({
 		profile: {
 			"firstName" : "Sally",
@@ -77,5 +77,6 @@ if (!Meteor.users.findOne({'profile.emailAddress': 'adriamooney+company1@gmail.c
 		}
 	});
 }
+*/
 
 
