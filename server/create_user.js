@@ -73,3 +73,11 @@ Accounts.validateLoginAttempt(function(attempt){
 Accounts.config({sendVerificationEmail: true});
 
 
+Accounts.onLogin(function(options) {
+    //var user = Meteor.userId();
+    //Router.go('/dashboard/');  //does this cause the problem of redirecting on refresh?
+   console.log('hi');
+
+});
+
+
