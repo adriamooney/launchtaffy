@@ -15,11 +15,11 @@ Template.profile.helpers({
 		var user = Meteor.user();
 		if(user) {
 			var userType =  user.profile.userType;
-			console.log(userType);
-			console.log(this._id);
-			console.log(user._id);
+			//console.log(userType);
+			//console.log(this._id);
+			//console.log(user._id);
 			if (userType == 'company' && (user._id == this._id))  {
-				console.log('mycompany');
+				//console.log('mycompany');
 				return true;
 			}
 		}
@@ -29,7 +29,7 @@ Template.profile.helpers({
 		if(user) {
 			var userType =  user.profile.userType;
 			if (userType == 'salesperson' && (user._id == this._id))  {
-				console.log('mysales');
+				//console.log('mysales');
 				return true;
 			}
 		}
@@ -56,7 +56,7 @@ Template.profile.helpers({
 		}
 	},
 	userType: function() {
-		console.log(this);
+		//console.log(this);
 		return this.profile.userType;
 	}
 
@@ -112,11 +112,16 @@ Template.updateSalesForm.helpers({
 		}
 		else {
 			var keywordsArr = this.profile.skills.values;
-			var newArr = [];
-			for(var i=0; i< keywordsArr.length; i++) {
-				newArr.push(keywordsArr[i].skill.name);
+			if(keywordsArr) {
+				var newArr = [];
+				for(var i=0; i< keywordsArr.length; i++) {
+					newArr.push(keywordsArr[i].skill.name);
+				}
+				return newArr.toString();
 			}
-			return newArr.toString();
+			else {
+				return '';
+			}
 		}
 		
 	}

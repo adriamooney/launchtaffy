@@ -11,7 +11,8 @@ Accounts.onCreateUser(function(options, user) {
 
     if (user.emails) {
       var accountEmail = user.emails[0].address;
-      console.log(accountEmail);
+      options.profile.emailAddress = accountEmail;
+      //console.log(accountEmail);
     }
     
 
@@ -22,12 +23,12 @@ Accounts.onCreateUser(function(options, user) {
           throw new Meteor.Error(403, "Email already registered");
       }
     }
-    
+
 
     if(email) {  //if already signed up with account signup form, this prevent linkedin signup
         var emailAlreadyExist = Meteor.users.find({"emails.address": email}, {limit: 1}).count()>0
 
-        console.log(emailAlreadyExist);
+        //console.log(emailAlreadyExist);
 
       if(emailAlreadyExist === true) {
           throw new Meteor.Error(403, "Email already registered");
@@ -47,6 +48,27 @@ Accounts.onCreateUser(function(options, user) {
     options.profile.isActive = true;
     options.profile.profileStatus = 0;
 
+    //welcome email:
+
+    var userEmail = options.profile.emailAddress;
+
+    var salesMsg = "<h3>Thanks for signing up for LaunchTaffy.</h3> <p>We're just getting started, and we're so happy to have you as one of our founding members.</p><h4>You're probably wondering, 'What next?'</h4> <p><strong>Polish Your Profile</strong>: Sales is about great impressions, and your first sale will be convincing companies you are qualified to represent them. Make sure your profile is well-written, outlining professional accomplishments, key client relationships and areas of specialization.</p><h4>LaunchTaffy will be successful by making you successful.</h4><p> Let us know how we can make you more successful by <b><a href='"+process.env.ROOT_URL+"/contact/'>contacting us directly</a></b> with your ideas and feedback.</p><p>We can't wait to see you get your first sales and will be in touch with updates soon.</p><p>Sincerely,<br />LaunchTaffy</p>";
+
+    var companyMsg = "<h3>Thanks for signing up for LaunchTaffy. We can't wait to help you get your first sales.</h3><h4>You're probably wondering, 'What next?'</h4><ul><li><strong>Provide Sales Collateral</strong>: On your company page, include links to marketing material, demos of your product, specification documents and pricing information.</li><li><strong>Outline Your Compensation Model</strong>: If you haven't quite figured out how to compensate for selling your product, now is the time to do so. Be sure to think through the details of what is appropriate. Answer questions such as, 'Do I want sales? Or do I want leads? What is each of those worth to my business?'</li></ul><h4>LaunchTaffy will be successful by making you successful.</h4><p>LaunchTaffy's goal is to make you successful during the critical early phase of your business. </p><p>If you have ideas or feedback, please <b><a href='"+process.env.ROOT_URL+"/contact/'>contact us</a></b>.</p><p>Sincerely,<br />LaunchTaffy</p>";
+
+    var genericMsg = "<h3>Thanks for singing up for LaunchTaffy. We can't wait to help you get your first sales on LaunchTaffy.</h3> <h4>You're probably wondering, 'What next?'</h4> <p>We're just getting started, and we're so happy to have you as one of our founding members. We're busy building new features and getting companies and salespeople on board. </p><p> In the mean time, get your profile ready and we'll be in contact with you about important updates.</p><p> Let us know how we can make you more successful by <b><a href='"+process.env.ROOT_URL+"/contact/'>contacting us</a></b>.</p><p>Sincerely,<br />LaunchTaffy</p>"; 
+
+    if(userType == 'salesperson') {
+      Meteor.call('sendEmail', userEmail, 'LaunchTaffy <no-reply@launchtaffy.com>', 'Welcome to LaunchTaffy - Your Ticket to More Sales!', salesMsg);
+    }
+    else if(userType == 'company') {
+      Meteor.call('sendEmail', userEmail, 'LaunchTaffy <no-reply@launchtaffy.com>', 'Welcome to LaunchTaffy - Your Ticket to More Sales!', companyMsg);
+    }
+    else {
+      Meteor.call('sendEmail', userEmail, 'LaunchTaffy <no-reply@launchtaffy.com>', 'Welcome to LaunchTaffy - Your Ticket to More Sales!', genericMsg);
+    }  
+
+
     if (options.profile) {
         user.profile = options.profile;
     }
@@ -62,7 +84,7 @@ Accounts.onCreateUser(function(options, user) {
 // (server-side) called whenever a login is attempted
 Accounts.validateLoginAttempt(function(attempt){
   if (attempt.user && attempt.user.emails && !attempt.user.emails[0].verified ) {
-    console.log('email not verified');
+    //console.log('email not verified');
 
     return false; // the login is aborted
   }
@@ -71,13 +93,5 @@ Accounts.validateLoginAttempt(function(attempt){
 
 
 Accounts.config({sendVerificationEmail: true});
-
-
-Accounts.onLogin(function(options) {
-    //var user = Meteor.userId();
-    //Router.go('/dashboard/');  //does this cause the problem of redirecting on refresh?
-   console.log('hi');
-
-});
 
 

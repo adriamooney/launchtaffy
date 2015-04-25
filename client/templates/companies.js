@@ -159,7 +159,7 @@ Template.company.events({
 					var rootUrl = Session.get('rootUrl');
 					var cleanmsg = msg.replace(/'/g, '&lsquo;');
 					AppMessages.throw('your messages was sent', 'success');
-					Meteor.call('sendEmail', to, 'noreply@launchtaffy.com', 'You have a LaunchTaffy Message', 'You have a LaunchTaffy Message:<br /><br />'+cleanmsg+'<br /><br /><a href="'+rootUrl+'/message/'+result+'">Reply</a>', 'You have a LaunchTaffy Message. Log in and check your inbox.');
+					Meteor.call('sendEmail', to, 'LaunchTaffy <no-reply@launchtaffy.com>', 'You have a LaunchTaffy Message', 'You have a LaunchTaffy Message:<br /><br />'+cleanmsg+'<br /><br /><a href="'+rootUrl+'/message/'+result+'">Reply</a>', 'You have a LaunchTaffy Message. Log in and check your inbox.');
 					Session.set('buttonClicked', false);
 					template.find('#message').value = '';
 				}
@@ -206,6 +206,7 @@ Template.getLinkedinInfo.events({
 	'click #updateCompanyInfo': function(event, template) {
 		var val = template.find('#companyNameVal').value;
 		var id = Meteor.userId();
+		
 		Meteor.call("updateLinkedCompanyProfile", val, id, function(err, result) {
 			if(err) {
 				AppMessages.throw(err.reason, 'danger');

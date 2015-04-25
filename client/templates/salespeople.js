@@ -1,10 +1,10 @@
 Template.salespeople.helpers({
 	salespeople: function() {
-		console.log(Meteor.users.find({'profile.isActive': true}).count());
+		//console.log(Meteor.users.find({'profile.isActive': true}).count());
 		//var users = Meteor.users.find({ $and: [ {'profile.userType': 'salesperson'}, {'profile.isActive': true}, {'emails.0.verified': true} ] } ); 
 		var users = Meteor.users.find({ $and: [ {'profile.userType': 'salesperson'}, {'profile.isActive': true} ] } ); 
 
-		console.log( users.count() );
+		//console.log( users.count() );
 		if (users.count() > 0) {
 			return users;
 		}
@@ -80,7 +80,7 @@ Template.salesProfile.events({
 		event.preventDefault();
 		Session.set('buttonClicked', true);
 		var senderId = Meteor.userId();
-		console.log(senderId);
+		//console.log(senderId);
 		var toId = this._id;
 		var msg = template.find('#message').value;
 
@@ -103,7 +103,7 @@ Template.salesProfile.events({
 					var rootUrl = Session.get('rootUrl');
 					var cleanmsg = msg.replace(/'/g, '&lsquo;');
 					AppMessages.throw('your messages was sent', 'success');
-					Meteor.call('sendEmail', to, 'noreply@launchtaffy.com', 'You have a LaunchTaffy Message', 'You have a LaunchTaffy Message:<br /><br />'+cleanmsg+'<br /><br /><a href="'+rootUrl+'/message/'+result+'">Reply</a>', 'You have a LaunchTaffy Message. Log in and check your inbox.');
+					Meteor.call('sendEmail', to, 'LaunchTaffy <no-reply@launchtaffy.com>', 'You have a LaunchTaffy Message', 'You have a LaunchTaffy Message:<br /><br />'+cleanmsg+'<br /><br /><a href="'+rootUrl+'/message/'+result+'">Reply</a>', 'You have a LaunchTaffy Message. Log in and check your inbox.');
 					Session.set('buttonClicked', false);
 					template.find('#message').value = '';
 				}
@@ -207,7 +207,7 @@ Template.salesProfile.events({
 Template.updateSalesForm.helpers({
 	approvedCompanies: function() {
 		var companiesArr = this.profile.approvedCompanies;
-		if(companiesArr.length>0) {
+		if(companiesArr && companiesArr.length>0) {
 			var ids = companiesArr;
 			var companies = Companies.find({_id: {$in: ids}});
 			return companies;
