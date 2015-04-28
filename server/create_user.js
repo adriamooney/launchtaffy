@@ -11,7 +11,7 @@ Accounts.onCreateUser(function(options, user) {
 
     if (user.emails) {
       var accountEmail = user.emails[0].address;
-      options.profile.emailAddress = accountEmail;
+      //options.profile.emailAddress = accountEmail;  //this causes an error
       //console.log(accountEmail);
     }
     
@@ -51,6 +51,10 @@ Accounts.onCreateUser(function(options, user) {
     //welcome email:
 
     var userEmail = options.profile.emailAddress;
+    if (!options.profile.emailAddress) {
+      var userEmail = user.emails[0].address;
+      options.profile.emailAddress = userEmail;
+    }
 
     var salesMsg = "<p>Thank you for signing up for LaunchTaffy.</p> <p>We're just getting started, and we're so happy to have you as one of our founding members.</p><h4>You're probably wondering, 'What next?'</h4> <p><strong>Polish Your Profile</strong>: Sales is about great impressions, and your first sale will be convincing companies you are qualified to represent them. Make sure your profile is well-written, outlining professional accomplishments, key client relationships and areas of specialization.</p><h4>LaunchTaffy will be successful by making you successful.</h4><p> Let us know how we can make you more successful by <b><a href='"+process.env.ROOT_URL+"/contact/'>contacting us directly</a></b> with your ideas and feedback.</p><p>We can't wait to see you get your first sales and will be in touch with updates soon.</p><p>Sincerely,<br />LaunchTaffy</p>";
 

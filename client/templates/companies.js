@@ -150,6 +150,16 @@ Template.company.events({
 			to = user.emails[0].address;
 		}
 
+		var emailFrom =  Meteor.users.findOne({_id: senderId});
+		if(emailFrom.profile.userType == 'company') {
+			var companyId = emailFrom.profile.companyId;
+			var company = Companies.findOne({_id: companyId});
+			var person = company.name;
+		}
+		else {
+			var person = emailFrom.profile.firstName+' '+ emailFrom.profile.lastName;
+		}
+
 
 		if (msg != '') {
 
@@ -159,7 +169,7 @@ Template.company.events({
 					var rootUrl = Session.get('rootUrl');
 					var cleanmsg = msg.replace(/'/g, '&lsquo;');
 					AppMessages.throw('your messages was sent', 'success');
-					Meteor.call('sendEmail', to, 'LaunchTaffy <no-reply@launchtaffy.com>', 'You have a LaunchTaffy Message', 'You have a LaunchTaffy Message:<br /><br />'+cleanmsg+'<br /><br /><a href="'+rootUrl+'/message/'+result+'">Reply</a>', 'You have a LaunchTaffy Message. Log in and check your inbox.');
+					Meteor.call('sendEmail', to, 'LaunchTaffy <no-reply@launchtaffy.com>', 'You have a LaunchTaffy Message', 'You have a LaunchTaffy Message from '+person+':<br /><br />'+cleanmsg+'<br /><br /><a href="'+rootUrl+'/message/'+result+'">Reply</a>', 'You have a LaunchTaffy Message. Log in and check your inbox.');
 					Session.set('buttonClicked', false);
 					template.find('#message').value = '';
 				}
