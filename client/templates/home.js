@@ -14,10 +14,10 @@
 
 Template.unloggedinHome.events({
   'click #company-signup': function() {
-    ga("send", "event", 'action', "click", "company-signup");
+    analytics.track('click-company-signup');
   },
   'click #sales-signup': function() {
-    ga("send", "event", "action", "click", "sales-signup");
+    analytics.track('click-sales-signup');
   }
 
 })
