@@ -7,6 +7,12 @@
 			<label>Subject</label>
 			<input class="form-control" type="text" placeholder="Subject" id="subject" />
 		</div>
+		{{#unless currentUser}}
+		<div class="form-group">
+			<label>Your Email</label>
+			<input class="form-control" type="email" placeholder="Subject" id="email" />
+		</div>
+		{{/unless}}
 		<div class="form-group">
 			<label>Message Type</label>
 			<select class="form-control" id="contactType">

@@ -3,12 +3,19 @@ Template.contact.events({
 		event.preventDefault();
 		Session.set('buttonClicked', true);
 		var user = Meteor.user();
-		if(!user.emails) {
-	        var userEmail = user.profile.emailAddress;
-	     }
-	     else {
-	        var userEmail = user.emails[0].address;
-	    }
+		if(user) {
+			if(!user.emails) {
+		        var userEmail = user.profile.emailAddress;
+		    }
+		     else {
+		        var userEmail = user.emails[0].address;
+		    }
+		}
+		else {
+			var userEmail = template.find('#email').value;
+		}
+
+		console.log(userEmail);
 
 		var subject = template.find('#subject').value;
 		var msg = template.find('#message').value;
@@ -33,6 +40,11 @@ Template.contact.events({
 			AppMessages.throw('Please fill out both subject and message','danger');
 			Session.set('buttonClicked', false);
 		}
+		if(!user && template.find('#email').value == '') {
+			AppMessages.throw('Please fill out your email','danger');
+			Session.set('buttonClicked', false);
+		}
+
 
 
 	    //sendEmail: function (to, from, subject, html, text) {
