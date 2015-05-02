@@ -249,7 +249,7 @@ Messages.attachSchema(new SimpleSchema({
         max: 3000
     },
     timeStamp: {
-        type: String
+        type: Date
     },
     status: {
         type: String
@@ -297,7 +297,7 @@ Threads.attachSchema(new SimpleSchema({
         type: String
     },
     timeStamp: {
-        type:String
+        type:Date
     }
 }));
 
@@ -332,7 +332,7 @@ Companies.attachSchema(new SimpleSchema({
         optional:true
     },
     timeStamp: {
-        type:String
+        type:Date
     },
     /*keywords: {
         type: [Object],
@@ -428,7 +428,7 @@ Sales.attachSchema(new SimpleSchema({
         type:String
     },
     timeStamp: {
-        type: String
+        type: Date
     }
 
 }));

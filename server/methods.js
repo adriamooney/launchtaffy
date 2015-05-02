@@ -19,10 +19,9 @@ Meteor.methods({
   //TODO: updateCompanyUser
   sendMessage: function(senderId, toId, msg) {
     //senderId, companyId, msg
-    var now = new Date().getTime();
 
-    var thread = Threads.insert({'from': senderId, 'to': toId, 'status': 'active', timeStamp: new Date(now - 7 * 3600 * 1000)}, function(err,doc) {
-      Messages.insert({'threadId': doc, 'message': msg, 'from': senderId, 'to': toId, 'status': 'unread', 'timeStamp': new Date(now - 7 * 3600 * 1000)} );
+    var thread = Threads.insert({'from': senderId, 'to': toId, 'status': 'active', timeStamp: new Date()}, function(err,doc) {
+      Messages.insert({'threadId': doc, 'message': msg, 'from': senderId, 'to': toId, 'status': 'unread', 'timeStamp': new Date()} );
     });
 
     return thread;
@@ -31,9 +30,9 @@ Meteor.methods({
   //also need to update helper function and templates
   replyToMessage: function(id, senderId, toId, msg, threadId) {
    // Messages.update( {_id: id}, {$push: {'replies': {'to': toId, 'status': 'unread', 'message': msg, 'from': senderId} }});
-    var now = new Date().getTime();
-    Messages.insert({'threadId': threadId, 'message': msg, 'from': senderId, 'to': toId, 'status': 'unread', 'timeStamp': new Date(now - 7 * 3600 * 1000)} );
-    Threads.update({_id: threadId}, {$set:{'timeStamp': new Date(now - 7 * 3600 * 1000)}})
+
+    Messages.insert({'threadId': threadId, 'message': msg, 'from': senderId, 'to': toId, 'status': 'unread', 'timeStamp': new Date()} );
+    Threads.update({_id: threadId}, {$set:{'timeStamp': new Date()}})
   },
   deleteMessage: function(id) {
     Threads.remove({_id:id});

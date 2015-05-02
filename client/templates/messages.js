@@ -49,7 +49,7 @@ Template.messages.helpers({
 	timeAgo: function() {
 		var time = this.timeStamp;
 		//return moment(time).fromNow();
-		return moment().format('L');
+		return moment(time).format('L');
 	},
 	messagesToMe: function() {
 		//return Messages.find({$and: [{to: Meteor.userId()},{status: 'unread'}]}, {sort: {timeStamp: -1}});
@@ -135,7 +135,7 @@ Template.thread.helpers({
 	},
 	timeAgo: function() {
 		var time = this.timeStamp;
-		return moment().format('L');
+		return moment(time).format('L');
 		//return moment(time).fromNow();
 	},
 	messages: function() {

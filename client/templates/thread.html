@@ -5,7 +5,7 @@
 	<div class="thread well">
             {{#each messages}}
             <div class="msg">
-                <b><a href="/profile/{{from}}">{{fromId}}</a>:</b> {{message}}
+                <b>{{fromId}}:</b> {{{message}}} <small>{{timeAgo}}</small>
             </div>
             {{/each}}
             {{>reply}}
