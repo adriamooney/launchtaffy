@@ -1,0 +1,91 @@
+<template name="companyUserProfile">
+  
+  	{{# if thisCompany}}
+
+  	{{>updateCompanyForm}}
+  	
+  	{{ else }}
+
+    <div class="page-header">
+      <h1>{{company.name}}  
+
+        {{#if currentUserIsSales}}{{#if companyApproved}}<small class="pull-right"><a class="btn btn-primary btn-sm" href="/sales/"><i class="glyphicon glyphicon-plus"></i> Add a Sale</a></small>{{/if}}{{/if}}
+
+      </h1>
+    </div>
+
+      {{#unless isFavorite }}
+      {{#if currentUser}}
+      <small class="pull-right"><a id="addToCompanyFavorites" href="#"><i class="glyphicon glyphicon-heart-empty"></i>Add to Favorites</a></small>
+      {{/if}}
+      {{/unless}}
+
+
+      <div class="media">
+      <div class="media-left">
+        <a href="/profile/{{_id}}">
+          {{# if company.logoUrl}}
+            <img class="media-object" src="{{company.logoUrl}}" alt="" />
+            {{else}}
+            <img class="media-object" src="" alt="" style="width:60px;height:60px;background:#ccc;border:1px solid #666"/>
+          {{/if}}
+        </a>
+      </div>
+      <div class="media-body">
+        {{#if company.description}}
+          <h5>Description</h5>
+          <p>{{company.description}}</p>
+        {{/if}}
+
+        {{#if company.websiteUrl}}
+        <h5>Company URL</h5>
+        <p><a href="{{company.websiteUrl}}" target="_blank">{{company.websiteUrl}}</a></p>
+        {{/if}}
+
+        {{#if company.keywords}}
+        <h5>Keywords</h5>
+        <p>{{company.keywords}}</p>
+        {{/if}}
+
+          {{#if company.companyResources}}
+          <h5>Company Resources</h5>
+            <ul class="list-group">
+              {{#if company.showPrivate}}
+                {{#each company.companyResources}}
+                    <li class="list-group-item"><a href="{{url}}">{{name}}</a></li>
+                {{/each}}
+              {{else}}
+                {{#each company.companyResources}}
+                      {{#unless company.private}}
+                        <li><a href="{{url}}">{{name}}</a></li>
+                      {{/unless}}
+                {{/each}}
+              {{/if}}
+            </ul>
+          {{/if}}
+
+
+      </div>
+    </div>
+
+
+		{{#if currentUser}}
+    <div><h3>Send Message</h3>
+  		<form id="contactCompany">
+  			<div class="form-group"><textarea id="message" class="form-control"></textarea></div>
+  			<button class="btn btn-primary" type="submit">Submit</button> 
+  		</form>
+    </div>
+		{{/if}}
+  	{{/if}}
+
+</template>
+
+
+
+
+
+
+
+
+

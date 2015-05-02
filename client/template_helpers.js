@@ -157,4 +157,14 @@ Template.registerHelper('emptyCompanyProfile', function() {
     }
 });
 
+Template.registerHelper('email', function() {
+	var user = Meteor.user();
+    if(!user.emails) {
+        var userEmail = user.profile.emailAddress;
+     }
+     else {
+        var userEmail = user.emails[0].address;
+    }
+    return userEmail;
+});
 

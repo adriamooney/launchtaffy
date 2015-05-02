@@ -1,4 +1,5 @@
 Sales = new Mongo.Collection("sales");
+Leads = new Mongo.Collection("leads");
 Companies = new Mongo.Collection("companies");
 Messages = new Mongo.Collection("messages");
 Threads = new Mongo.Collection("threads");
@@ -409,6 +410,53 @@ Sales.attachSchema(new SimpleSchema({
         type:String,
         label: 'Product Billing Frequency',
         allowedValues: ['monthly', 'annually', 'one-time']
+    },
+    companyId: {
+        type:String
+    },
+    companyUserId: {
+        type:String,
+        optional:true
+    }, 
+    companyName: {
+        type:String,
+        optional:true
+    }, 
+    salesPersonId: {
+        type:String
+    },
+    salesPersonName: {
+        type:String
+    },
+    timeStamp: {
+        type: Date
+    }
+
+}));
+
+Leads.attachSchema(new SimpleSchema({
+    status: {
+        type: String,
+        allowedValues: ['pending', 'approved', 'dispute', 'paid', 'rejected']
+    },
+    leadCompanyName: {
+        type:String
+    },
+    leadName: {
+        type: String
+    },
+    leadEmail: {
+        type: String,
+        regEx: SimpleSchema.RegEx.Email
+    },
+    leadPhone: {
+        type: String,
+        regEx: /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/,
+        optional: true
+    },
+    details: {
+        type:String,
+        optional:true
     },
     companyId: {
         type:String

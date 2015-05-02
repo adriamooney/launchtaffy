@@ -84,6 +84,9 @@ Meteor.methods({
   updateSaleStatus: function(saleId, status) {
     Sales.update({_id: saleId}, {$set: {'status': status}});
   },
+  updateLeadStatus: function(saleId, status) {
+    Leads.update({_id: saleId}, {$set: {'status': status}});
+  },
   addToCompanyFavorites: function(companyId, userId) {
     Meteor.users.update({_id: userId}, {$addToSet: {'profile.favoriteCompanies': companyId}});
   },
