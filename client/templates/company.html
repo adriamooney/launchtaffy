@@ -6,12 +6,9 @@
   	
   	{{ else }}
 
-    <div class="page-header">
-      <h1>{{this.name}}  
-
-        {{#if currentUserIsSales}}{{#if companyApproved}}<small class="pull-right"><a class="btn btn-primary btn-sm" href="/sales/"><i class="glyphicon glyphicon-plus"></i> Add a Sale</a></small>{{/if}}{{/if}}
-
-      </h1>
+    <div class="page-header company-header">
+      <h1>{{this.name}}</h1>
+      {{#if currentUserIsSales}}{{#if companyApproved}}<div class="btn-group add-sales"><a class="btn btn-primary btn-xs" href="/sales/"><i class="glyphicon glyphicon-plus"></i> Add a Sale</a><a class="btn btn-info btn-xs" href="/leads/"><i class="glyphicon glyphicon-plus"></i> Add a Lead</a></div>{{/if}}{{/if}}
     </div>
 
       {{#unless isFavorite }}
