@@ -18,12 +18,25 @@ Template.salespeople.helpers({
 
 Template.salespeopleItem.helpers({
 	numSales: function() {
-		var sales = Sales.find({$and: [ { salesPersonId: this._id}, { status: 'approved' } ] }).count();   
-		if(sales === 1) {
+		var sales = Sales.find({$or: [{$and: [{salesPersonId: this._id},{'status': 'approved'}]}, {$and: [{salesPersonId: this._id},{'status': 'paid'}]}]} ).count();  
+		if(sales === 1) {	
 			return sales +' sale';
 		}
 		else if(sales>1){
 			return sales +' sales';
+		}
+		else {
+			return false;
+		}
+		
+	},
+	numLeads: function() {
+		var leads = Leads.find({$or: [{$and: [{salesPersonId: this._id},{'status': 'approved'}]}, {$and: [{salesPersonId: this._id},{'status': 'paid'}]}]} ).count();   
+		if(leads === 1) {
+			return leads +' lead';
+		}
+		else if(leads>1){
+			return leads +' leads';
 		}
 		else {
 			return false;
