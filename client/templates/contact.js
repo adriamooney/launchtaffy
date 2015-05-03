@@ -1,4 +1,4 @@
-Template.contact.events({
+Template.contactForm.events({
 	'submit form': function(event, template) {
 		event.preventDefault();
 		Session.set('buttonClicked', true);
@@ -20,7 +20,13 @@ Template.contact.events({
 		var subject = template.find('#subject').value;
 		var msg = template.find('#message').value;
 		var html = msg;
-		var label =' #'+ $('#contactType').val();
+		if(user) {
+			var label =' #'+ $('#contactType').val();
+		}
+		else {
+			var label = ' company_lead';
+		}
+		
 
 		if (subject != '' && msg != '') {
 

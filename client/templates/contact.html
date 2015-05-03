@@ -2,7 +2,12 @@
 	<div class="page-header">
 		<h1>Contact</h1>
 	</div>
+	{{>contactForm}}
+</template>
+
+<template name="contactForm">
 	<form id="contactForm">
+		{{>appMessages}}
 		<div class="form-group">
 			<label>Subject</label>
 			<input class="form-control" type="text" placeholder="Subject" id="subject" />
@@ -10,9 +15,11 @@
 		{{#unless currentUser}}
 		<div class="form-group">
 			<label>Your Email</label>
-			<input class="form-control" type="email" placeholder="Subject" id="email" />
+			<input class="form-control" type="email" placeholder="you@example.com" id="email" />
 		</div>
 		{{/unless}}
+		
+		{{#if currentUser}}
 		<div class="form-group">
 			<label>Message Type</label>
 			<select class="form-control" id="contactType">
@@ -21,6 +28,9 @@
 				<option value="customer_bug">Report a Bug</option>
 			</select>
 		</div>
+		{{/if}}
+
+
 		<div class="form-group">
 			<label>Message</label>
 			<textarea class="form-control" id="message"></textarea>
