@@ -24,7 +24,7 @@ Template.contactForm.events({
 			var label =' #'+ $('#contactType').val();
 		}
 		else {
-			var label = ' company_lead';
+			var label = ' #company_lead';
 		}
 		
 
@@ -58,7 +58,7 @@ Template.contactForm.events({
 	}
 });
 
-Template.contact.helpers({
+Template.contactForm.helpers({
 	buttonClicked: function() {
 		return Session.get('buttonClicked');
 	}
