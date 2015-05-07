@@ -13,9 +13,11 @@
 			</div>
 			<div class="form-inline">
 			<div class="form-group">
-				<label>Possible Answers</label>
-				Correct answer<input type="radio" name="quiz-answer" /><input class="form-control quiz-answer" type="text" placeholder="" />
+
+
+				{{> Template.dynamic template=getQuizAnswer}}
 			</div>
+			<button id="add-answer" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-plus"></i> Add answer</button>
 		</div>
 		</div>
 
@@ -27,6 +29,11 @@
 		<button type="submit" class="btn btn-primary">Submit</button>
 		
 	</form>
+</template>
+
+<template name="newAnswer">
+	<label>Possible Answer</label>
+	Is correct answer<input type="radio" name="quiz-answer" /><input class="form-control quiz-answer" type="text" />
 </template>
 
 <!--

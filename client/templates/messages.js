@@ -238,12 +238,21 @@ Template.messages.events({
 		$(event.currentTarget).closest('.panel').find('.panel-body').removeClass('hidden');
 		$('#toggle-'+id).html('<button class="hideThread pull-left btn btn-xs btn-info"><i class="glyphicon glyphicon-minus"></i></button>');
 		//todo: use a session to show thread is read?  not sure how to handle this
+		var currTag = event.currentTarget.tagName ;
+		if (currTag = 'H5') {
+			$(event.currentTarget).removeClass('expandThread').addClass('hideThread');
+		}
 
 	},
 	'click .hideThread': function(event, template) {
 		var id = this._id;
 		$(event.currentTarget).closest('.panel').find('.panel-body').addClass('hidden');
 		$('#toggle-'+id).html('<button class="expandThread pull-left btn btn-xs btn-info"><i class="glyphicon glyphicon-plus"></i></button>');
+		var currTag = event.currentTarget.tagName ;
+		if (currTag = 'H5') {
+			$(event.currentTarget).removeClass('hideThread').addClass('expandThread');
+		}
+
 	}
 
 });

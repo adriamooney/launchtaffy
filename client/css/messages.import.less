@@ -16,8 +16,13 @@
 .msg {
 	padding: 5px 0;
 }
-
-.expandThread, .hideThread {
+.expandThread, .hideThread { 
+	cursor:pointer;
+	&:hover {
+		opacity:.8;
+	}
+}
+button.expandThread, button.hideThread {
 	padding: 0 2px;
 	font-size:@font-size-tiny;
 	position:relative;
