@@ -30,9 +30,9 @@
 				  <div class="media-left">
 				    <a href="/profile/{{_id}}">
 				      {{# if profile.pictureUrl}}
-				      	<img class="media-object" src="{{profile.pictureUrl}}" alt="{{profile.firstName}} {{profile.lastName}} Picture" />
+				      	<img class="media-object img-circle" src="{{profile.pictureUrl}}" alt="{{profile.firstName}} {{profile.lastName}} Picture" />
 				      	{{else}}
-				      	<img class="media-object" src="" alt="" style="width:60px;height:60px;background:#ccc;border:1px solid #666"/>
+				      	<img class="media-object" style="width:80px" src="/blank_person.png" alt="{{profile.firstName}} {{profile.lastName}} Picture" />
 				      {{/if}}
 				    </a>
 				  </div>
