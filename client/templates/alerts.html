@@ -13,6 +13,23 @@
   </div>
 </template>
 
+<template name="companyProfileMessage">
+ <div class="alert alert-warning" role="alert">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    Your profile is 95% complete.  Add resources for sales professionals to learn more about your company.
+</div>
+
+</template>
+
+
+
+<template name="salesProfileMessage">
+  <div class="alert alert-warning" role="alert">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    Your profile is 95% complete.  Add a bio for companies to learn more about you. Include sales accomplishments, key accounts and valuable connections.
+  </div>
+</template>
+
 <template name="linkedInCompanyMessages">
 	{{#each messages}}
 		{{>linkedInCompanyMessage}}

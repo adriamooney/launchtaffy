@@ -37,3 +37,7 @@ Meteor.publish('threads', function(){
 Meteor.publish('linkedinmessages', function(){
     return LinkedInMessages.find();
 });
+
+Meteor.publish('quiz', function(){
+    return Quiz.find();
+});

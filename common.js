@@ -4,6 +4,7 @@ Companies = new Mongo.Collection("companies");
 Messages = new Mongo.Collection("messages");
 Threads = new Mongo.Collection("threads");
 News = new Mongo.Collection("news");
+Quiz = new Mongo.Collection("quiz");
 
 LinkedInMessages = new Mongo.Collection('linkedinmessages');
 //easy search:

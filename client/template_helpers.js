@@ -76,7 +76,7 @@ Template.registerHelper('userHasCompany', function() {
 	var userType = Meteor.user().profile.userType;
 	if (userType == 'company') {
 		var id = Meteor.userId();
-		var company = Companies.findOne({companyId: id});  //TODO: check to see if this returns anything or not.
+		var company = Companies.findOne({companyId: id});  
 
 		if(company) {
 			return true;
@@ -140,21 +140,53 @@ Template.registerHelper('approvedSalesPeople', function() {
 });
 
 Template.registerHelper('emptyCompanyProfile', function() {
-    var userId = Meteor.userId();
-    var userType = Meteor.user().profile.userType;
+    if(Meteor.user()) {
 
-    var myCompany = Companies.findOne({'companyId': userId});
-    if(userType == 'company') {
-        if (myCompany.companyProfileStatus == 0 ) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-    else {
-        return false;
-    }
+	    var userId = Meteor.userId();
+	    var userType = Meteor.user().profile.userType;
+
+	    var myCompany = Companies.findOne({'companyId': userId});
+	    if(userType == 'company') {
+	        if (myCompany.companyProfileStatus == 0 ) {
+	            return true;
+	        }
+	        else {
+	            return false;
+	        }
+	    }
+	    else {
+	        return false;
+	    }
+	}
+	else {
+		return false;
+	}
+});
+
+Template.registerHelper('emptySalesProfile', function() {
+	
+	
+	if(Meteor.user()) {
+		var profileStatus = Meteor.user().profile.profileStatus;
+		var userType = Meteor.user().profile.userType;
+			if(userType == 'salesperson') {
+			if (profileStatus == 0) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+	}
+	else {
+		return false;
+	}
+	
+	
+
 });
 
 Template.registerHelper('email', function() {

@@ -4,6 +4,8 @@
 
 		<div class="container">
 			{{>appMessages}}
+			{{#if emptyCompanyProfile}} {{>companyProfileMessage}} {{/if}}
+			{{#if emptySalesProfile}} {{>salesProfileMessage}}{{/if}}
 		
 			{{>linkedInCompanyMessages}}
 			{{>yield}}

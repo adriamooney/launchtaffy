@@ -26,8 +26,6 @@ Meteor.methods({
 
     return thread;
   },
-  //TODO: updates this stuff for new threads/message architecture
-  //also need to update helper function and templates
   replyToMessage: function(id, senderId, toId, msg, threadId) {
    // Messages.update( {_id: id}, {$push: {'replies': {'to': toId, 'status': 'unread', 'message': msg, 'from': senderId} }});
 
@@ -104,6 +102,17 @@ Meteor.methods({
     Meteor.users.update({ _id: id }, {
         $set: { 'profile.lastActiveOn': new Date(now - 7 * 3600 * 1000) }
       }); 
+  },
+  newQuiz: function() {
+    var userId = this.userId;
+    var company = Companies.findOne({companyId: userId});
+    var companyId = company._id;
+    Quiz.insert({name: 'Quiz Name', companyId: companyId, companyUserId:userId});
+  },
+  updateQuiz: function(id, name, question, answers, correct) {
+  
+    Quiz.update({_id: id}, {$addToSet: {questions: {'question': question, 'answers': answers, 'correct': correct} }, $set: {name:name}});
+
   },
   getLinkedCompanyProfile: function(companyName) {
 
@@ -275,94 +284,5 @@ Meteor.methods({
   }
 
 });
-
-
-/* sync methods */
-
-/*Meteor.syncMethods({
-    getLinkedCompanyProfile: function(companyName, callback){
-        // do some async stuff
-        
-      if( Meteor.user().services.linkedin.accessToken) {
-        var accessToken = Meteor.user().services.linkedin.accessToken;
-        var linkedin = Linkedin().init(accessToken);
-        var userId = this.userId;
-        var self = this;
-        linkedin.companies.name(companyName, Meteor.bindEnvironment(function(err, company) {
-
-          console.log(company);
-          if(!company.name) {
-            var err = company;
-            console.log(err.message);
-            //AppMessages.throw(err.message, 'danger');
-            throw new Meteor.Error( 500, err.message );
-
-            return err;
-          }
-    // Here you go
-        //console.log(company);
-          var name = company.name;
-
-          if(company.description) {
-            var description = company.description;
-          }
-          else {
-            var description = '';
-          }
-
-          if(company.websiteUrl) {
-            var websiteUrl=company.websiteUrl;
-          }
-          else {
-            var websiteUrl='';
-          }
-          
-          if(company.logoUrl) {
-            var logoUrl= company.logoUrl;
-          }
-          else {
-            var logoUrl = '';
-          }
-
-          if(company.specialties) {
-            var keywordsArr = company.specialties.values;
-            var keywords = keywordsArr.toString();
-          }
-          else {
-            var keywords = '';
-          }
-          
-
-          var userId = self.userId;
-
-          //var keywords = _.extend({}, keywordsArr);
-
-          
-          if(!err) {
-            
-           Companies.insert({
-                name: name, 
-                description: description, 
-                websiteUrl: websiteUrl,
-                logoUrl: logoUrl,
-                //keywords: [keywords],
-                keywords: keywords,
-                accountIsActive: true, 
-                companyId: userId, 
-                companyProfileStatus:0,
-                timeStamp: new Date(),
-              }, function(err,doc) {
-                Meteor.users.update({_id: userId}, {$set: {'profile.companyId': doc}});
-              });
-
-
-          } 
-
-        }));
-      }
-
-        callback(err, result);
-    }
-}); */
 
 
