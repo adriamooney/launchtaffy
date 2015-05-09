@@ -1,0 +1,9 @@
+<template name="companyProfileAccessDenied">
+	 <div class="not-found container">
+	    <div class="page-header"><h1>Access Denied</h1></div>
+	    <p class="lead">This is your company profile page.  <a href="/profile/{{currentUser._id}}">View your sales professional profile</a>. You cannot view your company profile as a Sales Professional. Switch your role back to Company in order to view this page.</p>
+	    <p>
+	    	{{>userTypeSwitcher}}
+	    </p>
+	  </div>
+</template>

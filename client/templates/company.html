@@ -80,12 +80,27 @@
 
 <template name="getLinkedinInfo">
     <div id="companyName" class="form-group">
-        <input type="text" value="" id="companyNameVal" placeholder="Company Name as it appears in your LinkedIn URL" class="form-control" />
+      <label>
         {{#if userHasCompany}}
-          <button class="btn btn-primary" id="updateCompanyInfo">Update company Info from LinkedIn</button>
-          {{else}}
-          <button class="btn btn-primary" id="getCompanyInfo">Get company Info from LinkedIn</button>
+          Update Company Info From LinkedIn
+        {{else}}
+          Get Company Info From LinkedIn
         {{/if}}
+        </label>
+        <div class="input-group">
+          <input type="text" value="" id="companyNameVal" placeholder="Company Name as shown in LinkedIn URL" class="form-control" />
+          {{#if userHasCompany}}
+          <span class="input-group-btn">
+            <button class="btn btn-primary" id="updateCompanyInfo">Submit</button>
+          </span>
+          {{else}}
+          <span class="input-group-btn">
+              <button class="btn btn-primary" id="getCompanyInfo">Submit</button>
+          </span>
+          {{/if}}
+        </div>
+
+ 
     </div>
 </template>
 
@@ -103,6 +118,8 @@
       {{/autoForm}}
     </div>
     <div class="col-sm-4">
+      {{>userTypeSwitcher}}
+
       {{>getLinkedinInfo}}
       <div class="well">{{>approvedSalesPeople}} </div>
 
@@ -116,7 +133,7 @@
 <template name="updateCompanyFormOnProfile">
 
   <div class="page-header">
-    <h1>Profile</h1>
+    <h1>Profile</h1> 
   </div>
 
   <div class="row">
@@ -126,11 +143,11 @@
       {{/autoForm}}
    </div>
     <div class="col-sm-4">
+      {{>userTypeSwitcher}}
+
       {{>getLinkedinInfo}}
       <div class="well">{{>approvedSalesPeople}} </div>
 
-
-      {{>newQuiz}}
     </div>
   </div>
 

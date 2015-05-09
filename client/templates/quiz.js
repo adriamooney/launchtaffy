@@ -18,7 +18,7 @@ Template.newQuiz.events({
 			var answersArr = [];
 
 			$(answers).each(function(index, iterator) {
-				answersArr.push($(iterator).val());
+				answersArr.push($(iterator).val());  //build answers array
 			});
 
 			//TODO: need to get the index of the radio that's checked and pass that along.

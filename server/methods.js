@@ -16,6 +16,9 @@ Meteor.methods({
   updateSalesUser: function(id, userData) {
     Meteor.users.update( {_id: id}, {$set: userData});
   },
+  switchUserType: function(id, newUserType) {
+    Meteor.users.update({_id:id}, {$set: {'profile.userType': newUserType}});
+  },
   //TODO: updateCompanyUser
   sendMessage: function(senderId, toId, msg) {
     //senderId, companyId, msg

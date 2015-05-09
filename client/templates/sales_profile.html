@@ -1,7 +1,7 @@
 <template name="salesProfile">
 
 		<div class="page-header">
-			<h1>{{profile.firstName}} {{profile.lastName}}</h1>
+			<h1>{{profile.firstName}} {{profile.lastName}}</h1> 
 		</div>
 
 		{{#unless isFavorite }}
@@ -82,7 +82,7 @@
 <template name="updateSalesForm">
 
 	<div class="page-header">
-	  <h1>Profile</h1>
+	  <h1>Profile</h1>  
 	</div>
 
 	<div class="row">
@@ -125,6 +125,7 @@
 			</form>
 		</div>
 		<div class="col-sm-6">
+			{{>userTypeSwitcher}}
 			{{#if approvedCompanies}}
 				<h4>Companies I can sell for:</h4>
 				<ul class="list-group">

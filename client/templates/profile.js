@@ -127,6 +127,20 @@ Template.updateSalesForm.helpers({
 	}
 });
 
+Template.userTypeSwitcher.events({
+	'click #switchUserType': function() {
+		var id = Meteor.userId();
+		var userType = Meteor.user().profile.userType;
+		if (userType == 'salesperson') {
+			var newUserType = 'company';
+		}
+		else if (userType == 'company') {
+			var newUserType = 'salesperson';
+		}
+		Meteor.call('switchUserType', id, newUserType);
+	}
+});
+
 
 Template.chooseUserType.events({
 	'click #chooseCompany': function(event, template) {
