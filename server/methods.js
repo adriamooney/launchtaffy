@@ -107,12 +107,15 @@ Meteor.methods({
     var userId = this.userId;
     var company = Companies.findOne({companyId: userId});
     var companyId = company._id;
-    Quiz.insert({name: 'Quiz Name', companyId: companyId, companyUserId:userId});
+    Quiz.insert({name: 'Quiz Name', companyId: companyId, companyUserId:userId, questions: [{'question':'', 'answers': [], 'correct': 0}]});
   },
   updateQuiz: function(id, name, question, answers, correct) {
   
     Quiz.update({_id: id}, {$addToSet: {questions: {'question': question, 'answers': answers, 'correct': correct} }, $set: {name:name}});
 
+  },
+  addQuizQuestion: function(id) {
+        Quiz.update({_id: id}, {$push: {questions: {'question': '', 'answers': [], 'correct': 0} }});
   },
   getLinkedCompanyProfile: function(companyName) {
 
