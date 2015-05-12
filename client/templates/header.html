@@ -39,7 +39,7 @@
             <li><a href="/companies/">Browse Companies</a></li>
             {{/unless}}
             {{/if}}
-            <!--<li><a href="#" class="logout">Logout</a></li>-->
+            {{#unless userHasCompany}}<li><a href="#" class="logout">Logout</a></li>{{/unless}}
             {{else}}
             <li><a href="/login">Login</a></li>
             {{/if}}
