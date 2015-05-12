@@ -13,7 +13,7 @@ Meteor.publish("messages", function () {
 
 Meteor.publish("sales", function () {
 	var user = this.userId;
-	return Sales.find({salesPersonId: user}, {fields: {emails: 1, profile: 1}}); 
+	return Sales.find({salesPersonId: user}); 
 });
 
 Meteor.publish("leads", function () {
@@ -23,7 +23,7 @@ Meteor.publish("leads", function () {
 
 Meteor.publish("companyTypeSales", function () {
 	var user = this.userId;
-	return Sales.find({companyUserId: user}, {fields: {emails: 1, profile: 1}}); 
+	return Sales.find({companyUserId: user}); 
 });
 
 Meteor.publish('news', function(){

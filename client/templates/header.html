@@ -10,7 +10,10 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
+          {{#if currentUser}}<a class="navbar-brand" href="/dashboard/"><img src="/LaunchTaffy_3_small.png" alt="LaunchTaffy" class="img-responsive"></a>
+          {{else}}
           <a class="navbar-brand" href="/"><img src="/LaunchTaffy_3_small.png" alt="LaunchTaffy" class="img-responsive"></a>
+          {{/if}}
         </div>
         <div class="collapse navbar-collapse" id="navigation">
           <ul class="nav navbar-nav navbar-right">

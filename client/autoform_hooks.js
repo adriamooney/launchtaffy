@@ -70,8 +70,11 @@ AutoForm.hooks({
     onSuccess: function(formType, result) {
       console.log(result);
       var sale = Sales.findOne({_id: result});
+      console.log(sale);
       var companyUserId = sale.companyUserId;
+
       var companyUser = Meteor.users.findOne({_id: companyUserId});
+
       var companyName = sale.companyName;
 
       if(!companyUser.emails) {
