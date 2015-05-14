@@ -41,6 +41,7 @@ Accounts.onCreateUser(function(options, user) {
     }
 
     var userType = ServerSession.get('userType');
+    //console.log(userType);
     //console.log(profile);
     if(userType) {
       options.profile.userType = userType;
