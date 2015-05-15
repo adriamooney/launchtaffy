@@ -72,7 +72,10 @@ this.SalesPersonPages = new Meteor.Pagination(Meteor.users, {
     infiniteTrigger: .9,
     infiniteRateLimit: 1,
     infiniteStep: 1,
-    perPage: 10
+    perPage: 10,
+    sort: {
+        createdAt: -1
+    }
 });
 
 /*this.SalesPages = new Meteor.Pagination(Sales, {
