@@ -24,7 +24,16 @@ Template.contactForm.events({
 			var label =' #'+ $('#contactType').val();
 		}
 		else {
-			var label = ' #company_lead';
+			if($('body.SalesLandingWithForm').length> 0) {
+				var label = ' #sales_lead';
+			}
+			else if($('body.CompanyLanding').length> 0) {
+				var label = ' #company_lead';
+			}
+			else {
+				var label = ' #unloggedin_user';
+			}
+				
 		}
 		
 
