@@ -319,11 +319,12 @@ Companies.attachSchema(new SimpleSchema({
 	},
 	websiteUrl: {
         type: String,
-        regEx: SimpleSchema.RegEx.Url,
+        //regEx: SimpleSchema.RegEx.Url,
         optional: true
     },
     description: {
     	type: String,
+        optional:true,
     	label: 'Company Description'
     },
     logoUrl: {

@@ -130,6 +130,9 @@ Meteor.methods({
         var self = this;
         linkedin.companies.name(companyName, Meteor.bindEnvironment(function(err, company) {
 
+          console.log(company);
+          console.log(err);
+
 
           if(!company.name) {
 
@@ -181,6 +184,7 @@ Meteor.methods({
 
           
           if(!err) {
+            console.log(name);
             
            Companies.insert({
                 name: name, 
@@ -194,6 +198,7 @@ Meteor.methods({
                 companyProfileStatus:0,
                 timeStamp: new Date(),
               }, function(err,doc) {
+                console.log(err);
                 Meteor.users.update({_id: userId}, {$set: {'profile.companyId': doc}}, function(err, doc) {
                   if(!err) {
                     LinkedInMessages.insert({message: 'Your company has been entered successfully', messageType: 'success'});
