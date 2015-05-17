@@ -66,12 +66,19 @@ Accounts.onCreateUser(function(options, user) {
 
     if(userType == 'salesperson') {
       Meteor.call('sendEmail', userEmail, 'LaunchTaffy <no-reply@launchtaffy.com>', 'Welcome to LaunchTaffy - Your Ticket to More Sales!', salesMsg);
+      
+      Meteor.call('sendEmail', 'contact@launchtaffy.com', 'LaunchTaffy <no-reply@launchtaffy.com>', 'New Sales Professional Signed Up', 'New Sales Professional, '+userEmail+' signed up');
+
     }
     else if(userType == 'company') {
       Meteor.call('sendEmail', userEmail, 'LaunchTaffy <no-reply@launchtaffy.com>', 'Welcome to LaunchTaffy - Your Ticket to More Sales!', companyMsg);
+
+      Meteor.call('sendEmail', 'contact@launchtaffy.com', 'LaunchTaffy <no-reply@launchtaffy.com>', 'New Company Signed Up', 'New Company, '+userEmail+' signed up');
     }
     else {
       Meteor.call('sendEmail', userEmail, 'LaunchTaffy <no-reply@launchtaffy.com>', 'Welcome to LaunchTaffy - Your Ticket to More Sales!', genericMsg);
+
+      Meteor.call('sendEmail', 'contact@launchtaffy.com', 'LaunchTaffy <no-reply@launchtaffy.com>', 'New User Signed Up', 'New User, '+userEmail+' signed up');
     }  
 
 
