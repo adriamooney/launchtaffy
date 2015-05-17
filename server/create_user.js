@@ -41,6 +41,7 @@ Accounts.onCreateUser(function(options, user) {
     }
 
     var userType = ServerSession.get('userType');
+    var referralPath =  ServerSession.get('referralPath');
     //console.log(userType);
     //console.log(profile);
     if(userType) {
@@ -48,6 +49,12 @@ Accounts.onCreateUser(function(options, user) {
     }
     options.profile.isActive = true;
     options.profile.profileStatus = 0;
+    
+    if(referralPath) {
+      options.profile.referralPath = referralPath;
+    }
+
+
 
     //welcome email:
 
@@ -66,7 +73,7 @@ Accounts.onCreateUser(function(options, user) {
 
     if(userType == 'salesperson') {
       Meteor.call('sendEmail', userEmail, 'LaunchTaffy <no-reply@launchtaffy.com>', 'Welcome to LaunchTaffy - Your Ticket to More Sales!', salesMsg);
-      
+
       Meteor.call('sendEmail', 'contact@launchtaffy.com', 'LaunchTaffy <no-reply@launchtaffy.com>', 'New Sales Professional Signed Up', 'New Sales Professional, '+userEmail+' signed up');
 
     }
