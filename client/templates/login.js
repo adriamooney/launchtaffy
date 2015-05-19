@@ -1,3 +1,17 @@
+Template.stripeConnect.events({
+    'click #stripeLoginButton': function() {
+        //Meteor.loginWithStripe();
+         Meteor.loginWithStripe({}, function(err) {
+            if (err) {
+                console.log("ERROR: ", err.message); //error handling
+            } else {
+                console.log("NO ERROR ON LOGIN");
+                Router.go('/stripe/redirect/')
+            }
+    });
+  }
+});
+
 Template.login.events({
     'submit form': function(event, template){
         event.preventDefault();
@@ -38,13 +52,13 @@ Template.forgotPassword.events({
     
 }); */
 
-
+//this fixes the problem of redirecting to dashboard on page refresh
 Tracker.autorun(function(){
     if(!Meteor.userId()){
-      // login handler
+      // login handler  //this fixes the problem of redirecting to dashboard on page refresh
       Accounts.onLogin(function(options) {
             var user = Meteor.userId();
-            Router.go('/dashboard/');  //does this cause the problem of redirecting on refresh?
+            Router.go('/dashboard/');  
             Meteor.call('lastLogin', user, function(err) {
                 if(err) {
                     console.log(err);
