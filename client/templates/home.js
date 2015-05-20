@@ -13,11 +13,76 @@
 }; */
 
 Template.unloggedinHome.events({
-  'click #company-signup': function() {
-    analytics.track('click-company-signup');
+  'click #company-signup': function(e) {
+    //analytics.track('click-company-signup');
+    ServerSession.set('userType', 'company');
+    e.preventDefault();
+    Meteor.loginWithLinkedin({}, function (err) {
+            if (err){
+              console.log('ERROR: ' + err); //error handling
+            } else {
+              console.log('NO ERROR ON LOGIN'); //show an alert
+            }
+        });
+
   },
-  'click #sales-signup': function() {
-    analytics.track('click-sales-signup');
+  'click #sales-signup': function(e) {
+    //analytics.track('click-sales-signup');
+    ServerSession.set('userType', 'salesperson');
+    e.preventDefault();
+    Meteor.loginWithLinkedin({}, function (err) {
+            if (err){
+              console.log('ERROR: ' + err); //error handling
+            } else {
+              console.log('NO ERROR ON LOGIN'); //show an alert
+            }
+        });
   }
 
-})
+});
+
+Template.companyLanding.events({
+  'click #company-signup': function(e) {
+    //analytics.track('click-company-signup');
+    ServerSession.set('userType', 'company');
+    e.preventDefault();
+    Meteor.loginWithLinkedin({}, function (err) {
+            if (err){
+              console.log('ERROR: ' + err); //error handling
+            } else {
+              console.log('NO ERROR ON LOGIN'); //show an alert
+            }
+        });
+
+  }
+});
+
+Template.salesLandingWithForm.events({
+  'click #sales-signup': function(e) {
+    //analytics.track('click-sales-signup');
+    ServerSession.set('userType', 'salesperson');
+    e.preventDefault();
+    Meteor.loginWithLinkedin({}, function (err) {
+            if (err){
+              console.log('ERROR: ' + err); //error handling
+            } else {
+              console.log('NO ERROR ON LOGIN'); //show an alert
+            }
+        });
+  }
+});
+
+Template.salesLanding.events({
+  'click #sales-signup': function(e) {
+    //analytics.track('click-sales-signup');
+    ServerSession.set('userType', 'salesperson');
+    e.preventDefault();
+    Meteor.loginWithLinkedin({}, function (err) {
+            if (err){
+              console.log('ERROR: ' + err); //error handling
+            } else {
+              console.log('NO ERROR ON LOGIN'); //show an alert
+            }
+        });
+  }
+});

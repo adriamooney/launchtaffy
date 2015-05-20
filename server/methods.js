@@ -3,6 +3,12 @@ Meteor.methods({
     var rootUrl = process.env.ROOT_URL;
     return rootUrl;
   },
+  removeMsg: function(id) {
+    AppMessages.collection.remove(id);
+  },
+  removeLinkedInMsg: function(id) {
+    LinkedInMessages.remove(id);
+  },
 	sendInitialEmail: function(result) {
 		return Accounts.sendEnrollmentEmail(result);
 	},
