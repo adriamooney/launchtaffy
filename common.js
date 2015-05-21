@@ -6,6 +6,30 @@ Threads = new Mongo.Collection("threads");
 News = new Mongo.Collection("news");
 Quiz = new Mongo.Collection("quiz");
 
+Companies.allow({
+  insert: function () { return true; },
+  update: function () { return true; },
+  remove: function () { return true; }
+});
+
+Sales.allow({
+  insert: function () { return true; },
+  update: function () { return true; }//,
+  //remove: function () { return true; }
+});
+
+Leads.allow({
+  insert: function () { return true; },
+  update: function () { return true; }//,
+  //remove: function () { return true; }
+});
+
+News.allow({
+  insert: function () { return true; },
+  update: function () { return true; }//,
+  //remove: function () { return true; }
+});
+
 LinkedInMessages = new Mongo.Collection('linkedinmessages');
 //easy search:
 //https://atmospherejs.com/matteodem/easy-search
@@ -320,16 +344,16 @@ Companies.attachSchema(new SimpleSchema({
 	websiteUrl: {
         type: String,
         //regEx: SimpleSchema.RegEx.Url,
-        optional: true
+        optional: false
     },
     description: {
     	type: String,
-        optional:true,
+        optional:false,
     	label: 'Company Description'
     },
     logoUrl: {
         type: String,
-        label: 'Company Logo',
+        label: 'Company Logo URL',
         optional:true
     },
     keywords: {
@@ -472,7 +496,7 @@ Leads.attachSchema(new SimpleSchema({
     }, 
     companyName: {
         type:String,
-        optional:true
+        optional:false
     }, 
     salesPersonId: {
         type:String

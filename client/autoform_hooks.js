@@ -3,8 +3,20 @@ AutoForm.hooks({
 
     // Called when any submit operation succeeds
     onSuccess: function(formType, result) {
-      //console.log(result);
+
+  
+      console.log(result);
       var company = Companies.findOne({_id: result});
+
+      company.companyResources;
+      if(company.companyResources) {
+        companyProfileStatus = 1;
+      }
+      else {
+        companyProfileStatus = 0;
+      }
+
+      Companies.update({_id: result}, {$set: {companyProfileStatus: companyProfileStatus, timeStamp: new Date()}}); 
       //var email = company.email;
 
       Meteor.users.update({_id: company.companyId}, {$set: {'profile.companyId': result}});

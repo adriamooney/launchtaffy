@@ -129,16 +129,24 @@
                 {{/if}}
 
                 {{#if currentUserIsCompany}}
-                    {{# unless userHasCompany }}
+                    <!--{{# unless userHasCompany }}
                          <p class="lead">To get started, enter your company name as it appears on the end of your LinkedIn company URL </p><p class="lead"><i>https://www.linkedin.com/company/<b>yourcompanyname</b></i></p>
                         <div class="form-group">
                             <input class="form-control" type="text" value="" id="companyNameVal" placeholder="company-name"/>
                         </div>
                         <button class="btn btn-primary" id="getCompanyInfo">Get company Info from LinkedIn</button>
-                    {{else}}
+                    {{else}} -->
+
+                    {{# unless userHasCompany }}
+                        <p class="lead">Start by filling out your <a href="/profile/{{currentUser._id}}/">company profile</a> so you can start connecting with sales professionals.  </p>
+                    {{/unless}}
+
                     {{#if emptyCompanyProfile}}
+                    
                     <p class="lead">Don't forget to update your <a href="/profile/{{currentUser._id}}/">profile</a> and add some resources for sales professionals to learn about your products.   </p>
+                    
                     {{else}}
+                    {{# if userHasCompany }}
                     <div class="well">
                         {{>approvedSalesPeople}}
                     </div>
@@ -151,7 +159,8 @@
                             {{>companyTypeLeadsWidget}}
                     </div>
                     {{/if}}
-                    {{/unless}}
+                    {{/if}}
+                    <!--{{/unless}}-->
                 {{/if}}
             </div>
 

@@ -200,3 +200,9 @@ Template.registerHelper('email', function() {
     return userEmail;
 });
 
+Template.registerHelper('newDate', function() {
+	return new Date();
+});
+
+
+

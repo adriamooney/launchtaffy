@@ -120,7 +120,7 @@
     <div class="col-sm-4">
       <!--{{>userTypeSwitcher}}-->
 
-      {{>getLinkedinInfo}}
+      <!--{{>getLinkedinInfo}}-->
       <div class="well">{{>approvedSalesPeople}} </div>
 
 
@@ -145,7 +145,7 @@
     <div class="col-sm-4">
       <!--{{>userTypeSwitcher}}-->
 
-      {{>getLinkedinInfo}}
+      <!--{{>getLinkedinInfo}}-->
       <div class="well">{{>approvedSalesPeople}} </div>
 
     </div>
@@ -159,7 +159,7 @@
       <div class="form-group"><img class="logo pull-right" {{logoAtts}} /></div>
       {{> afQuickField name='name' value=this.name id='name'}}
       {{> afQuickField name='websiteUrl' value=this.websiteUrl}}
-      {{> afQuickField name='logoUrl' value=this.logoUrl type='hidden'}}
+      {{> afQuickField name='logoUrl' value=this.logoUrl }}
       {{> afQuickField name='description' rows=6 value=this.description}}
       {{> afQuickField name='keywords' rows=4 value=this.keywords}}
       <h4 class="form-hd">Resources for Sales People</h4>
@@ -175,12 +175,16 @@
 
   <!--{{>getLinkedinInfo}}-->
 
+  <div class="page-header">
+    <h1>Profile</h1> 
+  </div>
+
   {{#autoForm collection="Companies" id="insertCompanyForm" type="insert"}}
   <fieldset>
     <legend>Company Info</legend>
     {{> afQuickField name='name' value=''}}
     {{> afQuickField name='websiteUrl' value=''}}
-    {{> afQuickField name='logoUrl' type='hidden'}}
+    {{> afQuickField name='logoUrl' placeholder='https://media.licdn.com/media/logo.png'}}
     {{> afQuickField name='description' rows=6 value=''}}
     {{> afQuickField name='keywords' rows=4}}
     <p>Provide links to resources such as documenation and training, demos, sales literature, whitepapers, etc.  <br />Anything that would be helpful to educate sales people about your company and products:</p>
@@ -188,6 +192,7 @@
     {{> afFieldInput name='accountIsActive' type='hidden' value='true'}}
 
     {{> afFieldInput name='companyId' type='hidden' value=currentUser._id}}
+
   </fieldset>
   <button type="submit" class="btn btn-primary">Submit</button>
   {{/autoForm}}
