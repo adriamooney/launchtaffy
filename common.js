@@ -362,7 +362,8 @@ Companies.attachSchema(new SimpleSchema({
         optional:true
     },
     timeStamp: {
-        type:Date
+        type:Date,
+        optional:true
     },
     /*keywords: {
         type: [Object],
