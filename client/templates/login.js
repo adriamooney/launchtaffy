@@ -12,15 +12,6 @@ Template.login.events({
             Router.go('/');
            }
         });
-    },
-    'click #stripeLogin': function() {
-         Meteor.loginWithLinkedin({}, function (err) {
-                if (err){
-                  console.log('ERROR: ' + err); //error handling
-                } else {
-                  console.log('NO ERROR ON LOGIN'); //show an alert
-                }
-            });
     }
 });
 //check here for more stuff to do. good article on how to set up custom accounts flow.  

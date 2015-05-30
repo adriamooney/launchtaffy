@@ -1,7 +1,7 @@
 Template.header.events({
 	'click #inbox': function() {
 	   Meteor.call('readMessages');
-	},
+	}/*,
 	'click #linkedInLoginHeader': function(e){
 		e.preventDefault();
 		Meteor.loginWithLinkedin({}, function (err) {
@@ -11,5 +11,5 @@ Template.header.events({
               console.log('NO ERROR ON LOGIN'); //show an alert
             }
         });
-	}
+	} */
 });

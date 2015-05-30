@@ -77,6 +77,7 @@ Template.updateSalesForm.events({
 
 		var userData = {
 			//fullName: template.find('#fullName').value,
+			"profile.pictureUrl": template.find('#pictureUrl').value,
 			"profile.website": template.find('#website').value,
 			"profile.bio": template.find('#bio').value,
 			"profile.firstName": template.find('#firstName').value,

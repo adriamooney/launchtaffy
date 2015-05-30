@@ -365,6 +365,10 @@ Companies.attachSchema(new SimpleSchema({
         type:Date,
         optional:true
     },
+    compensationModel: {
+        type:String,
+        optional:true
+    },
     /*keywords: {
         type: [Object],
         optional:true,
