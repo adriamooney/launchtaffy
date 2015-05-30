@@ -49,12 +49,12 @@
             <ul class="list-group">
               {{#if showPrivate}}
                 {{#each companyResources}}
-                    <li class="list-group-item"><a href="{{url}}">{{name}}</a></li>
+                    <li class="list-group-item"><a href="{{url}}" target="_blank">{{name}}</a></li>
                 {{/each}}
               {{else}}
                 {{#each companyResources}}
                       {{#unless private}}
-                        <li><a href="{{url}}">{{name}}</a></li>
+                        <li><a href="{{url}}" target="_blank">{{name}}</a></li>
                       {{/unless}}
                 {{/each}}
               {{/if}}
@@ -162,12 +162,11 @@
       {{> afQuickField name='logoUrl' value=this.logoUrl }}
       {{> afQuickField name='description' rows=6 value=this.description}}
       {{> afQuickField name='compensationModel' rows=4 value=this.compensationModel}}
-      <p class="help-block">Outline your compensation model (commissions, referrals) for sales and leads.</p>
       {{> afQuickField name='keywords' rows=4 value=this.keywords}}
-      <h4 class="form-hd">Resources for Sales People</h4>
-      
+      <h4 class="form-hd">Resources for Sales Professionals</h4>
+      <p>Provide links to resources such as documenation and training, demos, sales literature, whitepapers.  Anything that would be helpful for sales people to know about your company and products.</p>
       {{> afArrayField name='companyResources'}}
-      <p class="help-block">Provide links to resources such as documenation and training, demos, sales literature, whitepapers.  Anything that would be helpful for sales people to know about your company and products.</p>
+      
       {{> afFieldInput name='accountIsActive' value=this.accountIsActive}}
       {{> afFieldInput name='companyProfileStatus' type="hidden" value=this.companyProfileStatus}}   
     </fieldset>
@@ -190,13 +189,10 @@
     {{> afQuickField name='logoUrl' placeholder='https://media.licdn.com/media/logo.png'}}
     {{> afQuickField name='description' rows=6 value=''}}
     {{> afQuickField name='compensationModel' rows=4}}
-    <p class="help-block">Outline your compensation model (commissions, referrals) for sales and leads.</p>
     {{> afQuickField name='keywords' rows=4}}
-    <div class="form-group">
-      <label class="control-label">Company Resources (Collateral)</label>
-      {{> afArrayField name='companyResources'}}
-      <p class="help-block">Provide links to resources such as documenation and training, demos, sales literature, whitepapers.  Anything that would be helpful for sales people to know about your company and products.</p>
-    </div>
+    <h4 class="form-hd">Resources for Sales Professionals</h4>
+    <p>Provide links to resources such as documenation and training, demos, sales literature, whitepapers.  Anything that would be helpful for sales people to know about your company and products.</p>
+    {{> afArrayField name='companyResources'}}
     {{> afFieldInput name='accountIsActive' type='hidden' value='true'}}
 
     {{> afFieldInput name='companyId' type='hidden' value=currentUser._id}}
