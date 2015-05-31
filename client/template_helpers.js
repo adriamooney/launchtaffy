@@ -147,9 +147,11 @@ Template.registerHelper('emptyCompanyProfile', function() {
 
 	    var myCompany = Companies.findOne({'companyId': userId});
 	    if(userType == 'company') {
-	        if (myCompany.companyProfileStatus == 0 ) {
-	            return true;
-	        }
+	    	if(myCompany) {
+		        if (myCompany.companyProfileStatus == 0 ) {
+		            return true;
+		        }
+		    }
 	        else {
 	            return false;
 	        }

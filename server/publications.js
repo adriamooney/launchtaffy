@@ -41,3 +41,7 @@ Meteor.publish('linkedinmessages', function(){
 Meteor.publish('quiz', function(){
     return Quiz.find();
 });
+
+Meteor.publish('featuredSalesPeople', function(){
+    return FeaturedSalesPeople.find();
+});

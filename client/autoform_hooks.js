@@ -5,10 +5,8 @@ AutoForm.hooks({
     onSuccess: function(formType, result) {
 
   
-      console.log(result);
       var company = Companies.findOne({_id: result});
 
-      company.companyResources;
       if(company.companyResources) {
         companyProfileStatus = 1;
       }
@@ -30,7 +28,7 @@ AutoForm.hooks({
 
     var id = this.docId;
     var company = Companies.findOne({_id: id});
-    company.companyResources;
+
     if(company.companyResources) {
       companyProfileStatus = 1;
     }

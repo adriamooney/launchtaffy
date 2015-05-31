@@ -106,6 +106,12 @@ Meteor.methods({
   removeFromSalesPeopleFavorites: function(salesId, userId) {
     Meteor.users.update({_id: userId}, {$pull: {'profile.favoriteSalesPeople': salesId}});
   },
+  addFeaturedSalesPeople: function(userId) {
+    FeaturedSalesPeople.insert({userId: userId});
+  },
+  removeFeaturedSalesPeople: function(userId) {
+    FeaturedSalesPeople.remove({userId: userId});
+  },
   lastLogin: function(id) {
     var now = new Date().getTime();
     Meteor.users.update({ _id: id }, {

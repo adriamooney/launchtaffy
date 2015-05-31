@@ -6,10 +6,12 @@ Threads = new Mongo.Collection("threads");
 News = new Mongo.Collection("news");
 Quiz = new Mongo.Collection("quiz");
 
+FeaturedSalesPeople = new Mongo.Collection("featuredSalesPeople");
+
 Companies.allow({
   insert: function () { return true; },
-  update: function () { return true; },
-  remove: function () { return true; }
+  update: function () { return true; }//,
+  //remove: function () { return true; }
 });
 
 Sales.allow({

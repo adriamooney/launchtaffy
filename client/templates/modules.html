@@ -25,3 +25,29 @@
     <p>Message <a href="/salespeople/">sales professionals</a> you're interested working with. </p>
   {{/unless}}
 </template>
+
+<template name="featuredSalesPeople">
+    <ul>
+    {{#each featuredSalesPeople}}
+        <li>{{profile.pictureUrl}}<a href="/profile/{{_id}}">{{profile.firstName}}</a> - {{_id}}</li>
+    {{/each}}
+    </ul>
+
+</template>
+
+<template name="featuredSalesPeopleWidget">
+    {{#each featuredSalesPeople}}
+        <div class="media">
+              <div class="media-left">
+
+                    <img class="media-object" src="{{profile.pictureUrl}}" alt="{{profile.firstName}} {{profile.lastName}} Picture" />
+              </div>
+            <div class="media-body">
+                <h4 class="media-heading">{{profile.firstName}} {{lastName}}</h4>
+            </div>
+        </div>
+    {{/each}}
+</template>
+
+
+        
