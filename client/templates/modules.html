@@ -29,24 +29,35 @@
 <template name="featuredSalesPeople">
     <ul>
     {{#each featuredSalesPeople}}
-        <li>{{profile.pictureUrl}}<a href="/profile/{{_id}}">{{profile.firstName}}</a> - {{_id}}</li>
+        <li><a href="/profile/{{_id}}">{{profile.firstName}}</a> - {{_id}}</li>
     {{/each}}
     </ul>
 
 </template>
 
 <template name="featuredSalesPeopleWidget">
-    {{#each featuredSalesPeople}}
-        <div class="media">
-              <div class="media-left">
+    {{#if featuredSalesPeople}}
 
-                    <img class="media-object" src="{{profile.pictureUrl}}" alt="{{profile.firstName}} {{profile.lastName}} Picture" />
-              </div>
-            <div class="media-body">
-                <h4 class="media-heading">{{profile.firstName}} {{lastName}}</h4>
-            </div>
-        </div>
-    {{/each}}
+        <div class="col-md-6">
+             
+
+                    <div id="featuredSalesWidget" class="well">
+                    {{#each featuredSalesPeople}}
+                        <div class="media">
+                              <div class="media-left">
+
+                                    <img class="media-object img-circle" src="{{profile.pictureUrl}}" alt="{{profile.firstName}} {{profile.lastName}} Picture" style="width:60px"/>
+                              </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">{{profile.firstName}} {{lastName}}</h4>
+                                <p>{{profile.headline}}</p>
+                            </div>
+                        </div>
+                    {{/each}}
+                    </div>
+    
+          </div>
+    {{/if}}
 </template>
 
 

@@ -41,8 +41,7 @@ Template.unloggedinHome.events({
 
 });
 
-Template.companyLanding.events({
-  'click #company-signup': function(e) {
+/*  'click #company-signup': function(e) {
     //analytics.track('click-company-signup');
     ServerSession.set('userType', 'company');
     e.preventDefault();
@@ -55,7 +54,7 @@ Template.companyLanding.events({
         });
 
   }
-});
+}); */
 
 Template.salesLandingWithForm.events({
   'click #sales-signup': function(e) {
