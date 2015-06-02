@@ -59,6 +59,7 @@ Accounts.onCreateUser(function(options, user) {
     //welcome email:
 
     //this stuff will not work anymore if you add facebook login too:
+    //sets emails.address to be consistent with linkedin 'profile.emailAddress'
     var userEmail = options.profile.emailAddress;
     if (!options.profile.emailAddress) {
       var userEmail = user.emails[0].address;

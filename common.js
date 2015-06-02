@@ -33,6 +33,12 @@ News.allow({
   //remove: function () { return true; }
 });
 
+Reviews.allow({
+  insert: function () { return true; },
+  update: function () { return false; }//,
+  //remove: function () { return true; }
+});
+
 LinkedInMessages = new Mongo.Collection('linkedinmessages');
 //easy search:
 //https://atmospherejs.com/matteodem/easy-search
