@@ -7,6 +7,7 @@ News = new Mongo.Collection("news");
 Quiz = new Mongo.Collection("quiz");
 
 FeaturedSalesPeople = new Mongo.Collection("featuredSalesPeople");
+Reviews = new Mongo.Collection("reviews");
 
 Companies.allow({
   insert: function () { return true; },
@@ -329,6 +330,37 @@ Threads.attachSchema(new SimpleSchema({
     },
     timeStamp: {
         type:Date
+    }
+}));
+
+Reviews.attachSchema(new SimpleSchema({
+   /* rating: {
+        type: Number,
+        allowedValues: [1,2,3,4,5]
+    }, */
+    rating: {
+        type: Number,
+        min: 0,
+        max: 5,
+        denyUpdate: true,
+        autoform: {
+          type: 'raty',
+          ratyOptions: {
+            starHalf: '/raty/images/star-half.png',
+            starOff: '/raty/images/star-off.png',
+            starOn: '/raty/images/star-on.png'
+          }
+        }
+    },
+    review: {
+        type: String,
+        optional:true
+    },
+    commenterId: {
+        type: String
+    },
+    userId: {
+        type:String
     }
 }));
 

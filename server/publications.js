@@ -45,3 +45,7 @@ Meteor.publish('quiz', function(){
 Meteor.publish('featuredSalesPeople', function(){
     return FeaturedSalesPeople.find();
 });
+
+Meteor.publish('reviews', function(){
+    return Reviews.find();
+});
