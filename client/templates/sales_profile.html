@@ -10,6 +10,8 @@
       	{{/if}}
       	{{/unless}}
 
+      	{{averageStarRating}}
+
 
       	<div class="media">
 		  <div class="media-left">
@@ -83,7 +85,9 @@
 		<hr />
 		<br />
 
+	{{# unless reviewExists}}	
 		{{>salesReviewForm}}
+	{{/unless}}
 
 </template>
 
