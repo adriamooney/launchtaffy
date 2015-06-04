@@ -8,7 +8,7 @@
     </ul>
     {{/if}}
     {{#unless approvedCompanies}}
-    <p>Message <a href="/companies/">companies</a> you're interested to start the process of becoming an approved seller. </p>
+    <p>Message <a href="/companies/">companies</a> you're interested in to start the process of becoming an approved seller. </p>
     {{/unless}}
 </template>
 
@@ -25,3 +25,40 @@
     <p>Message <a href="/salespeople/">sales professionals</a> you're interested working with. </p>
   {{/unless}}
 </template>
+
+<template name="featuredSalesPeople">
+    <ul>
+    {{#each featuredSalesPeople}}
+        <li><a href="/profile/{{_id}}">{{profile.firstName}}</a> - {{_id}}</li>
+    {{/each}}
+    </ul>
+
+</template>
+
+<template name="featuredSalesPeopleWidget">
+    {{#if featuredSalesPeople}}
+
+        <div class="col-md-6">
+             
+
+                    <div id="featuredSalesWidget" class="well">
+                    {{#each featuredSalesPeople}}
+                        <div class="media">
+                              <div class="media-left">
+
+                                    <img class="media-object img-circle" src="{{profile.pictureUrl}}" alt="{{profile.firstName}} {{profile.lastName}} Picture" style="width:60px"/>
+                              </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">{{profile.firstName}} {{lastName}}</h4>
+                                <p>{{profile.headline}}</p>
+                            </div>
+                        </div>
+                    {{/each}}
+                    </div>
+    
+          </div>
+    {{/if}}
+</template>
+
+
+        

@@ -59,6 +59,7 @@ Accounts.onCreateUser(function(options, user) {
     //welcome email:
 
     //this stuff will not work anymore if you add facebook login too:
+    //sets emails.address to be consistent with linkedin 'profile.emailAddress'
     var userEmail = options.profile.emailAddress;
     if (!options.profile.emailAddress) {
       var userEmail = user.emails[0].address;
@@ -92,6 +93,8 @@ Accounts.onCreateUser(function(options, user) {
     if (options.profile) {
         user.profile = options.profile;
     }
+
+    ServerSession.set('referralPath', '');
 
     // we wait for Meteor to create the user before sending an email
    /* Meteor.setTimeout(function() {

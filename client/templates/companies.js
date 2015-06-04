@@ -23,6 +23,12 @@ Template.companyItem.helpers({
 			return false;
 		}
 		
+	},
+	descriptionTruncated: function() {
+		console.log(this.description);
+		var id = this._id;
+		var description = s.prune(this.description, 1500, "<a href='/company/"+id+"'> read more &raquo;</a>");
+		return description;
 	}
 });
 
@@ -129,6 +135,8 @@ Template.companyProfile.helpers({
 	    }
   	}
 });
+
+
 
 
 

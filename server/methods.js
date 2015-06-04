@@ -3,6 +3,12 @@ Meteor.methods({
     var rootUrl = process.env.ROOT_URL;
     return rootUrl;
   },
+  removeMsg: function(id) {
+    AppMessages.collection.remove(id);
+  },
+  removeLinkedInMsg: function(id) {
+    LinkedInMessages.remove(id);
+  },
 	sendInitialEmail: function(result) {
 		return Accounts.sendEnrollmentEmail(result);
 	},
@@ -99,6 +105,12 @@ Meteor.methods({
   },
   removeFromSalesPeopleFavorites: function(salesId, userId) {
     Meteor.users.update({_id: userId}, {$pull: {'profile.favoriteSalesPeople': salesId}});
+  },
+  addFeaturedSalesPeople: function(userId) {
+    FeaturedSalesPeople.insert({userId: userId});
+  },
+  removeFeaturedSalesPeople: function(userId) {
+    FeaturedSalesPeople.remove({userId: userId});
   },
   lastLogin: function(id) {
     var now = new Date().getTime();

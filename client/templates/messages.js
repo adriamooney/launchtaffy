@@ -332,3 +332,94 @@ Template.reply.events({
 		
 	}
 });
+
+
+Template.massEmail.events({
+	'click #allSalesUsers': function(e, template) {
+		e.preventDefault();
+		var users = Meteor.users.find({'profile.isActive': true, 'profile.userType':'salesperson'}, {'profile.emailAddress': 1, 'profile.firstName': 1});
+		var msg = template.find('#message').value;
+		var subject = template.find('#subject').value;
+		if(subject != '' && msg != '') {
+			users.forEach(function (user) {
+				
+				var email = user.profile.emailAddress;
+				var firstName = user.profile.firstName;
+				if(firstName == undefined) {
+					firstName = '';
+				}
+
+				//sendEmail: function (to, from, subject, html, text) {
+				Meteor.call('sendEmail', email, 'LaunchTaffy <no-reply@launchtaffy.com>', subject, 'Hi '+firstName+',<br />'+msg, function(err) {
+					if(!err) {
+						AppMessages.throw('message sent to '+users.count()+ ' users', 'success');
+					}
+					else {
+						AppMessages.throw(err.reason, 'danger');
+					}
+				});
+			});
+		}
+		else {
+			AppMessages.throw('Fill out message and subject', 'danger');
+		}
+		
+	},
+	'click #allCompanyUsers': function(e, template) {
+		e.preventDefault();
+		var users = Meteor.users.find({'profile.isActive': true, 'profile.userType':'company'}, {'profile.emailAddress': 1, 'profile.firstName': 1});
+		var msg = template.find('#message').value;
+		var subject = template.find('#subject').value;
+		if(subject != '' && msg != '') {
+			users.forEach(function (user) {
+				
+				var email = user.profile.emailAddress;
+				var firstName = user.profile.firstName;
+				if(firstName == undefined) {
+					firstName = '';
+				}
+
+				//sendEmail: function (to, from, subject, html, text) {
+				Meteor.call('sendEmail', email, 'LaunchTaffy <no-reply@launchtaffy.com>', subject, 'Hi '+firstName+',<br />'+msg, function(err) {
+					if(!err) {
+						AppMessages.throw('message sent to '+users.count()+ ' users', 'success');
+					}
+					else {
+						AppMessages.throw(err.reason, 'danger');
+					}
+				});
+			});
+		}
+		else {
+			AppMessages.throw('Fill out message and subject', 'danger');
+		}
+		
+	},
+	'click #specificEmails': function(e, template) {
+		e.preventDefault();
+		var users = template.find('#emails').value;
+		var userArr = users.split(',');
+		var msg = template.find('#message').value;
+
+		var subject = template.find('#subject').value;
+		if(subject != '' && msg != '') {
+			for(i=0;i<userArr.length;i++) {
+				console.log(userArr[i]);
+				
+				//sendEmail: function (to, from, subject, html, text) {
+				Meteor.call('sendEmail', userArr[i], 'LaunchTaffy <no-reply@launchtaffy.com>', subject, msg, function(err) {
+					if(!err) {
+						AppMessages.throw('message sent to '+userArr.length+ ' users', 'success');
+					}
+					else {
+						AppMessages.throw(err.reason, 'danger');
+					}
+				});
+			}
+		}
+		else {
+			AppMessages.throw('Fill out message and subject', 'danger');
+		}
+		
+	}
+});

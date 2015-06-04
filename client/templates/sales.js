@@ -104,7 +104,10 @@ Template.companyTypeSalesWidget.helpers({
 	    			}
 	        	},
 	 			{ key: 'leadCompanyName', label: 'Lead Company Name' },
-	 			{ key: 'salesPersonName', label: 'Sales Person Name' }
+	 			{ key: 'salesPersonName', label: 'Sales Person Name', fn: function(value, object) {
+	 					return new Spacebars.SafeString('<a href="/profile/'+object.salesPersonId+'">'+value+'</a>');
+	 				} 
+	 			}
 
             ]
         }; 
@@ -144,7 +147,10 @@ Template.salesTypeSalesWidget.helpers({
 	    				return new Spacebars.SafeString('<span class="label label-'+label+'">'+value+ '</span>'); 
 	    			}
 	        	},
-	            { key: 'companyName', label: 'Company Name' },
+	            { key: 'companyName', label: 'Company Name', fn: function(value, object) {
+	 					return new Spacebars.SafeString('<a href="/company/'+object.companyId+'">'+value+'</a>');
+	 				} 
+	 			},
 	 			{ key: 'leadCompanyName', label: 'Lead Company Name' },
 	    		{ key: 'productPrice', label: 'Product Price',
 	    			fn: function(value,object) {

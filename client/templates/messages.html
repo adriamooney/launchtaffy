@@ -25,7 +25,7 @@
                 <div class="panel-body hidden">
                     {{#each messages}}
                     <div class="msg">
-                        <b><a href="/profile/{{from}}">{{fromId}}</a>:</b> {{{message}}}  <small>{{timeAgo}}</small>
+                        <b><a href="/profile/{{from}}">{{fromId}}</a>:</b> <span class="pre">{{{message}}}</span>  <small>{{timeAgo}}</small>
                     </div>
                     {{/each}}
                     {{>reply}}
@@ -57,7 +57,7 @@
                     <div class="panel-body">
                          {{#each expandThread}}
                             <div class="msg">
-                                <b><a href="/profile/{{from}}">{{fromId}}</a>:</b> {{{message}}} <small>{{timeAgo}}</small>
+                                <b><a href="/profile/{{from}}">{{fromId}}</a>:</b> <span class="pre">{{{message}}}</span> <small>{{timeAgo}}</small>
                             </div>
                         {{/each}}
                     </div>

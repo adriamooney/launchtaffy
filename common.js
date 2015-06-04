@@ -6,6 +6,39 @@ Threads = new Mongo.Collection("threads");
 News = new Mongo.Collection("news");
 Quiz = new Mongo.Collection("quiz");
 
+FeaturedSalesPeople = new Mongo.Collection("featuredSalesPeople");
+Reviews = new Mongo.Collection("reviews");
+
+Companies.allow({
+  insert: function () { return true; },
+  update: function () { return true; }//,
+  //remove: function () { return true; }
+});
+
+Sales.allow({
+  insert: function () { return true; },
+  update: function () { return true; }//,
+  //remove: function () { return true; }
+});
+
+Leads.allow({
+  insert: function () { return true; },
+  update: function () { return true; }//,
+  //remove: function () { return true; }
+});
+
+News.allow({
+  insert: function () { return true; },
+  update: function () { return true; }//,
+  //remove: function () { return true; }
+});
+
+Reviews.allow({
+  insert: function () { return true; },
+  update: function () { return false; }//,
+  //remove: function () { return true; }
+});
+
 LinkedInMessages = new Mongo.Collection('linkedinmessages');
 //easy search:
 //https://atmospherejs.com/matteodem/easy-search
@@ -306,6 +339,37 @@ Threads.attachSchema(new SimpleSchema({
     }
 }));
 
+Reviews.attachSchema(new SimpleSchema({
+   /* rating: {
+        type: Number,
+        allowedValues: [1,2,3,4,5]
+    }, */
+    rating: {
+        type: Number,
+        min: 0,
+        max: 5,
+        denyUpdate: true,
+        autoform: {
+          type: 'raty',
+          ratyOptions: {
+            starHalf: '/raty/images/star-half.png',
+            starOff: '/raty/images/star-off.png',
+            starOn: '/raty/images/star-on.png'
+          }
+        }
+    },
+    review: {
+        type: String,
+        optional:true
+    },
+    commenterId: {
+        type: String
+    },
+    userId: {
+        type:String
+    }
+}));
+
 Companies.attachSchema(new SimpleSchema({
 	/*email: {
         type: String,
@@ -320,16 +384,16 @@ Companies.attachSchema(new SimpleSchema({
 	websiteUrl: {
         type: String,
         //regEx: SimpleSchema.RegEx.Url,
-        optional: true
+        optional: false
     },
     description: {
     	type: String,
-        optional:true,
+        optional:false,
     	label: 'Company Description'
     },
     logoUrl: {
         type: String,
-        label: 'Company Logo',
+        label: 'Company Logo URL',
         optional:true
     },
     keywords: {
@@ -338,7 +402,12 @@ Companies.attachSchema(new SimpleSchema({
         optional:true
     },
     timeStamp: {
-        type:Date
+        type:Date,
+        optional:true
+    },
+    compensationModel: {
+        type:String,
+        optional:true
     },
     /*keywords: {
         type: [Object],
@@ -472,7 +541,7 @@ Leads.attachSchema(new SimpleSchema({
     }, 
     companyName: {
         type:String,
-        optional:true
+        optional:false
     }, 
     salesPersonId: {
         type:String

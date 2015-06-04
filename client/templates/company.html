@@ -31,7 +31,7 @@
       <div class="media-body">
         {{#if this.description}}
           <h5>Description</h5>
-          <p>{{this.description}}</p>
+          <p><span class="pre">{{this.description}}</span></p>
         {{/if}}
 
         {{#if websiteUrl}}
@@ -49,12 +49,12 @@
             <ul class="list-group">
               {{#if showPrivate}}
                 {{#each companyResources}}
-                    <li class="list-group-item"><a href="{{url}}">{{name}}</a></li>
+                    <li class="list-group-item"><a href="{{url}}" target="_blank">{{name}}</a></li>
                 {{/each}}
               {{else}}
                 {{#each companyResources}}
                       {{#unless private}}
-                        <li><a href="{{url}}">{{name}}</a></li>
+                        <li><a href="{{url}}" target="_blank">{{name}}</a></li>
                       {{/unless}}
                 {{/each}}
               {{/if}}
@@ -120,7 +120,7 @@
     <div class="col-sm-4">
       <!--{{>userTypeSwitcher}}-->
 
-      {{>getLinkedinInfo}}
+      <!--{{>getLinkedinInfo}}-->
       <div class="well">{{>approvedSalesPeople}} </div>
 
 
@@ -145,7 +145,7 @@
     <div class="col-sm-4">
       <!--{{>userTypeSwitcher}}-->
 
-      {{>getLinkedinInfo}}
+      <!--{{>getLinkedinInfo}}-->
       <div class="well">{{>approvedSalesPeople}} </div>
 
     </div>
@@ -159,12 +159,14 @@
       <div class="form-group"><img class="logo pull-right" {{logoAtts}} /></div>
       {{> afQuickField name='name' value=this.name id='name'}}
       {{> afQuickField name='websiteUrl' value=this.websiteUrl}}
-      {{> afQuickField name='logoUrl' value=this.logoUrl type='hidden'}}
+      {{> afQuickField name='logoUrl' value=this.logoUrl }}
       {{> afQuickField name='description' rows=6 value=this.description}}
+      {{> afQuickField name='compensationModel' rows=4 value=this.compensationModel}}
       {{> afQuickField name='keywords' rows=4 value=this.keywords}}
-      <h4 class="form-hd">Resources for Sales People</h4>
+      <h4 class="form-hd">Resources for Sales Professionals</h4>
       <p>Provide links to resources such as documenation and training, demos, sales literature, whitepapers.  Anything that would be helpful for sales people to know about your company and products.</p>
       {{> afArrayField name='companyResources'}}
+      
       {{> afFieldInput name='accountIsActive' value=this.accountIsActive}}
       {{> afFieldInput name='companyProfileStatus' type="hidden" value=this.companyProfileStatus}}   
     </fieldset>
@@ -175,19 +177,26 @@
 
   <!--{{>getLinkedinInfo}}-->
 
+  <div class="page-header">
+    <h1>Profile</h1> 
+  </div>
+
   {{#autoForm collection="Companies" id="insertCompanyForm" type="insert"}}
   <fieldset>
     <legend>Company Info</legend>
     {{> afQuickField name='name' value=''}}
     {{> afQuickField name='websiteUrl' value=''}}
-    {{> afQuickField name='logoUrl' type='hidden'}}
+    {{> afQuickField name='logoUrl' placeholder='https://media.licdn.com/media/logo.png'}}
     {{> afQuickField name='description' rows=6 value=''}}
+    {{> afQuickField name='compensationModel' rows=4}}
     {{> afQuickField name='keywords' rows=4}}
-    <p>Provide links to resources such as documenation and training, demos, sales literature, whitepapers, etc.  <br />Anything that would be helpful to educate sales people about your company and products:</p>
+    <h4 class="form-hd">Resources for Sales Professionals</h4>
+    <p>Provide links to resources such as documenation and training, demos, sales literature, whitepapers.  Anything that would be helpful for sales people to know about your company and products.</p>
     {{> afArrayField name='companyResources'}}
     {{> afFieldInput name='accountIsActive' type='hidden' value='true'}}
 
     {{> afFieldInput name='companyId' type='hidden' value=currentUser._id}}
+
   </fieldset>
   <button type="submit" class="btn btn-primary">Submit</button>
   {{/autoForm}}

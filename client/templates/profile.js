@@ -77,6 +77,7 @@ Template.updateSalesForm.events({
 
 		var userData = {
 			//fullName: template.find('#fullName').value,
+			"profile.pictureUrl": template.find('#pictureUrl').value,
 			"profile.website": template.find('#website').value,
 			"profile.bio": template.find('#bio').value,
 			"profile.firstName": template.find('#firstName').value,
@@ -105,7 +106,7 @@ Template.updateSalesForm.events({
 	}
 });
 
-Template.updateSalesForm.helpers({
+/*Template.updateSalesForm.helpers({
 	keywords: function() {
 		if(this.profile.keywords) {
 			return this.profile.keywords;
@@ -125,7 +126,7 @@ Template.updateSalesForm.helpers({
 		}
 		
 	}
-});
+}); */
 
 Template.userTypeSwitcher.events({
 	'click #switchUserType': function() {
@@ -149,4 +150,35 @@ Template.chooseUserType.events({
 	'click #chooseSalesperson': function(event, template) {
 		Meteor.users.update({_id: Meteor.userId()}, {$set: {'profile.userType': 'salesperson'}});
 	}
+});
+
+Template.salesProfile.helpers({
+	reviewExists: function() {
+		var commenterId = Meteor.userId();
+		var userId = this._id;
+		var review = Reviews.findOne({userId: userId, commenterId: commenterId });
+		if(review) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	},
+	averageStarRating: function() {
+		var userId = this._id;
+		var reviews = Reviews.find({userId: userId });
+		var arr = [];
+		
+		reviews.forEach(function(doc){  //cursor.forEach
+			arr.push(doc.rating);
+		});
+
+		return _.reduce(arr, function(memo, num) {  //get average rating
+	        return memo + num;
+	    }, 0) / (arr.length === 0 ? 1 : arr.length);
+
+
+
+	}
+	
 });

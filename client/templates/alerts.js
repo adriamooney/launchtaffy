@@ -1,3 +1,4 @@
+
 AppMessages = {
   // Local (client-only) collection
   collection: new Mongo.Collection(null),
@@ -6,6 +7,12 @@ AppMessages = {
     AppMessages.collection.insert({message: message, messageType: messageType, seen: false})
   }
 };
+
+AppMessages.collection.allow({
+  insert: function () { return true; },
+  update: function () { return true; },
+  remove: function () { return true; }
+});
 
 Template.appMessages.helpers({
   appMessages: function() {
@@ -16,6 +23,8 @@ Template.appMessages.helpers({
 Template.appMessage.onRendered(function() {
   var message = this.data;
   Meteor.setTimeout(function () {
+    //AppMessages.collection.remove(message._id);
+    //Meteor.call('removeMsg', message._id);
     AppMessages.collection.remove(message._id);
   }, 6000);
 });
@@ -82,7 +91,8 @@ Template.linkedInCompanyMessage.onRendered(function() {
   var message = this.data;
 
   Meteor.setTimeout(function () {
-    LinkedInMessages.remove(message._id);
+    //LinkedInMessages.remove(message._id);
+    Meteor.call('removeLinkedInMsg', message._id);
   }, 3000);
 });
 

@@ -10,6 +10,8 @@
       	{{/if}}
       	{{/unless}}
 
+      	<!--{{averageStarRating}}-->
+
 
       	<div class="media">
 		  <div class="media-left">
@@ -33,7 +35,7 @@
 
 				{{#if this.profile.bio}}
 				<h5>Bio</h5>
-				<p>{{this.profile.bio}}</p>
+				<p><span class="pre">{{this.profile.bio}}</span></p>
 				{{/if}}
 
 				{{#if this.profile.keywords}}
@@ -77,6 +79,16 @@
 			</form>
 		</div>
 		{{/if}}
+
+	<!--	<br />
+		<br />
+		<hr />
+		<br />
+
+	{{# unless reviewExists}}	
+		{{>salesReviewForm}}
+	{{/unless}}-->
+
 </template>
 
 <template name="updateSalesForm">
@@ -90,12 +102,19 @@
 				<form id="updateSalesForm"> 
 				<fieldset>
 				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+					      {{# if profile.pictureUrl}}
+					      	<img class="img-responsive" src="{{profile.pictureUrl}}" alt="{{profile.firstName}} {{profile.lastName}} Picture" />
+					      {{/if}}
+				  		</div>
+			  		</div>
 					<div class="form-group">
-				    	<div class="col-sm-6">
+				    	<div class="col-sm-6 m-b">
 				    		<label for="firstName" class="control-label">First Name</label>
 				    		<input id="firstName" class="form-control" value="{{this.profile.firstName}}" />
 				    	</div>
-				    	<div class="col-sm-6">
+				    	<div class="col-sm-6 m-b">
 				    		<label for="lastName" class="control-label">Last Name</label>
 				    		<input id="lastName" class="form-control" value="{{this.profile.lastName}}" />
 				    	</div>
@@ -112,8 +131,14 @@
 		  		</div>
 		  		<div class="form-group">
 			    	<label for="keywords" class="control-label">Keywords</label>
-			    	<textarea id="keywords" class="form-control">{{keywords}}</textarea>
-			    	<p class="help-block">Be sure to include industries of specialization and key company connections.</p>
+			    	<textarea id="keywords" class="form-control">{{this.profile.keywords}}</textarea>
+			    	<p class="help-block">Be sure to include industries of specialization and key company connections. Add keywords separated by commas.</p>
+		  		</div>
+		  		<div class="form-group">
+			    	<label for="website" class="control-label">Profile Picture URL</label>
+			    	<input type="text" name="publicProfileUrl" id="pictureUrl" class="form-control" value="{{this.profile.pictureUrl}}"  />
+
+			    	<p class="help-block">Right click on your LinkedIn or FaceBook profile picture and select 'copy URL', then paste it here.</p>
 		  		</div>
 		  		<div class="form-group">
 			    	<label for="website" class="control-label">LinkedIn Profile</label>
@@ -134,6 +159,11 @@
 				{{/each}}
 				</ul>
 			{{/if}}
+			{{#unless approvedCompanies}}
+			<div class="well">
+			    <p>Message <a href="/companies/">companies</a> you're interested in to start the process of becoming an approved seller. </p>
+			</div>
+			{{/unless}}
 		</div>
 	</div>
 

@@ -3,8 +3,15 @@
 </template>
 
 <template name="news">
+	<div class="page-header">
+		<h1>News</h1>
+	</div>
 	{{>addNews}}
 	{{>editnews}}
+	{{>addFeaturedSalesPeople}}
+	{{>featuredSalesPeople}}
+
+	{{>massEmail}}
 </template>
 
 <template name="editnews">
@@ -26,4 +33,40 @@
 
 <template name="updateNews">
 	{{> quickForm collection="News" id="updateNewsForm" type="update" doc=this}}
+</template>
+
+<template name="addFeaturedSalesPeople">
+	<form>
+		<legend>Featured Sales Professionals</legend>
+		<div class="form-group">
+		<input class="form-control" type="text" id="addfeaturedSalesPerson" value=""><button type="submit" class="btn btn-primary" id="submit">Add</button>
+		<button type="button" class="btn btn-danger" id="remove">Remove</button>
+		</div>
+	</form>
+</template>
+
+
+
+<template name="massEmail">
+
+	<h3>Mass Email</h3>
+	
+	<form>
+		<div class="form-group">
+			<label>Emails:</label>
+			<textarea class="form-control" id="emails" placeholder="Separate emails by commas.  If sending to all users, leave this blank."></textarea>
+		</div>
+		<div class="form-group">
+			<label>Subject:</label>
+			<input class="form-control" id="subject" type="text" placeholder="subject" />
+		</div>
+		<div class="form-group">
+			<label>Message:</label>
+			<textarea class="form-control" id="message" rows="10"></textarea>
+		</div>
+		<!--<button type="submit" class="btn btn-primary">Submit</button>-->
+		<button id="allSalesUsers" class="btn btn-sm btn-primary">Send to all Sales Professionals</button>
+		<button id="allCompanyUsers" class="btn btn-sm btn-success">Send to all Companies</button>
+		<button id="specificEmails" class="btn btn-sm btn-info">Send to specific emails</button>
+	</form>
 </template>
