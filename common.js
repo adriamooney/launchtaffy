@@ -10,33 +10,121 @@ FeaturedSalesPeople = new Mongo.Collection("featuredSalesPeople");
 Reviews = new Mongo.Collection("reviews");
 
 Companies.allow({
-  insert: function () { return true; },
-  update: function () { return true; }//,
-  //remove: function () { return true; }
+  insert: function (userId, doc) {
+    // the user must be logged in, and the document must be owned by the user
+    return (userId && doc.companyId === userId);
+  },
+  update: function (userId, doc, fields, modifier) {
+    // can only change your own documents
+    return doc.companyId === userId;
+  },
+  remove: function (userId, doc) {
+    // can only remove your own documents
+    return doc.companyId === userId;
+  },
+  fetch: ['companyId']
+});
+
+Companies.deny({
+  update: function (userId, docs, fields, modifier) {
+    // can't change owners
+    return _.contains(fields, 'companyId');
+  },
+  remove: function (userId, doc) {
+    // can't remove locked documents
+    return doc.locked;
+  },
+  fetch: ['locked'] // no need to fetch 'owner'
 });
 
 Sales.allow({
-  insert: function () { return true; },
-  update: function () { return true; }//,
-  //remove: function () { return true; }
+  insert: function (userId, doc) {
+    // the user must be logged in, and the document must be owned by the user
+    return (userId && doc.salesPersonId === userId);
+  },
+  update: function (userId, doc, fields, modifier) {
+    // can only change your own documents
+    return doc.salesPersonId === userId;
+  },
+  remove: function (userId, doc) {
+    // can only remove your own documents
+    return doc.salesPersonId === userId;
+  },
+  fetch: ['salesPersonId']
+});
+
+Sales.deny({
+  update: function (userId, docs, fields, modifier) {
+    // can't change owners
+    return _.contains(fields, 'salesPersonId');
+  },
+  remove: function (userId, doc) {
+    // can't remove locked documents
+    return doc.locked;
+  },
+  fetch: ['locked'] // no need to fetch 'owner'
 });
 
 Leads.allow({
-  insert: function () { return true; },
-  update: function () { return true; }//,
-  //remove: function () { return true; }
+  insert: function (userId, doc) {
+    // the user must be logged in, and the document must be owned by the user
+    return (userId && doc.salesPersonId === userId);
+  },
+  update: function (userId, doc, fields, modifier) {
+    // can only change your own documents
+    return doc.salesPersonId === userId;
+  },
+  remove: function (userId, doc) {
+    // can only remove your own documents
+    return doc.salesPersonId === userId;
+  },
+  fetch: ['salesPersonId']
 });
 
-News.allow({
+Leads.deny({
+  update: function (userId, docs, fields, modifier) {
+    // can't change owners
+    return _.contains(fields, 'salesPersonId');
+  },
+  remove: function (userId, doc) {
+    // can't remove locked documents
+    return doc.locked;
+  },
+  fetch: ['locked'] // no need to fetch 'owner'
+});
+
+News.allow({  //TODO: fix this
   insert: function () { return true; },
   update: function () { return true; }//,
   //remove: function () { return true; }
 });
 
 Reviews.allow({
-  insert: function () { return true; },
-  update: function () { return false; }//,
-  //remove: function () { return true; }
+  insert: function (userId, doc) {
+    // the user must be logged in, and the document must be owned by the user
+    return (userId && doc.userId === userId);
+  },
+  update: function (userId, doc, fields, modifier) {
+    // can only change your own documents
+    return doc.userId === userId;
+  },
+  remove: function (userId, doc) {
+    // can only remove your own documents
+    return doc.userId === userId;
+  },
+  fetch: ['userId']
+});
+
+Reviews.deny({
+  update: function (userId, docs, fields, modifier) {
+    // can't change owners
+    return _.contains(fields, 'userId');
+  },
+  remove: function (userId, doc) {
+    // can't remove locked documents
+    return doc.locked;
+  },
+  fetch: ['locked'] // no need to fetch 'owner'
 });
 
 LinkedInMessages = new Mongo.Collection('linkedinmessages');
