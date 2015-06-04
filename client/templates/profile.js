@@ -106,7 +106,7 @@ Template.updateSalesForm.events({
 	}
 });
 
-Template.updateSalesForm.helpers({
+/*Template.updateSalesForm.helpers({
 	keywords: function() {
 		if(this.profile.keywords) {
 			return this.profile.keywords;
@@ -126,7 +126,7 @@ Template.updateSalesForm.helpers({
 		}
 		
 	}
-});
+}); */
 
 Template.userTypeSwitcher.events({
 	'click #switchUserType': function() {

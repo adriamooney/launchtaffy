@@ -10,7 +10,7 @@
       	{{/if}}
       	{{/unless}}
 
-      	{{averageStarRating}}
+      	<!--{{averageStarRating}}-->
 
 
       	<div class="media">
@@ -35,7 +35,7 @@
 
 				{{#if this.profile.bio}}
 				<h5>Bio</h5>
-				<p>{{this.profile.bio}}</p>
+				<p><span class="pre">{{this.profile.bio}}</span></p>
 				{{/if}}
 
 				{{#if this.profile.keywords}}
@@ -80,14 +80,14 @@
 		</div>
 		{{/if}}
 
-		<br />
+	<!--	<br />
 		<br />
 		<hr />
 		<br />
 
 	{{# unless reviewExists}}	
 		{{>salesReviewForm}}
-	{{/unless}}
+	{{/unless}}-->
 
 </template>
 
@@ -131,7 +131,7 @@
 		  		</div>
 		  		<div class="form-group">
 			    	<label for="keywords" class="control-label">Keywords</label>
-			    	<textarea id="keywords" class="form-control">{{keywords}}</textarea>
+			    	<textarea id="keywords" class="form-control">{{this.profile.keywords}}</textarea>
 			    	<p class="help-block">Be sure to include industries of specialization and key company connections. Add keywords separated by commas.</p>
 		  		</div>
 		  		<div class="form-group">
