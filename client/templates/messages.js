@@ -72,6 +72,17 @@ Template.messages.helpers({
 		}
 		//return Messages.find({$and: [{from: Meteor.userId()},{status: 'unread'}]}, {sort: {timeStamp: -1}});
 	},
+	threadStartedByCurrentUser: function() {
+		var fromId = this.from;
+		var from =  Meteor.users.findOne({_id: fromId});
+		if( from._id == Meteor.userId() ) {
+			return true
+		}
+		else {
+			return false;
+		}
+
+	},
 	fromId: function() {
 		var fromId = this.from;
 		var from =  Meteor.users.findOne({_id: fromId});
@@ -85,13 +96,27 @@ Template.messages.helpers({
 		}
 		return person;
 	},
+	fromImg: function() {
+		var fromId = this.from;
+		var from =  Meteor.users.findOne({_id: fromId});
+		if(from.profile.userType == 'company') {
+			var companyId = from.profile.companyId;
+			var company = Companies.findOne({_id: companyId});
+			var img = company.logoUrl;
+		}
+		else {
+			var img = from.profile.pictureUrl;
+		}
+		console.log(img);
+		return img;
+	},
 	toId: function() {
 		var toId = this.to;
 		var to =  Meteor.users.findOne({_id: toId});
-		console.log(toId);
+		//console.log(toId);
 		if(to.profile.userType == 'company') {
 			var companyId = to.profile.companyId;
-			console.log(companyId);
+			//console.log(companyId);
 			var company = Companies.findOne({_id: companyId});
 			var person = company.name;
 		}
@@ -99,6 +124,20 @@ Template.messages.helpers({
 			var person = to.profile.firstName +' '+ to.profile.lastName;
 		}
 		return person;
+	},
+	toImg: function() {
+		var toId = this.to;
+		var to =  Meteor.users.findOne({_id: toId});
+
+		if(to.profile.userType == 'company') {
+			var companyId = to.profile.companyId;
+			var company = Companies.findOne({_id: companyId});
+			var img = company.logoUrl;
+		}
+		else {
+			var img = to.profile.pictureUrl;
+		}
+		return img;
 	}
 });
 
