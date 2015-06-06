@@ -72,6 +72,17 @@ Template.messages.helpers({
 		}
 		//return Messages.find({$and: [{from: Meteor.userId()},{status: 'unread'}]}, {sort: {timeStamp: -1}});
 	},
+	threadStartedByCurrentUser: function() {
+		var fromId = this.from;
+		var from =  Meteor.users.findOne({_id: fromId});
+		if( from._id == Meteor.userId() ) {
+			return true
+		}
+		else {
+			return false;
+		}
+
+	},
 	fromId: function() {
 		var fromId = this.from;
 		var from =  Meteor.users.findOne({_id: fromId});
@@ -84,6 +95,20 @@ Template.messages.helpers({
 			var person = from.profile.firstName+' '+ from.profile.lastName;
 		}
 		return person;
+	},
+	fromImg: function() {
+		var fromId = this.from;
+		var from =  Meteor.users.findOne({_id: fromId});
+		if(from.profile.userType == 'company') {
+			var companyId = from.profile.companyId;
+			var company = Companies.findOne({_id: companyId});
+			var img = company.logoUrl;
+		}
+		else {
+			var img = from.profile.pictureUrl;
+		}
+		console.log(img);
+		return img;
 	},
 	toId: function() {
 		var toId = this.to;
@@ -110,7 +135,7 @@ Template.messages.helpers({
 			var img = company.logoUrl;
 		}
 		else {
-			var img = to.pictureUrl;
+			var img = to.profile.pictureUrl;
 		}
 		return img;
 	}

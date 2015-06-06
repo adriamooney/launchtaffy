@@ -12,7 +12,7 @@
   }
 }; */
 
-Template.unloggedinHome.events({
+/*Template.unloggedinHome.events({
   'click #company-signup': function(e) {
     //analytics.track('click-company-signup');
     ServerSession.set('userType', 'company');
@@ -25,7 +25,7 @@ Template.unloggedinHome.events({
             }
         });
 
-  },
+  }, 
   'click #sales-signup': function(e) {
     //analytics.track('click-sales-signup');
     ServerSession.set('userType', 'salesperson');
@@ -39,9 +39,8 @@ Template.unloggedinHome.events({
         });
   }
 
-});
-
-/*  'click #company-signup': function(e) {
+}); 
+ 'click #company-signup': function(e) {
     //analytics.track('click-company-signup');
     ServerSession.set('userType', 'company');
     e.preventDefault();
