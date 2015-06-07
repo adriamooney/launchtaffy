@@ -10,7 +10,8 @@
       	{{/if}}
       	{{/unless}}
 
-      	<!--{{averageStarRating}}-->
+      	<span>Average rating: {{averageStarRating}}</span> <span>({{numReviews}}) reviews</span>
+      	<div id="averageScore"></div>
 
 
       	<div class="media">
@@ -80,14 +81,14 @@
 		</div>
 		{{/if}}
 
-	<!--	<br />
+		<br />
 		<br />
 		<hr />
 		<br />
 
 	{{# unless reviewExists}}	
 		{{>salesReviewForm}}
-	{{/unless}}-->
+	{{/unless}}
 
 </template>
 

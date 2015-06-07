@@ -2,7 +2,7 @@
 	<h3>Leave Review</h3>
 	{{#autoForm collection="Reviews" id="insertReviewForm" type="insert"}}
 
-		{{> afQuickField name='rating' value=''}}
+		{{> afQuickField name='rating' value='' ratyOptions=ratyOptions}}
 		{{> afQuickField name='review' rows=4 value=''}}
 		{{> afQuickField name='userId' value=this._id type='hidden'}}
 		{{> afQuickField name='commenterId' value=currentUser._id type='hidden'}}

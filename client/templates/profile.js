@@ -176,9 +176,42 @@ Template.salesProfile.helpers({
 		return _.reduce(arr, function(memo, num) {  //get average rating
 	        return memo + num;
 	    }, 0) / (arr.length === 0 ? 1 : arr.length);
-
-
-
+	},
+	numReviews: function() {
+		var userId = this._id;
+		var reviews = Reviews.find({userId: userId }).count();
+		return reviews;
 	}
 	
+});
+
+
+Template.salesProfile.onRendered(function () {
+	
+	var userId = this.data._id;
+
+	var reviews = Reviews.find({userId: userId });
+
+	var arr = [];
+	
+	reviews.forEach(function(doc){  //cursor.forEach
+		arr.push(doc.rating);
+
+	});
+
+	function arrayAverage(arr) {
+      return _.reduce(arr, function(memo, num) {
+        return memo + num;
+      }, 0) / (arr.length === 0 ? 1 : arr.length);
+    }
+
+	$('#averageScore').raty({
+	  halfShow : true,
+	  hints: ["bad", "poor", "average", "good", "excellent"],
+      starHalf: '/raty/images/star-half.png',
+      starOff: '/raty/images/star-off.png',
+      starOn: '/raty/images/star-on.png',
+      readOnly: true,
+	  score    : arrayAverage(arr)
+	});
 });
