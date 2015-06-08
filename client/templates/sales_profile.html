@@ -10,8 +10,7 @@
       	{{/if}}
       	{{/unless}}
 
-      	<span>Average rating: {{averageStarRating}}</span> <span>({{numReviews}}) reviews</span>
-      	<div id="averageScore"></div>
+
 
 
       	<div class="media">
@@ -26,6 +25,17 @@
 		    {{# if this.profile.publicProfileUrl}}
 				<a class="label-link block" href="{{this.profile.publicProfileUrl}}" target="_blank"><span class="label label-info block">LinkedIn</span></a>
 			{{/if}}
+
+
+			{{# if reviewExists this._id}}
+	      	<div class="pull-right">
+	      		<div id="averageScore" class="star-rating"></div>
+	      		<small class="text-muted">Avg. rating: {{averageStarRating this._id}}</small> <br />
+	      		<small>({{numReviews this._id}}) reviews</small>
+	      		
+	      	</div>
+	      	{{/if}}
+
 		  </div>
 		  <div class="media-body">
 		    
@@ -86,7 +96,7 @@
 		<hr />
 		<br />
 
-	{{# unless reviewExists}}	
+	{{# unless reviewExists this._id}}	
 		{{>salesReviewForm}}
 	{{/unless}}
 

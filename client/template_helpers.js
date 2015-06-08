@@ -1,47 +1,3 @@
-/*Template.registerHelper('isSalesPerson', function() {
-	var user = Meteor.user();
-	if(user) {
-		var userType =  user.profile.userType;
-		if (userType == 'salesperson') {
-			return true;
-		}
-	}
-		
-});
- */
-/*Template.registerHelper('isCompany', function() {
-
-		var user = Meteor.user();
-		if(user) {
-			var userType =  user.profile.userType;
-			if (userType == 'company') {
-				return true;
-			}
-		}
-}); */
-
-/*Template.registerHelper('userType', function() {
-
-	if (Meteor.user()) {
-		return Meteor.user().profile.userType;
-	}
-		
-}); */
-
-/*Template.registerHelper('thisCompany', function() {
-
-	if (Meteor.user()) {
-
-		var userId = Meteor.userId();
-
-		if(userId == companyId) {
-			var company = Companies.findOne({companyId: userId});
-			return company;
-		}
-	}
-		
-});  */
-
 Template.registerHelper('currentUserIsCompany', function() {   //TODO: these functions can be combined to use an argument  http://meteorcapture.com/spacebars/
 	var user = Meteor.user().profile.userType;
 	if (user == 'company') {
@@ -205,5 +161,46 @@ Template.registerHelper('email', function() {
 Template.registerHelper('newDate', function() {
 	return new Date();
 });
+
+
+// reviews 
+Template.registerHelper('reviewExists', function(userId) {
+		var commenterId = Meteor.userId();
+		//var userId = this._id;
+		var review = Reviews.findOne({userId: userId, commenterId: commenterId });
+		if(review) {
+			return true;
+		}
+		else {
+			return false;
+		}
+});
+Template.registerHelper('averageStarRating', function(userId) {
+
+		//var userId = this._id;
+		var reviews = Reviews.find({userId: userId });
+		var arr = [];
+		
+		reviews.forEach(function(doc){  //cursor.forEach
+			arr.push(doc.rating);
+		});
+
+		return _.reduce(arr, function(memo, num) {  //get average rating
+	        return memo + num;
+	    }, 0) / (arr.length === 0 ? 1 : arr.length);
+});
+Template.registerHelper('numReviews', function(userId) {
+		//var userId = this._id;
+		var reviews = Reviews.find({userId: userId }).count();
+		return reviews;
+});
+
+Template.registerHelper('reviewsForUser', function(userId) {
+		//var userId = this._id;
+		var reviews = Reviews.find({userId: userId });
+		return reviews;
+});
+
+
 
 

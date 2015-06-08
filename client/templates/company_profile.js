@@ -166,6 +166,38 @@ Template.companyUserProfile.events({
 });
 
 
+Template.companyUserProfile.onRendered(function () {
+	
+	var userId = this.data._id;
+
+	var reviews = Reviews.find({userId: userId });
+
+	var arr = [];
+	
+	reviews.forEach(function(doc){  //cursor.forEach
+		arr.push(doc.rating);
+
+	});
+
+	function arrayAverage(arr) {
+      return _.reduce(arr, function(memo, num) {
+        return memo + num;
+      }, 0) / (arr.length === 0 ? 1 : arr.length);
+    }
+
+	$('#averageScore').raty({
+	  halfShow : true,
+	  hints: ["bad", "poor", "average", "good", "excellent"],
+      starHalf: 'fa fa-star-half-o',
+      starOff: 'fa fa-star-o',
+      starOn: 'fa fa-star',
+      readOnly: true,
+      starType : 'i',
+	  score    : arrayAverage(arr)
+	});
+});
+
+
 
 // need companyResources, showPrivate, companyApproved, isFavorite
 

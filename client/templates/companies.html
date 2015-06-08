@@ -31,7 +31,10 @@
 				    </a>
 				  </div>
 				  <div class="media-body">
-				    <h4 class="media-heading"><a href="/company/{{this._id}}">{{name}}</a> <span class="label label-success">{{numSales}}</span></h4>
+				    <h4 class="media-heading"><a href="/company/{{this._id}}">{{name}}</a> <span class="label label-success">{{numSales}}</span>
+				    	{{# if reviewExists this.companyId}}<span>( {{averageStarRating this.companyId}}) </span>
+      					<div class="star-rating" id="averageScore-{{companyId}}"></div>{{/if}}
+				    </h4>
 				    	{{#if description}}
 							<p class="pre">{{{descriptionTruncated}}}</p>
 							{{else}}
