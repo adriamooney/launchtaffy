@@ -96,7 +96,7 @@
       {{>companyReviewForm}}
        {{else}}
         {{#each reviewsForUser this.companyId}}
-           <span class="pre">{{review}}</span>
+           {{>reviewItem}}
         {{/each}}
     {{/unless}}
 
