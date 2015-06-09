@@ -94,11 +94,15 @@
 
     {{# unless reviewExists this.companyId}}  
       {{>companyReviewForm}}
-       {{else}}
-        {{#each reviewsForUser this.companyId}}
-           {{>reviewItem}}
-        {{/each}}
     {{/unless}}
+
+    {{#if reviewsForUser this.companyId}}
+      {{# reviewsWrapper}}
+          {{#each reviewsForUser this.companyId}}
+             {{>reviewItem}}
+          {{/each}}
+      {{/ reviewsWrapper}}
+    {{/if}}
 
 </template>
 

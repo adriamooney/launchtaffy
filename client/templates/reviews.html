@@ -24,7 +24,18 @@
 
 <template name="reviewItem">
 	<img src="{{reviewerImg}}" /><h4>{{reviewerName}}</h4>
-	<div class="pre">{{review}}</div>
+	<div id="starRating-{{_id}}" class="star-rating"></div>
+	{{# if review }}<div class="pre">{{review}}</div>{{/if}}
+</template>
+
+
+<template name="reviewsWrapper">
+	<h3>{{Reviews}}</h3>
+	  <ul>
+	    <li>
+	      {{> UI.contentBlock}}
+	    </li>
+	  </ul>
 </template>
 
 

@@ -198,7 +198,12 @@ Template.registerHelper('numReviews', function(userId) {
 Template.registerHelper('reviewsForUser', function(userId) {
 		//var userId = this._id;
 		var reviews = Reviews.find({userId: userId });
-		return reviews;
+		if(reviews.count() > 0) {
+			return reviews;
+		}
+		else {
+			return false;
+		}
 });
 
 

@@ -30,11 +30,8 @@ Template.companyReviewForm.helpers({
 
 Template.reviewItem.helpers({
 	reviewerName: function() {
-		console.log(this);
 		var reviewerId = this.commenterId;
-		console.log(reviewerId);
 		var reviewer = Meteor.users.findOne({_id: reviewerId});
-		console.log(reviewer.profile.firstName);
 		if(reviewer.profile.userType == 'company') {
 			var companyId = reviewer._id;
 			var company = Company.findOne({_id: companyId});
@@ -45,8 +42,34 @@ Template.reviewItem.helpers({
 		}
 	},
 	reviewerImg: function() {
-		console.log(this);
+		var reviewerId = this.commenterId;
+		var reviewer = Meteor.users.findOne({_id: reviewerId});
+		if(reviewer.profile.userType == 'company') {
+			var companyId = reviewer._id;
+			var company = Company.findOne({_id: companyId});
+			return company.logoUrl;
+		}
+		else {
+			return reviewer.profile.pictureUrl;
+		}
 	}
+});
+
+
+Template.reviewItem.onRendered(function () {
+
+	var rating = this.data.rating;
+
+	$('#starRating-'+this.data._id).raty({
+	  halfShow : true,
+	  hints: ["bad", "poor", "average", "good", "excellent"],
+      starHalf: 'fa fa-star-half-o',
+      starOff: 'fa fa-star-o',
+      starOn: 'fa fa-star',
+      readOnly: true,
+      starType : 'i',
+	  score    : rating
+	}); 
 });
 
 
