@@ -1,4 +1,4 @@
-Template.salespeople.helpers({
+ Template.salespeople.helpers({
 	salespeople: function() {
 		//console.log(Meteor.users.find({'profile.isActive': true}).count());
 		//var users = Meteor.users.find({ $and: [ {'profile.userType': 'salesperson'}, {'profile.isActive': true}, {'emails.0.verified': true} ] } ); 
@@ -245,6 +245,7 @@ Template.salesProfile.onRendered(function () {
         return memo + num;
       }, 0) / (arr.length === 0 ? 1 : arr.length);
     }
+    var avg = arrayAverage(arr).toFixed(2);
 
 	$('#averageScore').raty({
 	  halfShow : true,
@@ -254,7 +255,7 @@ Template.salesProfile.onRendered(function () {
       starOn: 'fa fa-star',
       readOnly: true,
       starType : 'i',
-	  score    : arrayAverage(arr)
+	  score    : avg
 	});
 });
 

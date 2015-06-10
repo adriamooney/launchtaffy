@@ -34,7 +34,9 @@ Template.reviewItem.helpers({
 		var reviewer = Meteor.users.findOne({_id: reviewerId});
 		if(reviewer.profile.userType == 'company') {
 			var companyId = reviewer._id;
-			var company = Company.findOne({_id: companyId});
+
+			var company = Companies.findOne({companyId: companyId});
+			
 			return company.name;
 		}
 		else {
@@ -46,7 +48,8 @@ Template.reviewItem.helpers({
 		var reviewer = Meteor.users.findOne({_id: reviewerId});
 		if(reviewer.profile.userType == 'company') {
 			var companyId = reviewer._id;
-			var company = Company.findOne({_id: companyId});
+			var company = Companies.findOne({companyId: companyId});
+			
 			return company.logoUrl;
 		}
 		else {

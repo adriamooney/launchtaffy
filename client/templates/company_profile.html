@@ -95,11 +95,15 @@
 
     {{# unless reviewExists this._id}}  
       {{>salesReviewForm}}
-      {{else}}
-      {{#each reviewsForUser this._id}}
-        <span class="pre">{{review}}</span>
-      {{/each}}
     {{/unless}}
+
+    {{#if reviewsForUser this._id}}
+      {{# reviewsWrapper}}
+          {{#each reviewsForUser this._id}}
+             {{>reviewItem}}
+          {{/each}}
+      {{/ reviewsWrapper}}
+    {{/if}}
 
 
 </template>

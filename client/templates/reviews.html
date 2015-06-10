@@ -23,18 +23,20 @@
 </template>
 
 <template name="reviewItem">
-	<img src="{{reviewerImg}}" /><h4>{{reviewerName}}</h4>
-	<div id="starRating-{{_id}}" class="star-rating"></div>
-	{{# if review }}<div class="pre">{{review}}</div>{{/if}}
+	<li>
+		{{# if reviewerImg }}<img src="{{reviewerImg}}" /><h4>{{reviewerName}}</h4>{{/if}}
+		<div id="starRating-{{_id}}" class="star-rating"></div>
+		{{# if review }}<div class="pre">{{review}}</div>{{/if}}
+	</li>
 </template>
 
 
 <template name="reviewsWrapper">
 	<h3>Reviews</h3>
 	  <ul>
-	    <li>
+
 	      {{> UI.contentBlock}}
-	    </li>
+
 	  </ul>
 </template>
 

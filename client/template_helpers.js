@@ -168,13 +168,73 @@ Template.registerHelper('reviewExists', function(userId) {
 		var commenterId = Meteor.userId();
 		//var userId = this._id;
 		var review = Reviews.findOne({userId: userId, commenterId: commenterId });
+		
 		if(review) {
 			return true;
 		}
+
 		else {
 			return false;
 		}
 });
+
+Template.registerHelper('allowedToReview', function(userId) {
+		var commenterId = Meteor.userId();
+		var reviewee = Meteor.users.findOne({_id: userId});
+		//var userId = this._id;
+		var review = Reviews.findOne({userId: userId, commenterId: commenterId });
+		
+		if(review) {
+			return false;
+		}
+
+
+		if (Meteor.user().profile.userType == 'company' && reviewee.profile.userType == 'salesperson') {
+			var salesPeopleArr = Meteor.user().profile.approvedSalesPeople;
+
+
+			
+				if(salesPeopleArr && salesPeopleArr.length>0) {
+					console.log(salesPeopleArr);
+					console.log(userId);
+					//if there is a match, returns true
+					return  _.contains(salesPeopleArr, userId);
+				}
+				else {
+					return false;
+				}
+		
+		}
+
+		else if (Meteor.user().profile.userType == 'salesperson' && reviewee.profile.userType == 'company') {
+			var companiesArr = Meteor.user().profile.approvedCompanies;  //id's of companies
+			//need to know if userId maps to the company's companyId.  
+			if(companiesArr && companiesArr.length>0) {
+				console.log(companiesArr);
+				console.log(userId);
+				var companyUsersArr = [];
+				var companies = Companies.find({_id: {$in: companiesArr}});
+
+				companies.forEach(function (company) {
+					companyUsersArr.push(company.companyId);
+
+				});
+
+				//if there is a match, returns true
+				return  _.contains(companyUsersArr, userId);
+			}
+			else {
+				return false;
+			}
+		}
+
+
+		else {
+			return false;
+		}
+});
+
+
 Template.registerHelper('averageStarRating', function(userId) {
 
 		//var userId = this._id;
