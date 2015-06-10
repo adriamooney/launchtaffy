@@ -28,7 +28,7 @@
           {{/if}}
         </a>
 
-        {{# if reviewExists this.companyId}}
+        {{# if hasReviews this.companyId}}
           <div class="pull-right">
             <div id="averageScore" class="star-rating"></div>
             <small class="text-muted">Avg. rating: {{averageStarRating this.companyId}}</small> <br />
