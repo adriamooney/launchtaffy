@@ -245,7 +245,7 @@ Template.salesProfile.onRendered(function () {
         return memo + num;
       }, 0) / (arr.length === 0 ? 1 : arr.length);
     }
-    var avg = arrayAverage(arr).toFixed(2);
+
 
 	$('#averageScore').raty({
 	  halfShow : true,
