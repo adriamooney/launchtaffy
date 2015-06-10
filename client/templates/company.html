@@ -92,9 +92,9 @@
     <br />
 
 
-    {{# unless reviewExists this.companyId}}  
+    {{# if allowedToReview this.companyId}} 
       {{>companyReviewForm}}
-    {{/unless}}
+    {{/if}}
 
     {{#if reviewsForUser this.companyId}}
       {{# reviewsWrapper}}

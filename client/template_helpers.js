@@ -178,6 +178,19 @@ Template.registerHelper('reviewExists', function(userId) {
 		}
 });
 
+Template.registerHelper('hasReviews', function(userId) {
+
+		var review = Reviews.find({userId: userId }).count();
+		
+		if(review > 0) {
+			return true;
+		}
+
+		else {
+			return false;
+		}
+});
+
 Template.registerHelper('allowedToReview', function(userId) {
 		var commenterId = Meteor.userId();
 		var reviewee = Meteor.users.findOne({_id: userId});

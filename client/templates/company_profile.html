@@ -93,9 +93,9 @@
     <br />
 
 
-    {{# unless reviewExists this._id}}  
+    {{# if allowedToReview this._id}} 
       {{>salesReviewForm}}
-    {{/unless}}
+    {{/if}}
 
     {{#if reviewsForUser this._id}}
       {{# reviewsWrapper}}

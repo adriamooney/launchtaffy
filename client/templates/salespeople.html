@@ -39,7 +39,7 @@
 				  <div class="media-body">
 				    <h4 class="media-heading"><a href="/profile/{{_id}}">{{profile.firstName}} {{profile.lastName}}</a> <span class="label label-success">{{numSales}}</span> <span class="label label-success">{{numLeads}}</span>
 
-				    	{{# if reviewExists this._id}}<span>( {{averageStarRating this._id}}) </span>
+				    	{{# if hasReviews this._id}}<span>( {{averageStarRating this._id}}) </span>
       					<div class="star-rating" id="averageScore-{{_id}}"></div>{{/if}}
 
 				    </h4>
