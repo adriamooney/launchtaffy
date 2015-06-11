@@ -255,7 +255,7 @@ Template.salesProfile.onRendered(function () {
       starOn: 'fa fa-star',
       readOnly: true,
       starType : 'i',
-	  score    : avg
+	  score    : arrayAverage(arr)
 	});
 });
 

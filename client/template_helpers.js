@@ -258,9 +258,11 @@ Template.registerHelper('averageStarRating', function(userId) {
 			arr.push(doc.rating);
 		});
 
-		return _.reduce(arr, function(memo, num) {  //get average rating
+		var avg = _.reduce(arr, function(memo, num) {  //get average rating
 	        return memo + num;
 	    }, 0) / (arr.length === 0 ? 1 : arr.length);
+
+	    return avg.toFixed(1);
 });
 Template.registerHelper('numReviews', function(userId) {
 		//var userId = this._id;
