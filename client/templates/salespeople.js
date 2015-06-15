@@ -5,6 +5,7 @@ Template.salespeople.helpers({
 		var users = Meteor.users.find({ $and: [ {'profile.userType': 'salesperson'}, {'profile.isActive': true} ] } ); 
 
 		//console.log( users.count() );
+
 		if (users.count() > 0) {
 			return users;
 		}
