@@ -55,6 +55,19 @@ Template.reviewItem.helpers({
 		else {
 			return reviewer.profile.pictureUrl;
 		}
+	},
+	reviewerProfile: function() {
+		var reviewerId = this.commenterId;
+		var reviewer = Meteor.users.findOne({_id: reviewerId});
+		if(reviewer.profile.userType == 'company') {
+			var companyId = reviewer._id;
+			var company = Companies.findOne({companyId: companyId});
+			
+			return '/company/'+company._id;
+		}
+		else {
+			return '/profile/'+reviewer._id;
+		}
 	}
 });
 

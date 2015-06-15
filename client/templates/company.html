@@ -8,17 +8,28 @@
 
     <div class="page-header company-header">
       <h1>{{this.name}}</h1>
-      {{#if currentUserIsSales}}{{#if companyApproved}}<div class="btn-group add-sales"><a class="btn btn-primary btn-xs" href="/sales/"><i class="glyphicon glyphicon-plus"></i> Add a Sale</a><a class="btn btn-info btn-xs" href="/leads/"><i class="glyphicon glyphicon-plus"></i> Add a Lead</a></div>{{/if}}{{/if}}
+      {{#if currentUserIsSales}}{{#if companyApproved}}<div class="btn-group add-sales"><a class="btn btn-primary btn-xs" href="/sales/"><i class="glyphicon glyphicon-plus"></i> Add a Sale</a><a class="btn btn-info btn-xs" href="/leads/"><i class="glyphicon glyphicon-plus"></i> Add a Lead</a></div>{{/if}}{{/if}}                 
     </div>
 
-      {{#unless isFavorite }}
-      {{#if currentUser}}
-      <small class="pull-right"><a id="addToCompanyFavorites" href="#"><i class="glyphicon glyphicon-heart-empty"></i>Add to Favorites</a></small>
-      {{/if}}
-      {{/unless}}
-
-
+   
       <div class="media">
+
+        <div class="pull-right">
+          {{# if hasReviews this.companyId}}
+            <div class="avg-score-list">
+              <div id="averageScore" class="star-rating"></div>
+              <span class="score">({{averageStarRating this.companyId}})</span>
+            </div>
+          {{/if}}
+
+          {{#unless isFavorite }}
+            {{#if currentUser}}
+            <div><small><a id="addToCompanyFavorites" href="#"><i class="glyphicon glyphicon-heart text-danger"></i> Add to Favorites</a></small></div>
+            {{/if}}
+          {{/unless}}
+        </div>
+
+
       <div class="media-left">
         <a href="/profile/{{_id}}">
           {{# if this.logoUrl}}
@@ -27,15 +38,6 @@
             <img class="media-object" src="" alt="" style="width:60px;height:60px;background:#ccc;border:1px solid #666"/>
           {{/if}}
         </a>
-
-        {{# if hasReviews this.companyId}}
-          <div class="pull-right">
-            <div id="averageScore" class="star-rating"></div>
-            <small class="text-muted">Avg. rating: {{averageStarRating this.companyId}}</small> <br />
-            <small>({{numReviews this.companyId}}) reviews</small>
-            
-          </div>
-        {{/if}}
 
       </div>
       <div class="media-body">
