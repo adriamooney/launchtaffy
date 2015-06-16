@@ -178,7 +178,7 @@ this.SalesPersonPages = new Meteor.Pagination(Meteor.users, {
         sort: true
     },
     auth: function(skip, sub) {
-        return Meteor.users.find({ $and: [ {'profile.userType': 'salesperson'}, {'profile.isActive': true} ] } ); 
+        return Meteor.users.find({ $and: [ {'profile.userType': 'salesperson'}, {'profile.isActive': true}, {'profile.firstName': { $exists:true} } ] } ); 
     },
   
     itemTemplate: "salespeopleItem",
