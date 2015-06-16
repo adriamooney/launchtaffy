@@ -79,7 +79,7 @@
 
 
 		{{#if currentUser}}
-    <div><h3>Send Message</h3>
+    <div class="m-t-lrg"><h3>Send Message</h3>
   		<form id="contactCompany">
   			<div class="form-group"><textarea id="message" class="form-control"></textarea></div>
   			<button class="btn btn-primary" type="submit">Submit</button> 
@@ -88,10 +88,14 @@
 		{{/if}}
   	{{/if}}
 
-    <br />
-    <br />
-    <hr />
-    <br />
+    
+    {{#if allowedToReview this.companyId}}
+    <hr class="separator" />
+    {{else}}
+        {{#if reviewsForUser this.companyId}}
+      <hr class="separator" />
+        {{/if}}
+    {{/if}}
 
 
     {{# if allowedToReview this.companyId}} 
