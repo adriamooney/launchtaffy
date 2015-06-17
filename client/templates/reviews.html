@@ -2,11 +2,54 @@
 	<h3>Leave Review</h3>
 	{{#autoForm collection="Reviews" id="insertReviewForm" type="insert"}}
 
-		{{> afQuickField name='rating' value=''}}
+		{{> afQuickField name='rating' value='' ratyOptions=ratyOptions}}
 		{{> afQuickField name='review' rows=4 value=''}}
 		{{> afQuickField name='userId' value=this._id type='hidden'}}
 		{{> afQuickField name='commenterId' value=currentUser._id type='hidden'}}
 		<button type="submit" class="btn btn-primary">Submit</button>
 	{{/autoForm}}
 </template>
+
+<template name="companyReviewForm">
+	<h3>Leave Review</h3>
+	{{#autoForm collection="Reviews" id="insertReviewForm" type="insert"}}
+
+		{{> afQuickField name='rating' value='' ratyOptions=ratyOptions}}
+		{{> afQuickField name='review' rows=4 value=''}}
+		{{> afQuickField name='userId' value=this.companyId type='hidden'}}
+		{{> afQuickField name='commenterId' value=currentUser._id type='hidden'}}
+		<button type="submit" class="btn btn-primary">Submit</button>
+	{{/autoForm}}
+</template>
+
+<template name="reviewItem">
+	<li class="list-group-item">
+
+
+		<div class="media">
+		  <div class="media-left">
+		    {{# if reviewerImg }}<a href="{{reviewerProfile}}"><img class="media-object" src="{{reviewerImg}}" /></a>
+		    {{else}}
+		    <img class="media-object" src="" alt="" style="width:60px;height:60px;background:#ccc;border:1px solid #666"/>
+		    {{/if}}
+		  </div>
+		  <div class="media-body">
+		   	<div id="starRating-{{_id}}" class="star-rating"></div>
+			{{# if review }}<div class="pre">{{review}}</div>{{/if}}
+		  </div>
+		</div>
+		
+	</li>
+</template>
+
+
+<template name="reviewsWrapper">
+	<h3>Reviews</h3>
+	  <ul class="list-group reviews-list">
+
+	      {{> UI.contentBlock}}
+
+	  </ul>
+</template>
+
 

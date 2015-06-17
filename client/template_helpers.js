@@ -1,47 +1,3 @@
-/*Template.registerHelper('isSalesPerson', function() {
-	var user = Meteor.user();
-	if(user) {
-		var userType =  user.profile.userType;
-		if (userType == 'salesperson') {
-			return true;
-		}
-	}
-		
-});
- */
-/*Template.registerHelper('isCompany', function() {
-
-		var user = Meteor.user();
-		if(user) {
-			var userType =  user.profile.userType;
-			if (userType == 'company') {
-				return true;
-			}
-		}
-}); */
-
-/*Template.registerHelper('userType', function() {
-
-	if (Meteor.user()) {
-		return Meteor.user().profile.userType;
-	}
-		
-}); */
-
-/*Template.registerHelper('thisCompany', function() {
-
-	if (Meteor.user()) {
-
-		var userId = Meteor.userId();
-
-		if(userId == companyId) {
-			var company = Companies.findOne({companyId: userId});
-			return company;
-		}
-	}
-		
-});  */
-
 Template.registerHelper('currentUserIsCompany', function() {   //TODO: these functions can be combined to use an argument  http://meteorcapture.com/spacebars/
 	var user = Meteor.user().profile.userType;
 	if (user == 'company') {
@@ -205,5 +161,136 @@ Template.registerHelper('email', function() {
 Template.registerHelper('newDate', function() {
 	return new Date();
 });
+
+
+// reviews 
+Template.registerHelper('reviewExists', function(userId) {
+		var commenterId = Meteor.userId();
+		//var userId = this._id;
+		var review = Reviews.findOne({userId: userId, commenterId: commenterId });
+		
+		if(review) {
+			return true;
+		}
+
+		else {
+			return false;
+		}
+});
+
+Template.registerHelper('hasReviews', function(userId) {
+
+		var review = Reviews.find({userId: userId }).count();
+		
+		if(review > 0) {
+			return true;
+		}
+
+		else {
+			return false;
+		}
+});
+
+Template.registerHelper('allowedToReview', function(userId) {
+		var commenterId = Meteor.userId();
+		var reviewee = Meteor.users.findOne({_id: userId});
+		//var userId = this._id;
+		var review = Reviews.findOne({userId: userId, commenterId: commenterId });
+		
+		if(review) {
+			return false;
+		}
+
+
+		if (Meteor.user().profile.userType == 'company' && reviewee.profile.userType == 'salesperson') {
+			var salesPeopleArr = Meteor.user().profile.approvedSalesPeople;
+
+
+			
+				if(salesPeopleArr && salesPeopleArr.length>0) {
+					console.log(salesPeopleArr);
+					console.log(userId);
+					//if there is a match, returns true
+					return  _.contains(salesPeopleArr, userId);
+				}
+				else {
+					return false;
+				}
+		
+		}
+
+		else if (Meteor.user().profile.userType == 'salesperson' && reviewee.profile.userType == 'company') {
+			var companiesArr = Meteor.user().profile.approvedCompanies;  //id's of companies
+			//need to know if userId maps to the company's companyId.  
+			if(companiesArr && companiesArr.length>0) {
+				console.log(companiesArr);
+				console.log(userId);
+				var companyUsersArr = [];
+				var companies = Companies.find({_id: {$in: companiesArr}});
+
+				companies.forEach(function (company) {
+					companyUsersArr.push(company.companyId);
+
+				});
+
+				//if there is a match, returns true
+				return  _.contains(companyUsersArr, userId);
+			}
+			else {
+				return false;
+			}
+		}
+
+
+		else {
+			return false;
+		}
+});
+
+
+Template.registerHelper('averageStarRating', function(userId) {
+
+		//var userId = this._id;
+		var reviews = Reviews.find({userId: userId });
+		var arr = [];
+		
+		reviews.forEach(function(doc){  //cursor.forEach
+			arr.push(doc.rating);
+		});
+
+		var avg = _.reduce(arr, function(memo, num) {  //get average rating
+	        return memo + num;
+	    }, 0) / (arr.length === 0 ? 1 : arr.length);
+
+	    return avg.toFixed(1);
+});
+Template.registerHelper('numReviews', function(userId) {
+		//var userId = this._id;
+		var reviews = Reviews.find({userId: userId }).count();
+		return reviews;
+});
+
+Template.registerHelper('reviewsForUser', function(userId) {
+		//var userId = this._id;
+		var reviews = Reviews.find({userId: userId });
+		if(reviews.count() > 0) {
+			return reviews;
+		}
+		else {
+			return false;
+		}
+});
+
+Template.registerHelper("equals_or", function(param, arr) {
+   arr = arr.split(",");
+   if (arr.indexOf(param) !== -1) {
+      return true;
+   } 
+   else {
+     return false;
+   }
+});
+
+
 
 

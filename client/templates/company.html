@@ -8,17 +8,28 @@
 
     <div class="page-header company-header">
       <h1>{{this.name}}</h1>
-      {{#if currentUserIsSales}}{{#if companyApproved}}<div class="btn-group add-sales"><a class="btn btn-primary btn-xs" href="/sales/"><i class="glyphicon glyphicon-plus"></i> Add a Sale</a><a class="btn btn-info btn-xs" href="/leads/"><i class="glyphicon glyphicon-plus"></i> Add a Lead</a></div>{{/if}}{{/if}}
+      {{#if currentUserIsSales}}{{#if companyApproved}}<div class="btn-group add-sales"><a class="btn btn-primary btn-xs" href="/sales/"><i class="glyphicon glyphicon-plus"></i> Add a Sale</a><a class="btn btn-info btn-xs" href="/leads/"><i class="glyphicon glyphicon-plus"></i> Add a Lead</a></div>{{/if}}{{/if}}                 
     </div>
 
-      {{#unless isFavorite }}
-      {{#if currentUser}}
-      <small class="pull-right"><a id="addToCompanyFavorites" href="#"><i class="glyphicon glyphicon-heart-empty"></i>Add to Favorites</a></small>
-      {{/if}}
-      {{/unless}}
-
-
+   
       <div class="media">
+
+        <div class="pull-right">
+          {{# if hasReviews this.companyId}}
+            <div class="avg-score-list">
+              <div id="averageScore" class="star-rating"></div>
+              <span class="score">({{averageStarRating this.companyId}})</span>
+            </div>
+          {{/if}}
+
+          {{#unless isFavorite }}
+            {{#if currentUser}}
+            <div><small><a id="addToCompanyFavorites" href="#"><i class="glyphicon glyphicon-heart text-danger"></i> Add to Favorites</a></small></div>
+            {{/if}}
+          {{/unless}}
+        </div>
+
+
       <div class="media-left">
         <a href="/profile/{{_id}}">
           {{# if this.logoUrl}}
@@ -27,6 +38,7 @@
             <img class="media-object" src="" alt="" style="width:60px;height:60px;background:#ccc;border:1px solid #666"/>
           {{/if}}
         </a>
+
       </div>
       <div class="media-body">
         {{#if this.description}}
@@ -67,7 +79,7 @@
 
 
 		{{#if currentUser}}
-    <div><h3>Send Message</h3>
+    <div class="m-t-lrg"><h3>Send Message</h3>
   		<form id="contactCompany">
   			<div class="form-group"><textarea id="message" class="form-control"></textarea></div>
   			<button class="btn btn-primary" type="submit">Submit</button> 
@@ -75,6 +87,28 @@
     </div>
 		{{/if}}
   	{{/if}}
+
+    
+    {{#if allowedToReview this.companyId}}
+    <hr class="separator" />
+    {{else}}
+        {{#if reviewsForUser this.companyId}}
+      <hr class="separator" />
+        {{/if}}
+    {{/if}}
+
+
+    {{# if allowedToReview this.companyId}} 
+      {{>companyReviewForm}}
+    {{/if}}
+
+    {{#if reviewsForUser this.companyId}}
+      {{# reviewsWrapper}}
+          {{#each reviewsForUser this.companyId}}
+             {{>reviewItem}}
+          {{/each}}
+      {{/ reviewsWrapper}}
+    {{/if}}
 
 </template>
 
@@ -201,42 +235,4 @@
   <button type="submit" class="btn btn-primary">Submit</button>
   {{/autoForm}}
 </template>
-
-<!--TODO: move this somewhere else-->
-
-<template name="afArrayField_myArray">
-  <div class="panel panel-default arrayFieldPanel">
-    <div class="panel-heading">{{afFieldLabelText name=this.atts.name}}</div>
-    {{#if afFieldIsInvalid name=this.atts.name}}
-    <div class="panel-body has-error">
-      <span class="help-block">{{{afFieldMessage name=this.atts.name}}}</span>
-    </div>
-    {{/if}}
-    <ul class="list-group">
-      {{#afEachArrayItem name=this.atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount}}
-      <li class="list-group-item autoform-array-item">
-        <div>
-          <div class="autoform-remove-item-wrap">
-            {{#if afArrayFieldHasMoreThanMinimum name=../atts.name minCount=../atts.minCount maxCount=../atts.maxCount}}
-            <button type="button" class="btn btn-default btn-xs autoform-remove-item"><span class="glyphicon glyphicon-minus"></span></button>
-            {{/if}}
-          </div>
-          <div class="autoform-array-item-body">
-            {{> afQuickField name=this.name label=false options=afOptionsFromSchema}}
-          </div>
-        </div>
-      </li>
-      {{/afEachArrayItem}}
-      {{#if afArrayFieldHasLessThanMaximum name=this.atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount}}
-      <li class="list-group-item">
-        <button type="button" class="btn btn-info btn-xs autoform-add-item" data-autoform-field="{{this.atts.name}}" data-autoform-minCount="{{this.atts.minCount}}" data-autoform-maxCount="{{this.atts.maxCount}}"><span class="glyphicon glyphicon-plus"></span></button>
-      </li>
-      {{/if}}
-    </ul>
-  </div>
-</template>
-
-
-
-
 

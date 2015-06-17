@@ -37,7 +37,16 @@
 				    </a>
 				  </div>
 				  <div class="media-body">
-				    <h4 class="media-heading"><a href="/profile/{{_id}}">{{profile.firstName}} {{profile.lastName}}</a> <span class="label label-success">{{numSales}}</span> <span class="label label-success">{{numLeads}}</span></h4>
+				    <h4 class="media-heading"><a href="/profile/{{_id}}">{{profile.firstName}} {{profile.lastName}}</a> <span class="label label-success">{{numSales}}</span> <span class="label label-success">{{numLeads}}</span>
+
+				    	{{# if hasReviews this._id}}
+				    	<div class="avg-score-list">
+      						<div class="star-rating" id="averageScore-{{_id}}"></div>
+      						<span class="score">( {{averageStarRating this._id}}) </span>
+      					</div>
+      					{{/if}}
+
+				    </h4>
 				    	{{#if profile.headline}}
 						<p>{{profile.headline}}</p>
 						{{/if}}

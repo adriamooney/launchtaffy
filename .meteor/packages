@@ -22,7 +22,6 @@ jamielob:accounts-ui-no-dropdown
 pauli:accounts-linkedin
 khamoud:linkedin-api
 less
-alethes:pages
 aslagle:reactive-table
 sacha:spin
 momentjs:moment
@@ -33,5 +32,7 @@ andrei:iron-router-body-class
 meteorhacks:subs-manager
 underscorestring:underscore.string
 udondan:slick
-andrei:autoform-raty
 ryw:blog
+alethes:pages
+adriamooney:raty-autoform
+
