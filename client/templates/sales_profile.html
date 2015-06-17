@@ -4,16 +4,26 @@
 			<h1>{{profile.firstName}} {{profile.lastName}}</h1> 
 		</div>
 
-		{{#unless isFavorite }}
-		{{#if currentUser}}
-      	<small class="pull-right"><a id="addToFavorites" href="#"><i class="glyphicon glyphicon-heart-empty"></i>Add to Favorites</a></small>
-      	{{/if}}
-      	{{/unless}}
 
-      	<!--{{averageStarRating}}-->
 
 
       	<div class="media">
+
+      		<div class="pull-right">
+		      {{# if hasReviews this._id}}
+		        <div class="avg-score-list">
+		          <div id="averageScore" class="star-rating"></div>
+		          <span class="score">({{averageStarRating this._id}})</span>
+		        </div>
+		      {{/if}}
+
+		      {{#unless isFavorite }}
+		        {{#if currentUser}}
+		        <div><small><a id="addToFavorites" href="#"><i class="glyphicon glyphicon-heart text-danger"></i> Add to Favorites</a></small></div>
+		        {{/if}}
+		      {{/unless}}
+		    </div>
+
 		  <div class="media-left">
 
 		      {{# if profile.pictureUrl}}
@@ -25,6 +35,8 @@
 		    {{# if this.profile.publicProfileUrl}}
 				<a class="label-link block" href="{{this.profile.publicProfileUrl}}" target="_blank"><span class="label label-info block">LinkedIn</span></a>
 			{{/if}}
+
+
 		  </div>
 		  <div class="media-body">
 		    
@@ -67,7 +79,8 @@
 	
 
 		{{#if currentUser}}
-		<div>
+
+		<div class="m-t-lrg">
 			<h3>Send Message</h3>
 			<form id="contactSalesPerson">
 				<div class="form-group"><textarea id="message" class="form-control"></textarea></div>
@@ -80,14 +93,27 @@
 		</div>
 		{{/if}}
 
-	<!--	<br />
-		<br />
-		<hr />
-		<br />
+		
 
-	{{# unless reviewExists}}	
+	{{#if allowedToReview this._id}}
+		<hr class="separator" />
+	{{else}}
+	    {{#if reviewsForUser this._id}}
+		<hr class="separator" />
+	    {{/if}}
+	{{/if}}
+
+	{{# if allowedToReview this._id}}	
 		{{>salesReviewForm}}
-	{{/unless}}-->
+	{{/if}}
+
+	{{#if reviewsForUser this._id}}
+      {{# reviewsWrapper}}
+          {{#each reviewsForUser this._id}}
+             {{>reviewItem}}
+          {{/each}}
+      {{/ reviewsWrapper}}
+    {{/if}}
 
 </template>
 

@@ -90,7 +90,7 @@ Leads.deny({
     // can't remove locked documents
     return doc.locked;
   },
-  fetch: ['locked'] // no need to fetch 'owner'
+  fetch: ['locked'] 
 });
 
 News.allow({  //TODO: fix this
@@ -101,30 +101,24 @@ News.allow({  //TODO: fix this
 
 Reviews.allow({
   insert: function (userId, doc) {
-    // the user must be logged in, and the document must be owned by the user
-    return (userId && doc.userId === userId);
+    return (userId && doc.commenterId === userId);
   },
   update: function (userId, doc, fields, modifier) {
     // can only change your own documents
-    return doc.userId === userId;
+    return doc.commenterId === userId;
   },
-  remove: function (userId, doc) {
-    // can only remove your own documents
-    return doc.userId === userId;
-  },
-  fetch: ['userId']
+  fetch: ['commenterId']
 });
 
 Reviews.deny({
   update: function (userId, docs, fields, modifier) {
-    // can't change owners
-    return _.contains(fields, 'userId');
+    return _.contains(fields, 'commenterId');  //not sure if this works
   },
   remove: function (userId, doc) {
     // can't remove locked documents
     return doc.locked;
   },
-  fetch: ['locked'] // no need to fetch 'owner'
+  fetch: ['locked']
 });
 
 LinkedInMessages = new Mongo.Collection('linkedinmessages');
@@ -436,13 +430,17 @@ Reviews.attachSchema(new SimpleSchema({
         type: Number,
         min: 0,
         max: 5,
+        decimal: true,
         denyUpdate: true,
         autoform: {
           type: 'raty',
           ratyOptions: {
-            starHalf: '/raty/images/star-half.png',
-            starOff: '/raty/images/star-off.png',
-            starOn: '/raty/images/star-on.png'
+            starHalf: 'fa fa-star-half-o',
+            starOff: 'fa fa-star-o',
+            starOn: 'fa fa-star',
+            starType : 'i',
+            half:true,
+            hints: ["bad", "poor", "average", "good", "excellent"]
           }
         }
     },
