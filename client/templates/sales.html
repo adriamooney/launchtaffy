@@ -82,12 +82,13 @@
 	</div>
 
 	<div class="panel panel-default">
+		<div class="panel-heading"><span class="badge">Reference ID: {{_id}}</span></div>
 		<div class="panel-body">
-			{{#if currentUserIsCompany}}{{#if statusIs 'pending'}}<button class="btn btn-primary pull-right" id="approveSale">Approve this sale</button>{{/if}}{{/if}}
+			{{#if currentUserIsCompany}}{{#if statusIs 'pending'}}<button class="btn btn-sm btn-danger pull-right" id="rejectSale">Reject sale</button><button class="btn btn-sm btn-primary pull-right" id="approveSale">Approve sale</button>{{/if}}{{/if}}
 			{{#if currentUserIsSales}}{{#if statusIs 'approved'}}<button class="btn btn-primary pull-right" id="paidSale">Mark as Paid</button>{{/if}}{{/if}}
 			<h4>{{leadCompanyName}} <small><span class="label label-{{statusLabel}}">{{status}}</span></small></h4>
 			<p><b>Lead Contact: </b>{{leadName}} {{leadEmail}} {{leadPhone}}</p>
-			<p><b>Sale Details: </b>{{productName}} {{productPrice}} / {{productBillingFrequency}}</p>
+			<p><b>Sale Details: </b>{{productName}} ${{productPrice}} / {{productBillingFrequency}}</p>
 			<p><b>Sales Person: </b><a href="/profile/{{salesPersonId}}">{{salesPersonName}}</a></p>
 			<p><b>Company: </b> <a href="/company/{{companyId}}">{{companyName}}</a></p>
 		</div>

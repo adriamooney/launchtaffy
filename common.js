@@ -569,8 +569,19 @@ Sales.attachSchema(new SimpleSchema({
     },
     productPrice: {
         type: String,
-        regEx: /(?=.)^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|[0-9]+)?(\.[0-9]{1,2})?$/
+        //regEx: /(?=.)^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|[0-9]+)?(\.[0-9]{1,2})?$/
+        regEx: /^[+-]?[0-9]{1,3}(?:,?[0-9]{3})*\.[0-9]{2}$/
     },
+   /* currency: {
+        type: String,
+        autoform: {
+        options: {
+            USD: "USD",
+            EU: "EU",
+            GBP: "GBP"
+          }
+        }
+    }, */
     productBillingFrequency: {
         type:String,
         label: 'Product Billing Frequency',
