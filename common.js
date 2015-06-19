@@ -12,7 +12,12 @@ Reviews = new Mongo.Collection("reviews");
 Companies.allow({
   insert: function (userId, doc) {
     // the user must be logged in, and the document must be owned by the user
-    return (userId && doc.companyId === userId);
+    var user = Meteor.users.findOne({_id: userId})
+
+    if(user.profile.isAdmin) {
+        var admin = true;
+    }
+    return (userId && doc.companyId === userId || admin === true);
   },
   update: function (userId, doc, fields, modifier) {
     // can only change your own documents
@@ -564,8 +569,19 @@ Sales.attachSchema(new SimpleSchema({
     },
     productPrice: {
         type: String,
-        regEx: /(?=.)^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|[0-9]+)?(\.[0-9]{1,2})?$/
+        //regEx: /(?=.)^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|[0-9]+)?(\.[0-9]{1,2})?$/
+        regEx: /^[+-]?[0-9]{1,3}(?:,?[0-9]{3})*\.[0-9]{2}$/
     },
+   /* currency: {
+        type: String,
+        autoform: {
+        options: {
+            USD: "USD",
+            EU: "EU",
+            GBP: "GBP"
+          }
+        }
+    }, */
     productBillingFrequency: {
         type:String,
         label: 'Product Billing Frequency',

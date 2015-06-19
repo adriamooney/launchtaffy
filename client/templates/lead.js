@@ -51,8 +51,11 @@ Template.companyTypeLeads.helpers({
 	            		if(value == 'pending') {
 	            			label = 'info';
 	            		}
-	            		else if(value == 'approved' || value=='paid') {
+	            		if(value == 'approved' || value=='paid') {
 	            			label = 'success';
+	            		}
+	            		if(value == 'rejected' || value=='dispute') {
+	            			label = 'danger';
 	            		}
 
 	    				return new Spacebars.SafeString('<a href="/lead/'+object._id+'"><span class="label label-'+label+'">'+value+ '</span></a>' ); 
@@ -130,8 +133,11 @@ Template.salesTypeLeadsWidget.helpers({
 	            		if(value == 'pending') {
 	            			label = 'info';
 	            		}
-	            		else if(value == 'approved' || value == 'paid') {
+	            		if(value == 'approved' || value == 'paid') {
 	            			label = 'success';
+	            		}
+	            		if(value == 'rejected' || value == 'dispute') {
+	            			label = 'danger';
 	            		}
 
 	    				return new Spacebars.SafeString('<span class="label label-'+label+'">'+value+ '</span>'); 
@@ -169,9 +175,13 @@ Template.salesTypeLeads.helpers({
 	            		if(value == 'pending') {
 	            			label = 'info';
 	            		}
-	            		else if(value == 'approved' || value== 'paid') {
+	            		if(value == 'approved' || value== 'paid') {
 	            			label = 'success';
 	            		}
+	            		if(value == 'rejected' || value== 'dispute') {
+	            			label = 'danger';
+	            		}
+
 	    				//return new Spacebars.SafeString('<span class="label label-'+label+'">'+value+ '</span>'); 
 	    				return new Spacebars.SafeString('<a href="/lead/'+object._id+'"><span class="label label-'+label+'">'+value+ '</span></a>' ); 
 
@@ -214,6 +224,31 @@ Template.lead.events({
 			}
 		});
 
+	},
+	'click #rejectSale': function(event, template) {
+		var self = this;
+		Meteor.call('updateLeadStatus', this._id, 'rejected', function(err){
+			if(!err) {
+				AppMessages.throw('Lead rejected!', 'success');
+				var salesPersonId = self.salesPersonId;
+				//console.log(self);
+				var user = Meteor.users.findOne({_id: salesPersonId});
+				//console.log(user);
+
+				if(!user.emails) {
+			        var userEmail = user.profile.emailAddress;
+			     }
+			     else {
+			        var userEmail = user.emails[0].address;
+			    }
+      			var salesPerson = self.salesPersonName;
+
+      			var rootUrl = Session.get('rootUrl');
+
+				Meteor.call('sendEmail', userEmail, 'LaunchTaffy <no-reply@launchtaffy.com>', 'Your lead has been rejected', salesPerson+', <br />your lead has been rejected. <br /><a href="'+rootUrl+'/lead/'+self._id+'">Click here</a> to review the lead'); 
+
+			}
+		});
 	},
 	'click #paidSale': function() {
 		var self = this;
