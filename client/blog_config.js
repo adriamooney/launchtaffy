@@ -1,5 +1,9 @@
 
 Blog.config({
 	blogIndexTemplate: 'blogHome',
-	blogShowTemplate: 'blogPosts'
+	blogShowTemplate: 'blogPosts',
+	comments: {
+      disqusShortname: 'launchtaffy'
+    }
+
 });
