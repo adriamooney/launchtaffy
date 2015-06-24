@@ -12,12 +12,27 @@ Template.companies.helpers({
 
 Template.companyItem.helpers({
 	numSales: function() {
-		var sales = Sales.find({$and: [ { companyId: this._id}, { status: 'approved' } ] }).count();   
+		//var sales = Sales.find({$and: [ { companyId: this._id}, { status: 'approved' } ] }).count(); 
+		var sales = Sales.find({$or: [{$and: [{companyId: this._id},{'status': 'approved'}]}, {$and: [{companyId: this._id},{'status': 'paid'}]}]} ).count();  
+  
 		if(sales === 1) {
 			return sales +' sale';
 		}
 		else if(sales>1){
 			return sales +' sales';
+		}
+		else {
+			return false;
+		}
+		
+	},
+	numLeads: function() {
+		var leads = Leads.find({$or: [{$and: [{companyId: this._id},{'status': 'approved'}]}, {$and: [{companyId: this._id},{'status': 'paid'}]}]} ).count();   
+		if(leads === 1) {
+			return leads +' lead';
+		}
+		else if(leads>1){
+			return leads +' leads';
 		}
 		else {
 			return false;
@@ -40,7 +55,7 @@ Template.company.helpers({
 
 			if(userId == this.companyId) {
 				var company = Companies.findOne({companyId: userId});
-				console.log(company);
+				//console.log(company);
 				return company;
 			}
 		}
@@ -144,7 +159,7 @@ Template.company.events({
 	'submit #contactCompany': function(event, template) {
 		event.preventDefault();
 		var senderId = Meteor.userId();
-		console.log(senderId);
+		//console.log(senderId);
 		var toId = this.companyId;
 		var msg = template.find('#message').value;
 
@@ -173,7 +188,7 @@ Template.company.events({
 
 			Meteor.call('sendMessage', senderId, toId, msg, function(err, result) {
 				if(!err) {
-					console.log(result);
+					//console.log(result);
 					var rootUrl = Session.get('rootUrl');
 					var cleanmsg = msg.replace(/'/g, '&lsquo;');
 					AppMessages.throw('your messages was sent', 'success');
@@ -238,7 +253,7 @@ Template.getLinkedinInfo.events({
 Template.companyItem.onRendered(function () {
 	var userId = this.data.companyId;
 
-	console.log(this);
+	//console.log(this);
 
 	var reviews = Reviews.find({userId: userId });
 
