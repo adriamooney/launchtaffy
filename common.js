@@ -10,18 +10,34 @@ FeaturedSalesPeople = new Mongo.Collection("featuredSalesPeople");
 Reviews = new Mongo.Collection("reviews");
 
 
-/*var Images = new FS.Collection("images", {
-  stores: [new FS.Store.FileSystem("images", {path: "~/uploads"})]
+
+var imageStore = new FS.Store.GridFS("images", {
+    path: "~/uploads"
+}); 
+
+/*var imageStore = new FS.Store.FileSystem("images", {
+  path: "~/app-files/images" //optional, default is "/cfs/files" path within app container
+  //transformWrite: myTransformWriteFunction, //optional
+  //transformRead: myTransformReadFunction, //optional
+  //maxTries: 1 //optional, default 5
 }); */
 
-/*Images = new FS.Collection("images", {
- stores: [new FS.Store.FileSystem("images", {path: "~/uploads"})]
-}); */
-var imageStore = new FS.Store.GridFS("images", {path: "~/uploads"});
 
 Images = new FS.Collection("images", {
-  stores: [imageStore]
+  stores: [imageStore],
+  /*filter: {
+    //maxSize: 1048576 // in bytes
+    maxSize: 10000 // in bytes
+  }, */
+  filter: {
+    //maxSize: 10000,  
+    allow: {
+        contentTypes: ['image/*'],
+        extensions: ['png','jpg','jpeg','gif']
+    }
+  }
 }); 
+
 
 /*Images.files.before.insert(function(doc) {
   doc.metadata = {
@@ -51,14 +67,16 @@ Images.deny({
 
 Images.allow({
   insert: function (userId, doc) {
+    //console.log(doc);
     // the user must be logged in, and the document must be owned by the user
-    return true;
-    //return (userId && doc.owner === userId);
+    return (userId === userId);
   },
   update: function (userId, doc, fields, modifier) {
     // can only change your own documents
-    return true;
+    //return true;
+    console.log(doc);
     //return doc.owner === userId;
+    return true;
   },
   remove: function (userId, doc) {
     // can only remove your own documents
@@ -555,6 +573,7 @@ Companies.attachSchema(new SimpleSchema({
                 //type: "cfs-file",
                 //collection: 'Images',
                 collection:'images',
+                accept: 'image/*',
                 label: 'Choose file'
             }
         }

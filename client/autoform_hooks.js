@@ -7,6 +7,12 @@ AutoForm.hooks({
   
       var company = Companies.findOne({_id: result});
 
+      var  insertedFile = company.logo;
+      var owner = Meteor.userId();
+      var id = this.docId;
+
+      Images.update({_id: insertedFile}, {$set: {'company': id, 'owner': owner}});
+
       if(company.companyResources) {
         companyProfileStatus = 1;
       }
@@ -32,14 +38,15 @@ AutoForm.hooks({
 
 
     var  insertedFile = company.logo;
-    console.log(insertedFile);
+    //console.log(insertedFile);
 
     Meteor.call('removeCompanyImage', id);
 
 
     Images.update({_id: insertedFile}, {$set: {'company': id, 'owner': owner}});
-    var t = Images.findOne({_id: insertedFile});
-    console.log(t);
+    
+    //var t = Images.findOne({_id: insertedFile});
+    //console.log(t);
 
     if(company.companyResources) {
       companyProfileStatus = 1;
@@ -53,7 +60,7 @@ AutoForm.hooks({
     AppMessages.throw('Your company profile has been updated.', 'success');
 
     },
-    after: {
+    before: {
      insert: function(error, result, template) {
       /*var  insertedFile = Companies.findOne(result).logoUrl;
        console.log(insertedFile);

@@ -166,6 +166,21 @@ Template.companyProfile.helpers({
 	      src: logoUrl,
 	      alt: logoAlt
 	    }
+  	},
+  	logoImg: function() {
+  		var userId = this.companyId;
+		var company = Companies.findOne({companyId: userId});
+    	return Images.findOne({'company': company._id});
+  	},
+  	hasLogo: function() {
+  		var userId = this.companyId;
+		var company = Companies.findOne({companyId: userId});
+		if(company.logo) {
+			return true;
+		}
+		else {
+			return false;
+		}
   	}
 });
 
