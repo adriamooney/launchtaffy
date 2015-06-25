@@ -545,7 +545,7 @@ Companies.attachSchema(new SimpleSchema({
         optional:false,
     	label: 'Company Description'
     },
-    logoUrl: {
+    logo: {
         type: String,
         label: 'Company Logo',
         optional:true,
@@ -558,6 +558,11 @@ Companies.attachSchema(new SimpleSchema({
                 label: 'Choose file'
             }
         }
+    },
+    logoUrl: {
+        type: String,
+        label: 'Company Logo URL',
+        optional:true   
     },
     keywords: {
         type: String,

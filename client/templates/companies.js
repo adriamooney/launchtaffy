@@ -129,7 +129,22 @@ Template.company.helpers({
 		else {
 			return false;
 		}
-	}
+	},
+  	logoImg: function() {
+  		//var userId = this.companyId;
+		//var company = Companies.findOne({companyId: userId});
+    	return Images.findOne({'company': this._id});
+  	},
+  	hasLogo: function() {
+  		//var userId = this.companyId;
+		//var company = Companies.findOne({companyId: userId});
+		if(this.logo) {
+			return true;
+		}
+		else {
+			return false;
+		}
+  	}
 });
 
 Template.updateCompanyFormOnProfile.helpers({ //probably could be moved to a generic helper function
@@ -151,9 +166,6 @@ Template.companyProfile.helpers({
 	      src: logoUrl,
 	      alt: logoAlt
 	    }
-  	},
-  	logoImg: function() {
-    	return Images.findOne({'company': this._id});
   	}
 });
 

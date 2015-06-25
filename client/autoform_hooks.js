@@ -31,11 +31,15 @@ AutoForm.hooks({
     var owner = Meteor.userId();
 
 
-    var  insertedFile = company.logoUrl;
-       console.log(insertedFile);
-       Images.update({_id: insertedFile}, {$set: {'company': id, 'owner': owner}});
-       var t = Images.findOne({_id: insertedFile});
-       console.log(t);
+    var  insertedFile = company.logo;
+    console.log(insertedFile);
+
+    Meteor.call('removeCompanyImage', id);
+
+
+    Images.update({_id: insertedFile}, {$set: {'company': id, 'owner': owner}});
+    var t = Images.findOne({_id: insertedFile});
+    console.log(t);
 
     if(company.companyResources) {
       companyProfileStatus = 1;

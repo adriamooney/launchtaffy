@@ -32,11 +32,24 @@
 
       <div class="media-left">
         <a href="/profile/{{_id}}">
-          {{# if this.logoUrl}}
-            <img class="media-object" src="{{this.logoUrl}}" alt="" />
+
+          {{#if hasLogo }}
+
+            {{#with logoImg}}
+              <img class="media-object" src="{{this.url}}" alt="{{this.name}}" />
+            {{/with}}
+
             {{else}}
-            <img class="media-object" src="" alt="" style="width:60px;height:60px;background:#ccc;border:1px solid #666"/>
-          {{/if}}
+
+                {{#if this.logoUrl}}
+                    <img class="media-object" src="{{this.logoUrl}}" alt="" />
+                    {{else}}
+                    <img class="media-object" src="" alt="" style="width:60px;height:60px;background:#ccc;border:1px solid #666"/>
+                {{/if}}
+              
+          
+          {{/if}} 
+
         </a>
 
       </div>
@@ -190,7 +203,9 @@
 
 <template name="companyProfile">
      <fieldset>
-      <!--<div class="form-group"><img class="logo pull-right" {{logoAtts}} /></div>-->
+
+
+      {{#unless hasLogo }}<div class="form-group"><img class="logo pull-right" {{logoAtts}} /></div> {{/unless}}
 
        {{#with logoImg}}
         <div class="form-group">
@@ -200,7 +215,7 @@
 
       {{> afQuickField name='name' value=this.name id='name'}}
       {{> afQuickField name='websiteUrl' value=this.websiteUrl}}
-      {{> afQuickField name='logoUrl' value=this.logoUrl }}
+      {{> afQuickField name='logo' value=this.logo }}
       {{> afQuickField name='description' rows=6 value=this.description}}
       {{> afQuickField name='compensationModel' rows=4 value=this.compensationModel}}
       {{> afQuickField name='keywords' rows=4 value=this.keywords}}
@@ -227,7 +242,7 @@
     <legend>Company Info</legend>
     {{> afQuickField name='name' value=''}}
     {{> afQuickField name='websiteUrl' value=''}}
-    {{> afQuickField name='logoUrl' placeholder='https://media.licdn.com/media/logo.png'}}
+    {{> afQuickField name='logo'}}
     {{> afQuickField name='description' rows=6 value=''}}
     {{> afQuickField name='compensationModel' rows=4}}
     {{> afQuickField name='keywords' rows=4}}

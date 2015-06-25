@@ -91,7 +91,22 @@ Template.companyUserProfile.helpers({
 		else {
 			return false;
 		}
-	}
+	},
+  	logoImg: function() {
+  		var userId = this._id;
+		var company = Companies.findOne({companyId: userId});
+    	return Images.findOne({'company': company._id});
+  	},
+  	hasLogo: function() {
+  		var userId = this._id;
+		var company = Companies.findOne({companyId: userId});
+		if(company.logo) {
+			return true;
+		}
+		else {
+			return false;
+		}
+  	}
 });
 
 Template.companyUserProfile.events({

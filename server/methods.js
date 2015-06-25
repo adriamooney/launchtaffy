@@ -118,6 +118,9 @@ Meteor.methods({
         $set: { 'profile.lastActiveOn': new Date(now - 7 * 3600 * 1000) }
       }); 
   },
+  removeCompanyImage: function(id) {
+      Images.remove({'company': id});
+  },
   newQuiz: function() {
     var userId = this.userId;
     var company = Companies.findOne({companyId: userId});
