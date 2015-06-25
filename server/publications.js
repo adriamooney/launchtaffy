@@ -49,3 +49,7 @@ Meteor.publish('featuredSalesPeople', function(){
 Meteor.publish('reviews', function(){
     return Reviews.find();
 });
+
+Meteor.publish('images', function(){
+    return Images.find();
+});

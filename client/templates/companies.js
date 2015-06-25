@@ -44,7 +44,10 @@ Template.companyItem.helpers({
 		var id = this._id;
 		var description = s.prune(this.description, 1500, "<a href='/company/"+id+"'> read more &raquo;</a>");
 		return description;
-	}
+	},
+	logoImg: function() {
+    	return Images.findOne({'company': this._id});
+  	}
 });
 
 Template.company.helpers({
@@ -148,6 +151,9 @@ Template.companyProfile.helpers({
 	      src: logoUrl,
 	      alt: logoAlt
 	    }
+  	},
+  	logoImg: function() {
+    	return Images.findOne({'company': this._id});
   	}
 });
 

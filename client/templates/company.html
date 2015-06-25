@@ -190,7 +190,14 @@
 
 <template name="companyProfile">
      <fieldset>
-      <div class="form-group"><img class="logo pull-right" {{logoAtts}} /></div>
+      <!--<div class="form-group"><img class="logo pull-right" {{logoAtts}} /></div>-->
+
+       {{#with logoImg}}
+        <div class="form-group">
+          <img class="logo pull-right" src="{{this.url}}" alt="{{this.name}}"/>
+        </div>
+       {{/with}}
+
       {{> afQuickField name='name' value=this.name id='name'}}
       {{> afQuickField name='websiteUrl' value=this.websiteUrl}}
       {{> afQuickField name='logoUrl' value=this.logoUrl }}

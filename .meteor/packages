@@ -36,3 +36,7 @@ alethes:pages
 adriamooney:raty-autoform
 
 jonahback:blog
+yogiben:autoform-file
+cfs:standard-packages
+cfs:gridfs
+cfs:filesystem

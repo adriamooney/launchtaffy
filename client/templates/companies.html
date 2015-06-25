@@ -24,7 +24,13 @@
 				  <div class="media-left">
 				    <a href="/company/{{this._id}}" class="avatar">
 				      {{# if logoUrl}}
-				      	<img class="media-object" src="{{logoUrl}}" alt="{{name}}" />
+				      	<!--<img class="media-object" src="{{logoUrl}}" alt="{{name}}" />-->
+				      	 {{#with logoImg}}
+
+          					<img class="media-object" src="{{this.url}}" alt="{{this.name}}"/>
+
+       					 {{/with}}
+
 				      	{{else}}
 				      	<img class="media-object" src="" alt="" style="width:60px;height:60px;background:#ccc;border:1px solid #666"/>
 				      {{/if}}

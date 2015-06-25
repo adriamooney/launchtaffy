@@ -9,6 +9,69 @@ Quiz = new Mongo.Collection("quiz");
 FeaturedSalesPeople = new Mongo.Collection("featuredSalesPeople");
 Reviews = new Mongo.Collection("reviews");
 
+
+/*var Images = new FS.Collection("images", {
+  stores: [new FS.Store.FileSystem("images", {path: "~/uploads"})]
+}); */
+
+/*Images = new FS.Collection("images", {
+ stores: [new FS.Store.FileSystem("images", {path: "~/uploads"})]
+}); */
+var imageStore = new FS.Store.GridFS("images", {path: "~/uploads"});
+
+Images = new FS.Collection("images", {
+  stores: [imageStore]
+}); 
+
+/*Images.files.before.insert(function(doc) {
+  doc.metadata = {
+    date: Date.now(),
+    ownerId: this.userId
+             };
+  console.log("before", doc);
+  return doc;
+}); */
+
+Images.deny({
+  insert: function(){
+    return false;
+  },
+  update: function (userId, docs, fields, modifier) {
+    // can't change owners
+    return false;
+    //return _.contains(fields, 'owner');
+  },
+  remove: function(){
+    return false;
+  },
+  download: function(){
+    return false;
+  }
+});
+
+Images.allow({
+  insert: function (userId, doc) {
+    // the user must be logged in, and the document must be owned by the user
+    return true;
+    //return (userId && doc.owner === userId);
+  },
+  update: function (userId, doc, fields, modifier) {
+    // can only change your own documents
+    return true;
+    //return doc.owner === userId;
+  },
+  remove: function (userId, doc) {
+    // can only remove your own documents
+    return true;
+    //return doc.owner === userId;
+  },
+  download: function(userId, doc){
+    return true;
+    //return doc.owner === userId;
+  },
+  fetch: ['owner']
+});
+
 Companies.allow({
   insert: function (userId, doc) {
     // the user must be logged in, and the document must be owned by the user
@@ -484,8 +547,17 @@ Companies.attachSchema(new SimpleSchema({
     },
     logoUrl: {
         type: String,
-        label: 'Company Logo URL',
-        optional:true
+        label: 'Company Logo',
+        optional:true,
+        autoform: {
+            afFieldInput: {
+                type: 'fileUpload', 
+                //type: "cfs-file",
+                //collection: 'Images',
+                collection:'images',
+                label: 'Choose file'
+            }
+        }
     },
     keywords: {
         type: String,
