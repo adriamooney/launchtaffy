@@ -7,7 +7,7 @@ AutoForm.hooks({
   
       var company = Companies.findOne({_id: result});
 
-      var  insertedFile = company.logo;
+      var insertedFile = company.logo;
       var owner = Meteor.userId();
       var id = this.docId;
 
@@ -37,7 +37,7 @@ AutoForm.hooks({
     var owner = Meteor.userId();
 
 
-    var  insertedFile = company.logo;
+    var insertedFile = company.logo;
     //console.log(insertedFile);
 
     Meteor.call('removeCompanyImage', id);
@@ -61,13 +61,14 @@ AutoForm.hooks({
 
     },
     before: {
-     insert: function(error, result, template) {
-      /*var  insertedFile = Companies.findOne(result).logoUrl;
-       console.log(insertedFile);
-       var img = Images.update({_id: insertedFile}, {$set: {'company': result}});
-       console.log(img); */
-     }
-   }
+      insert: function(doc, result) {
+        //this isn't firing
+        /*var insertedFile = company.logo;
+        console.log(insertedFile);
+        var img = Images.findOne({_id: insertedFile});
+        console.log(img); */
+      }
+    }
   },
   addSaleForm: {
     before: {

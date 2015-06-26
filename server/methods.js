@@ -119,7 +119,10 @@ Meteor.methods({
       }); 
   },
   removeCompanyImage: function(id) {
-      Images.remove({'company': id});
+      var imgs = Images.find({'company':id}).count();
+      if(imgs>1) {
+        Images.remove({'company': id});
+      }   
   },
   newQuiz: function() {
     var userId = this.userId;

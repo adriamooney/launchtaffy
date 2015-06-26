@@ -13,14 +13,16 @@ Reviews = new Mongo.Collection("reviews");
 
 var imageStore = new FS.Store.GridFS("images", {
     path: "~/uploads"
-}); 
+});  
 
 /*var imageStore = new FS.Store.FileSystem("images", {
-  path: "~/app-files/images" //optional, default is "/cfs/files" path within app container
+  path: "~/uploads" //optional, default is "/cfs/files" path within app container
   //transformWrite: myTransformWriteFunction, //optional
   //transformRead: myTransformReadFunction, //optional
   //maxTries: 1 //optional, default 5
-}); */
+});   */
+
+
 
 
 Images = new FS.Collection("images", {
@@ -38,6 +40,16 @@ Images = new FS.Collection("images", {
   }
 }); 
 
+/*imageStore.on("stored", function(f, s){
+    //console.log(f);
+    var id = f._id;
+    var fileObj = Images.findOne({_id: id});
+    console.log(fileObj);
+   //var t =  Images.update({_id: f._id}, {$set: {'owner': owner}});
+   //console.log(t);
+});
+ */
+
 
 /*Images.files.before.insert(function(doc) {
   doc.metadata = {
@@ -49,10 +61,10 @@ Images = new FS.Collection("images", {
 }); */
 
 Images.deny({
-  insert: function(){
+  insert: function(userId, doc){
     return false;
   },
-  update: function (userId, docs, fields, modifier) {
+  update: function (userId, doc, fields, modifier) {
     // can't change owners
     return false;
     //return _.contains(fields, 'owner');
@@ -67,21 +79,21 @@ Images.deny({
 
 Images.allow({
   insert: function (userId, doc) {
-    //console.log(doc);
-    // the user must be logged in, and the document must be owned by the user
-    return (userId === userId);
+
+    //var company = Companies.findOne({companyId: userId})
+    var company = Companies.findOne({companyId:userId});
+    //return (userId && company.companyId === userId);
+    return ( userId && company.companyId === userId );
   },
   update: function (userId, doc, fields, modifier) {
-    // can only change your own documents
-    //return true;
-    console.log(doc);
-    //return doc.owner === userId;
+    var company = Companies.findOne({companyId:userId});
+    //return ( (userId && company.companyId === userId) && (company.logo === doc._id) );
     return true;
   },
   remove: function (userId, doc) {
     // can only remove your own documents
-    return true;
-    //return doc.owner === userId;
+    var company = Companies.findOne({companyId:userId});
+    return ( (userId && company.companyId === userId) && (company.logo === doc._id) );
   },
   download: function(userId, doc){
     return true;

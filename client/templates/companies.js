@@ -138,6 +138,7 @@ Template.company.helpers({
   	hasLogo: function() {
   		//var userId = this.companyId;
 		//var company = Companies.findOne({companyId: userId});
+		//console.log(this);
 		if(this.logo) {
 			return true;
 		}
@@ -168,13 +169,20 @@ Template.companyProfile.helpers({
 	    }
   	},
   	logoImg: function() {
-  		var userId = this.companyId;
+  		//var userId = this.profile.companyId;
+		//var company = Companies.findOne({_id: userId});
+		var userId = Meteor.userId();
 		var company = Companies.findOne({companyId: userId});
     	return Images.findOne({'company': company._id});
   	},
   	hasLogo: function() {
-  		var userId = this.companyId;
+  		//var userId = this.profile.companyId;
+
+  		var userId = Meteor.userId();
 		var company = Companies.findOne({companyId: userId});
+  		
+		//var company = Companies.findOne({_id: userId});
+		
 		if(company.logo) {
 			return true;
 		}
