@@ -87,8 +87,14 @@ Images.allow({
   },
   update: function (userId, doc, fields, modifier) {
     var company = Companies.findOne({companyId:userId});
-    //return ( (userId && company.companyId === userId) && (company.logo === doc._id) );
+    //why does this complain?
+    /*if(company.logo === doc._id) {
+        return true;
+    } */
     return true;
+    //return company.logo === doc._id;
+    //return ( (userId && company.companyId === userId) && (company.logo === doc._id) );
+
   },
   remove: function (userId, doc) {
     // can only remove your own documents
