@@ -112,6 +112,12 @@ Meteor.methods({
   removeFeaturedSalesPeople: function(userId) {
     FeaturedSalesPeople.remove({userId: userId});
   },
+  addFeaturedCompanies: function(companyId) {
+    FeaturedCompanies.insert({companyId: companyId});
+  },
+  removeFeaturedCompanies: function(companyId) {
+    FeaturedCompanies.remove({companyId: companyId});
+  },
   lastLogin: function(id) {
     var now = new Date().getTime();
     Meteor.users.update({ _id: id }, {

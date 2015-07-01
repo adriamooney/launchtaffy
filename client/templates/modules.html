@@ -35,6 +35,14 @@
 
 </template>
 
+<template name="featuredCompanies">
+    <ul>
+    {{#each featuredCompanies}}
+        <li><a href="/company/{{_id}}">{{name}}</a> - {{_id}}</li>
+    {{/each}}
+    </ul>
+</template>
+
 <template name="featuredSalesPeopleWidget">
     {{#if featuredSalesPeople}}
 
@@ -51,6 +59,32 @@
                             <div class="media-body">
                                 <h4 class="media-heading">{{profile.firstName}} {{lastName}}</h4>
                                 <p>{{profile.headline}}</p>
+                            </div>
+                        </div>
+                    {{/each}}
+                    </div>
+    
+          </div>
+    {{/if}}
+</template>
+
+
+<template name="featuredCompaniesWidget">
+    {{#if featuredCompanies}}
+
+        <div class="col-md-6">
+             
+
+                    <div id="featuredCompaniesWidget" class="well">
+                    {{#each featuredCompanies}}
+                        <div class="media">
+                              <div class="media-left">
+
+                                    <img class="media-object" src="{{logoUrl}}" alt="{{name}} Logo" style="width:90px"/>
+                              </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">{{name}}</h4>
+                                <p>{{descriptionTruncated}}</p>
                             </div>
                         </div>
                     {{/each}}

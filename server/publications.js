@@ -46,6 +46,11 @@ Meteor.publish('featuredSalesPeople', function(){
     return FeaturedSalesPeople.find();
 });
 
+Meteor.publish('featuredCompanies', function(){
+    return FeaturedCompanies.find();
+});
+
+
 Meteor.publish('reviews', function(){
     return Reviews.find();
 });

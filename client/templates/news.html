@@ -11,6 +11,10 @@
 	{{>addFeaturedSalesPeople}}
 	{{>featuredSalesPeople}}
 
+
+	{{>addFeaturedCompanies}}
+	{{>featuredCompanies}}
+
 	{{>massEmail}}
 
 
@@ -43,6 +47,16 @@
 		<legend>Featured Sales Professionals</legend>
 		<div class="form-group">
 		<input class="form-control" type="text" id="addfeaturedSalesPerson" value=""><button type="submit" class="btn btn-primary" id="submit">Add</button>
+		<button type="button" class="btn btn-danger" id="remove">Remove</button>
+		</div>
+	</form>
+</template>
+
+<template name="addFeaturedCompanies">
+	<form>
+		<legend>Featured Companies</legend>
+		<div class="form-group">
+		<input class="form-control" type="text" id="addfeaturedCompany" value=""><button type="submit" class="btn btn-primary" id="submit">Add</button>
 		<button type="button" class="btn btn-danger" id="remove">Remove</button>
 		</div>
 	</form>

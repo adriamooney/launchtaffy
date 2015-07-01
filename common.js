@@ -7,6 +7,7 @@ News = new Mongo.Collection("news");
 Quiz = new Mongo.Collection("quiz");
 
 FeaturedSalesPeople = new Mongo.Collection("featuredSalesPeople");
+FeaturedCompanies = new Mongo.Collection("featuredCompanies");
 Reviews = new Mongo.Collection("reviews");
 
 Companies.allow({
