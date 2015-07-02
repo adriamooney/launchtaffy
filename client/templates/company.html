@@ -190,6 +190,7 @@
 
 <template name="companyProfile">
      <fieldset>
+      {{> upload_bootstrap }}
       <div class="form-group"><img class="logo pull-right" {{logoAtts}} /></div>
       {{> afQuickField name='name' value=this.name id='name'}}
       {{> afQuickField name='websiteUrl' value=this.websiteUrl}}
@@ -218,6 +219,7 @@
   {{#autoForm collection="Companies" id="insertCompanyForm" type="insert"}}
   <fieldset>
     <legend>Company Info</legend>
+    {{> upload_bootstrap }}
     {{> afQuickField name='name' value=''}}
     {{> afQuickField name='websiteUrl' value=''}}
     {{> afQuickField name='logoUrl' placeholder='https://media.licdn.com/media/logo.png'}}

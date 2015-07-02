@@ -124,6 +124,12 @@ Meteor.methods({
         $set: { 'profile.lastActiveOn': new Date(now - 7 * 3600 * 1000) }
       }); 
   },
+  addLogoToUser: function(url, id) {
+    Meteor.users.update({_id: id}, {$set: {'profile.logo': url}});
+  },
+  addLogoToCompany: function(url, id) {
+    Companies.update({_id: id}, {$set: {logo: url}});
+  },
   newQuiz: function() {
     var userId = this.userId;
     var company = Companies.findOne({companyId: userId});
@@ -137,8 +143,8 @@ Meteor.methods({
   },
   addQuizQuestion: function(id) {
         Quiz.update({_id: id}, {$push: {questions: {'question': '', 'answers': [], 'correct': 0} }});
-  },
-  getLinkedCompanyProfile: function(companyName) {
+  }
+ /* getLinkedCompanyProfile: function(companyName) {
 
 
       if( Meteor.user().services.linkedin.accessToken) {
@@ -310,7 +316,7 @@ Meteor.methods({
         }));
       }
 
-  }
+  } */
 
 });
 

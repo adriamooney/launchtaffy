@@ -488,6 +488,10 @@ Companies.attachSchema(new SimpleSchema({
         label: 'Company Logo URL',
         optional:true
     },
+    logo: {
+        type: String,
+        optional:true
+    }, 
     keywords: {
         type: String,
         label: 'Keywords',

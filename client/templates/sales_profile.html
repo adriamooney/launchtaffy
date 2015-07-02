@@ -127,14 +127,8 @@
 		<div class="col-sm-6">
 				<form id="updateSalesForm"> 
 				<fieldset>
+				
 				<div class="row">
-					<div class="col-md-12">
-						<div class="form-group">
-					      {{# if profile.pictureUrl}}
-					      	<img class="img-responsive" src="{{profile.pictureUrl}}" alt="{{profile.firstName}} {{profile.lastName}} Picture" />
-					      {{/if}}
-				  		</div>
-			  		</div>
 					<div class="form-group">
 				    	<div class="col-sm-6 m-b">
 				    		<label for="firstName" class="control-label">First Name</label>
@@ -149,6 +143,25 @@
 		  		<div class="form-group">
 			    	<label for="headline" class="control-label">Headline</label>
 			    	<input type="text" name="headline" id="headline" class="form-control" value="{{this.profile.headline}}"/>
+		  		</div>
+		  		<div class="m-t m-b">
+		  			<div class="row">
+		  				<div class="col-sm-12">
+		  					<label for="logo" class="control-label">Profile Image</label>
+		  				</div>
+			  			<div class="col-sm-8">
+			  				{{> upload_bootstrap }}
+			  			</div>
+			  			<div class="col-sm-4">
+			  				{{#if profile.logo}}
+							  	<img class="img-responsive" src="{{profile.logo}}" alt="" style="height:36px"/>
+							  	{{else}}
+							  		{{# if profile.pictureUrl}}
+							      		<img class="img-responsive" src="{{profile.pictureUrl}}" alt="{{profile.firstName}} {{profile.lastName}} Picture" style="height:36px" />
+							      	{{/if}}
+							  {{/if}}
+			  			</div>
+		  			</div>
 		  		</div>
 		  		<div class="form-group">
 			    	<label for="bio" class="control-label">Bio</label>

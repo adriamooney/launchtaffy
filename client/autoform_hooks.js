@@ -14,7 +14,15 @@ AutoForm.hooks({
         companyProfileStatus = 0;
       }
 
-      Companies.update({_id: result}, {$set: {companyProfileStatus: companyProfileStatus, timeStamp: new Date()}}); 
+      var logo = Meteor.user().profile.logo;
+      if(logo) {
+        Companies.update({_id: result}, {$set: {companyProfileStatus: companyProfileStatus, timeStamp: new Date(), logo: logo}}); 
+      }
+      else {
+        Companies.update({_id: result}, {$set: {companyProfileStatus: companyProfileStatus, timeStamp: new Date()}}); 
+
+      }
+
       //var email = company.email;
 
       Meteor.users.update({_id: company.companyId}, {$set: {'profile.companyId': result}});
