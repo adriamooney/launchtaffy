@@ -6,9 +6,23 @@
   </div>
 </template>
 
+<template name="appMessagesButton">
+  <span class="errors appMessages">
+    {{#each appMessages}}
+      {{> appMessageButton}}
+    {{/each}}
+  </span>
+</template>
+
 <template name="appMessage">
   <div class="alert alert-{{messageType}}" role="alert">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{message}}
+  </div>
+</template>
+
+<template name="appMessageButton">
+  <div class="btn btn-{{messageType}}" role="alert" style="margin-left:20px">
     {{message}}
   </div>
 </template>

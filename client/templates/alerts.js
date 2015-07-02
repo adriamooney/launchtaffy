@@ -20,6 +20,12 @@ Template.appMessages.helpers({
   }
 });
 
+Template.appMessagesButton.helpers({
+  appMessages: function() {
+    return AppMessages.collection.find();
+  }
+});
+
 Template.appMessage.onRendered(function() {
   var message = this.data;
   Meteor.setTimeout(function () {
@@ -27,6 +33,15 @@ Template.appMessage.onRendered(function() {
     //Meteor.call('removeMsg', message._id);
     AppMessages.collection.remove(message._id);
   }, 6000);
+});
+
+Template.appMessageButton.onRendered(function() {
+  var message = this.data;
+  Meteor.setTimeout(function () {
+    //AppMessages.collection.remove(message._id);
+    //Meteor.call('removeMsg', message._id);
+    AppMessages.collection.remove(message._id);
+  }, 3000);
 });
 
 

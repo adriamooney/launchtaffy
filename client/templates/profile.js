@@ -100,7 +100,7 @@ Template.updateSalesForm.events({
 	          } else {
 	            // Success. Account has been created and the user
 	            // has logged in successfully. 
-	            AppMessages.throw('Profile updated.', 'success');
+	            AppMessages.throw('Profile updated', 'success');
 	            //.go('/');
 	          }
 		});
