@@ -8,7 +8,7 @@ AppMessages = {
   }
 };
 
-AppMessages.collection.allow({
+AppMessages.collection.allow({ //TODO: this needs to be locked down, this is dangerous
   insert: function () { return true; },
   update: function () { return true; },
   remove: function () { return true; }
