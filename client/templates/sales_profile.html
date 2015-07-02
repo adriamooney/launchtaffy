@@ -26,11 +26,16 @@
 
 		  <div class="media-left">
 
-		      {{# if profile.pictureUrl}}
-		      	<img class="media-object" src="{{profile.pictureUrl}}" alt="{{profile.firstName}} {{profile.lastName}} Picture" />
-		      	{{else}}
-		      	<img class="media-object" src="/blank_person.png" alt="" style="width:80px;"/>
-		      {{/if}}
+			{{#if profile.logo}}
+				<img class="media-object" src="{{profile.logo}}" alt="{{profile.firstName}} {{profile.lastName}} Picture" />
+			{{else}}
+		      	{{# if profile.pictureUrl}}
+			      	<img class="media-object" src="{{profile.pictureUrl}}" alt="{{profile.firstName}} {{profile.lastName}} Picture" />
+			      	{{else}}
+			      	<img class="media-object" src="/blank_person.png" alt="" style="width:80px;"/>
+		    	{{/if}}
+
+		    {{/if}}
 
 		    {{# if this.profile.publicProfileUrl}}
 				<a class="label-link block" href="{{this.profile.publicProfileUrl}}" target="_blank"><span class="label label-info block">LinkedIn</span></a>

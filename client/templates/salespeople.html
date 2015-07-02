@@ -8,8 +8,9 @@
 	{{#if salespeople}}
 
 			{{>salesPeopleSearch}}
-			
-			{{> pages}}
+
+				{{> pages}}
+
     		{{> pagesNav}}  <!--navigation-->
 
 	{{else}}
@@ -22,21 +23,26 @@
 
 <template name="salespeopleItem">
 
-	<div class="panel panel-default">
+	<div class="">
 				
-		<div class="panel-body">
+		<div class="well">
 			
-				<div class="media">
-				  <div class="media-left">
+				<div class="text-center">
+				  <div class="m-b">
 				    <a href="/profile/{{_id}}" class="avatar">
+
+				    {{#if profile.logo}}
+				      	<img class="img-circle" src="{{profile.logo}}" alt="{{profile.firstName}} {{profile.lastName}} Picture" />
+				      {{else}}
 				      {{# if profile.pictureUrl}}
-				      	<img class="media-object img-circle" src="{{profile.pictureUrl}}" alt="{{profile.firstName}} {{profile.lastName}} Picture" />
+				      	<img class="img-circle" src="{{profile.pictureUrl}}" alt="{{profile.firstName}} {{profile.lastName}} Picture" />
 				      	{{else}}
-				      	<img class="media-object" style="width:80px" src="/blank_person.png" alt="{{profile.firstName}} {{profile.lastName}} Picture" />
+				      	<img class="" style="width:80px" src="/blank_person.png" alt="{{profile.firstName}} {{profile.lastName}} Picture" />
 				      {{/if}}
+				    {{/if}}
 				    </a>
 				  </div>
-				  <div class="media-body">
+				  <div class="">
 				    <h4 class="media-heading"><a href="/profile/{{_id}}">{{profile.firstName}} {{profile.lastName}}</a> <span class="label label-primary label-mini">{{numSales}}</span> <span class="label label-info label-mini">{{numLeads}}</span>
 
 				    	{{# if hasReviews this._id}}

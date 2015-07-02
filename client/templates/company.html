@@ -32,10 +32,15 @@
 
       <div class="media-left">
         <a href="/profile/{{_id}}">
-          {{# if this.logoUrl}}
-            <img class="media-object" src="{{this.logoUrl}}" alt="" />
-            {{else}}
-            <img class="media-object" src="" alt="" style="width:60px;height:60px;background:#ccc;border:1px solid #666"/>
+
+          {{#if this.logo}}
+            <img class="media-object" src="{{this.logo}}" alt="{{company.name}}" />
+          {{else}}
+            {{# if this.logoUrl}}
+              <img class="media-object" src="{{this.logoUrl}}" alt="" />
+              {{else}}
+              <img class="media-object" src="" alt="" style="width:60px;height:60px;background:#ccc;border:1px solid #666"/>
+            {{/if}}
           {{/if}}
         </a>
 
@@ -190,11 +195,33 @@
 
 <template name="companyProfile">
      <fieldset>
-      {{> upload_bootstrap }}
-      <div class="form-group"><img class="logo pull-right" {{logoAtts}} /></div>
+      <!--
+      {{#if logoImg}}
+      <div class="form-group">
+        <img class="logo pull-right" {{logoImg}} style="height:60px"/>
+      </div>
+      {{/if}}-->
+
       {{> afQuickField name='name' value=this.name id='name'}}
       {{> afQuickField name='websiteUrl' value=this.websiteUrl}}
-      {{> afQuickField name='logoUrl' value=this.logoUrl }}
+
+      <div class="m-t m-b">
+            <div class="row">
+              <div class="col-sm-12">
+                <label for="logo" class="control-label">Company Logo</label>
+              </div>
+              <div class="col-sm-8">
+                {{> upload_bootstrap }}
+              </div>
+              <div class="col-sm-4">
+                {{#if logoImg}}
+                  <img class="img-responsive" {{logoImg}} style="height:36px"/>
+                {{/if}}
+              </div>
+            </div>
+        </div>
+
+
       {{> afQuickField name='description' rows=6 value=this.description}}
       {{> afQuickField name='compensationModel' rows=4 value=this.compensationModel}}
       {{> afQuickField name='keywords' rows=4 value=this.keywords}}
@@ -219,10 +246,24 @@
   {{#autoForm collection="Companies" id="insertCompanyForm" type="insert"}}
   <fieldset>
     <legend>Company Info</legend>
-    {{> upload_bootstrap }}
+
     {{> afQuickField name='name' value=''}}
     {{> afQuickField name='websiteUrl' value=''}}
-    {{> afQuickField name='logoUrl' placeholder='https://media.licdn.com/media/logo.png'}}
+    <div class="m-t m-b">
+        <div class="row">
+          <div class="col-sm-12">
+            <label for="logo" class="control-label">Company Logo</label>
+          </div>
+          <div class="col-sm-8">
+            {{> upload_bootstrap }}
+          </div>
+          <div class="col-sm-4">
+            {{#if this.profile.logo}}
+              <img class="img-responsive" src="{{this.profile.logo}}" alt="" style="height:36px"/>
+            {{/if}}
+          </div>
+        </div>
+    </div>
     {{> afQuickField name='description' rows=6 value=''}}
     {{> afQuickField name='compensationModel' rows=4}}
     {{> afQuickField name='keywords' rows=4}}

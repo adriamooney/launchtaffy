@@ -148,6 +148,30 @@ Template.companyProfile.helpers({
 	      src: logoUrl,
 	      alt: logoAlt
 	    }
+  	},
+  	logoImg: function() {
+  		//var userId = this.profile.companyId;
+		//var company = Companies.findOne({_id: userId});
+		var userId = Meteor.userId();
+		var company = Companies.findOne({companyId: userId});
+		var logoAlt = company.name+' logo';
+		var logoUrl = company.logoUrl;
+		var logo = company.logo;
+		if (company.logo) {
+			return {
+				src: logo,
+				alt: logoAlt
+			}
+		}
+		else if(company.logoUrl) {
+			return {
+				src: logoUrl,
+				alt: logoAlt
+			}
+		}
+    	else {
+    		return false;
+    	}
   	}
 });
 

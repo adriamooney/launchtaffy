@@ -17,6 +17,17 @@
 	
 });
 
+/*Template.salespeople.onRendered(function () {
+	 var $container = $('.grid');
+
+	  $container.imagesLoaded( function(){
+	    $container.masonry({
+	      itemSelector : '.grid-item'
+	    });
+	  });
+
+}); */
+
 Template.salespeopleItem.helpers({
 	numSales: function() {
 		var sales = Sales.find({$or: [{$and: [{salesPersonId: this._id},{'status': 'approved'}]}, {$and: [{salesPersonId: this._id},{'status': 'paid'}]}]} ).count();  

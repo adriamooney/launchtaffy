@@ -23,11 +23,16 @@
 				<div class="media">
 				  <div class="media-left">
 				    <a href="/company/{{this._id}}" class="avatar">
-				      {{# if logoUrl}}
-				      	<img class="media-object" src="{{logoUrl}}" alt="{{name}}" />
-				      	{{else}}
-				      	<img class="media-object" src="" alt="" style="width:60px;height:60px;background:#ccc;border:1px solid #666"/>
-				      {{/if}}
+				    {{#if logo}}
+				    	<img class="media-object" src="{{logo}}" alt="{{name}}" />
+					    {{else}}
+					      {{# if logoUrl}}
+					      	<img class="media-object" src="{{logoUrl}}" alt="{{name}}" />
+					      	{{else}}
+					      	<img class="media-object" src="" alt="" style="width:60px;height:60px;background:#ccc;border:1px solid #666"/>
+					      {{/if}}
+				     {{/if}}
+
 				    </a>
 				  </div>
 				  <div class="media-body">
