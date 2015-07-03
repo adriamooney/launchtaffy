@@ -31,6 +31,16 @@ Template.dashboard.events({
     }
 });
 
+Template.dashboard.onRendered(function () {
+    var user = Meteor.userId();
+    var referralPath = SessionStore.get('referralPath');
+
+    if(referralPath && !Meteor.user().profile.referralPath) {
+        console.log(referralPath);
+        Meteor.call('getReferralPathSession', referralPath, user);
+    }
+});
+
 Template.header.events({
     'click .logout': function(event){
         event.preventDefault();

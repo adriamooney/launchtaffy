@@ -44,19 +44,7 @@ Tracker.autorun(function(){
       // login handler
       Accounts.onLogin(function(options) {
 
-            var user = Meteor.userId();
-            var referralPath = SessionStore.get('referralPath');
-
-            if(referralPath) {
-                Meteor.call('getReferralPathSession', referralpath, user);
-            }
-
-           /* var userType = SessionStore.get('userType');
-            if(userType && !Meteor.user().profile.userType) {
-                console.log(userType);
-                Meteor.call('setUserType', userType, user); 
-            } */
-               
+            var user = Meteor.userId();               
 
             Router.go('/dashboard/');  //does this cause the problem of redirecting on refresh?
             Meteor.call('lastLogin', user, function(err) {
