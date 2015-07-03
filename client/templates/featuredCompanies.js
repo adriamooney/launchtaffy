@@ -50,11 +50,11 @@ Template.featuredCompaniesWidget.helpers({
 			var id = company.companyId;
 		  	companyArr.push(id);
 		});
-		console.log(companyArr);
+		//console.log(companyArr);
 		var featuredCompany = Companies.find({_id: {$in: companyArr}}, {fields: {'name':1, _id:1, 'description': 1, 'logoUrl': 1, 'logo': 1}}).fetch();
 		
 		if(featuredCompany) {
-			console.log(featuredCompany);
+			//console.log(featuredCompany);
 			return featuredCompany;
 		} 
 

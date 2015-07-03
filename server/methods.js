@@ -3,6 +3,12 @@ Meteor.methods({
     var rootUrl = process.env.ROOT_URL;
     return rootUrl;
   },
+  getReferralPathSession: function(referralPath, id) {
+    Meteor.users.update({_id: id},{$set:{'profile.referralPath': referralPath}});
+  },
+  setUserType: function(userType, id) {
+    Meteor.users.update({_id: id},{$set:{'profile.userType': userType}});
+  },
   removeMsg: function(id) {
     AppMessages.collection.remove(id);
   },

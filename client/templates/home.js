@@ -58,7 +58,7 @@
 Template.salesLandingWithForm.events({
   'click #sales-signup': function(e) {
     //analytics.track('click-sales-signup');
-    ServerSession.set('userType', 'salesperson');
+    //ServerSession.set('userType', 'salesperson');
     e.preventDefault();
     Meteor.loginWithLinkedin({}, function (err) {
             if (err){
@@ -73,7 +73,7 @@ Template.salesLandingWithForm.events({
 Template.salesLanding.events({
   'click #sales-signup': function(e) {
     //analytics.track('click-sales-signup');
-    ServerSession.set('userType', 'salesperson');
+    //ServerSession.set('userType', 'salesperson');
     e.preventDefault();
     Meteor.loginWithLinkedin({}, function (err) {
             if (err){

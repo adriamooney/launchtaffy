@@ -4,6 +4,8 @@ Accounts.onCreateUser(function(options, user) {
       var email = user.services.linkedin.emailAddress;
       Meteor.users.update({_id: user._id}, { $addToSet: { 'emails.address': {'address': email, 'verified': true} }});
   } */
+
+
     var linkedin = user.services.linkedin;
     if(linkedin) {
       var email = user.services.linkedin.emailAddress;
@@ -18,7 +20,7 @@ Accounts.onCreateUser(function(options, user) {
 
     if(accountEmail) {//if already signed up with linkedin signup form, this prevent account signup
       var emailAlreadyExist = Meteor.users.find({"profile.emailAddress": accountEmail}, {limit: 1}).count()>0
-      console.log(emailAlreadyExist);
+      //console.log(emailAlreadyExist);
       if(emailAlreadyExist === true) {
           throw new Meteor.Error(403, "Email already registered");
       }
@@ -41,18 +43,18 @@ Accounts.onCreateUser(function(options, user) {
     }
 
     var userType = ServerSession.get('userType');
-    var referralPath =  ServerSession.get('referralPath');
-    //console.log(userType);
-    //console.log(profile);
+   
+   
+
     if(userType) {
       options.profile.userType = userType;
     }
     options.profile.isActive = true;
     options.profile.profileStatus = 0;
     
-    if(referralPath) {
+    /*if(referralPath) {
       options.profile.referralPath = referralPath;
-    }
+    } */
 
 
 
@@ -94,7 +96,7 @@ Accounts.onCreateUser(function(options, user) {
         user.profile = options.profile;
     }
 
-    ServerSession.set('referralPath', '');
+    //ServerSession.set('referralPath', '');
 
     // we wait for Meteor to create the user before sending an email
    /* Meteor.setTimeout(function() {
