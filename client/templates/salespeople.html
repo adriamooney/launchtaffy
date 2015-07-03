@@ -65,22 +65,26 @@
 </template>
 
 <template name="salesPeopleSearch">
-    <div class="form-group">{{> esInput index="salesPeopleIndex" placeholder="Search..." class="form-control"}}</div>
+    <div class="well well-info search-results">
+    	<div class="form-group">{{> esInput index="salesPeopleIndex" placeholder="Search..." class="form-control"}}</div>
+    
 
-    {{#esEach index="salesPeopleIndex"}}
-        {{>salespeopleItem}}
-    {{/esEach}}
+	    {{#ifEsIsSearching index="salesPeopleIndex"}}
+	    	 <div>Loading...</div>
+	    	{{else}}
 
+			   	{{#esEach index="salesPeopleIndex"}}
+			        {{>salespeopleItem}}
+			    {{/esEach}}	
+        
+	    {{/ifEsIsSearching}}
 
-    {{> esLoadMoreButton index="salesPeopleIndex"}}
+	    <div class="text-center">{{> esLoadMoreButton index="salesPeopleIndex" class="btn btn-primary" content="Load More"}}</div>
 
-    {{#ifEsHasNoResults index="salesPeopleIndex"}}
-        <div class="no-results">No results found!</div>
-    {{/ifEsHasNoResults}}
-
-    {{#ifEsIsSearching index="salesPeopleIndex"}}
-            <div>Loading...</div>
-    {{/ifEsIsSearching}}
+	    {{#ifEsHasNoResults index="salesPeopleIndex"}}
+	        <div class="no-results">No results found</div>
+	    {{/ifEsHasNoResults}}
+    </div>
 </template>
 
 

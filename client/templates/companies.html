@@ -61,20 +61,25 @@
 </template>
 
 <template name="companySearch">
-    <div class="form-group">{{> esInput index="companiesIndex" placeholder="Search..." class="form-control"}}</div>
+	 <div class="well well-info search-results">
+    	<div class="form-group">{{> esInput index="companiesIndex" placeholder="Search..." class="form-control"}}</div>
 
-    {{#esEach index="companiesIndex"}}
-        {{>companyItem}}
-    {{/esEach}}
+    	{{#ifEsIsSearching index="companiesIndex"}}
+	        <div>Loading...</div>
+	    	{{else}}
+
+	    {{#esEach index="companiesIndex"}}
+	        {{>companyItem}}
+	    {{/esEach}}
+
+	    {{/ifEsIsSearching}}
 
 
-    {{> esLoadMoreButton index="companiesIndex"}}
+	    <div class="text-center">{{> esLoadMoreButton index="companiesIndex" class="btn btn-primary" content="Load More"}}</div>
 
-    {{#ifEsHasNoResults index="companiesIndex"}}
-        <div class="no-results">No results found!</div>
-    {{/ifEsHasNoResults}}
+	    {{#ifEsHasNoResults index="companiesIndex"}}
+	        <div class="no-results">No results found</div>
+	    {{/ifEsHasNoResults}}
 
-    {{#ifEsIsSearching index="companiesIndex"}}
-            <div>Loading...</div>
-    {{/ifEsIsSearching}}
+	</div>
 </template>
