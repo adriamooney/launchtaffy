@@ -25,9 +25,9 @@
 
 	<div class="">
 				
-		<div class="well">
+		<div class="panel panel-default">
 			
-				<div class="text-center">
+				<div class="text-center panel-body">
 				  <div class="m-b">
 				    <a href="/profile/{{_id}}" class="avatar">
 
@@ -65,12 +65,12 @@
 </template>
 
 <template name="salesPeopleSearch">
-    <div class="well well-info search-results">
+    <div class="well well-info search-results p-b-no">
     	<div class="form-group">{{> esInput index="salesPeopleIndex" placeholder="Search..." class="form-control"}}</div>
     
 
 	    {{#ifEsIsSearching index="salesPeopleIndex"}}
-	    	 <div>Loading...</div>
+	    	 <div><p>Searching...</p></div>
 	    	{{else}}
 
 			   	{{#esEach index="salesPeopleIndex"}}
@@ -79,10 +79,10 @@
         
 	    {{/ifEsIsSearching}}
 
-	    <div class="text-center">{{> esLoadMoreButton index="salesPeopleIndex" class="btn btn-primary" content="Load More"}}</div>
+	    <div class="text-center"><p>{{> esLoadMoreButton index="salesPeopleIndex" class="btn btn-primary" content="Load More"}}</p></div>
 
 	    {{#ifEsHasNoResults index="salesPeopleIndex"}}
-	        <div class="no-results">No results found</div>
+	        <div class="no-results"><p>No results found</p></div>
 	    {{/ifEsHasNoResults}}
     </div>
 </template>

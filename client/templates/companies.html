@@ -61,11 +61,11 @@
 </template>
 
 <template name="companySearch">
-	 <div class="well well-info search-results">
+	 <div class="well well-info search-results p-b-no">
     	<div class="form-group">{{> esInput index="companiesIndex" placeholder="Search..." class="form-control"}}</div>
 
     	{{#ifEsIsSearching index="companiesIndex"}}
-	        <div>Loading...</div>
+	        <div><p>Searching...</p></div>
 	    	{{else}}
 
 	    {{#esEach index="companiesIndex"}}
@@ -75,10 +75,10 @@
 	    {{/ifEsIsSearching}}
 
 
-	    <div class="text-center">{{> esLoadMoreButton index="companiesIndex" class="btn btn-primary" content="Load More"}}</div>
+	    <div class="text-center"><p>{{> esLoadMoreButton index="companiesIndex" class="btn btn-primary" content="Load More"}}</p></div>
 
 	    {{#ifEsHasNoResults index="companiesIndex"}}
-	        <div class="no-results">No results found</div>
+	        <div class="no-results"><p>No results found</p></div>
 	    {{/ifEsHasNoResults}}
 
 	</div>
