@@ -146,10 +146,14 @@ Template.userTypeSwitcher.events({
 
 Template.chooseUserType.events({
 	'click #chooseCompany': function(event, template) {
-		Meteor.users.update({_id: Meteor.userId()}, {$set: {'profile.userType': 'company'}});
+		var id = Meteor.userId();
+		//Meteor.users.update({_id: Meteor.userId()}, {$set: {'profile.userType': 'company'}});
+		Meteor.call('setUserType', 'company', id);
 	},
 	'click #chooseSalesperson': function(event, template) {
-		Meteor.users.update({_id: Meteor.userId()}, {$set: {'profile.userType': 'salesperson'}});
+		var id = Meteor.userId();
+		//Meteor.users.update({_id: Meteor.userId()}, {$set: {'profile.userType': 'salesperson'}});
+		Meteor.call('setUserType', 'salesperson', id);
 	}
 });
 

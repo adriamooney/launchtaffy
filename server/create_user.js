@@ -42,13 +42,13 @@ Accounts.onCreateUser(function(options, user) {
       options.profile = {};
     }
 
-    var userType = ServerSession.get('userType');
+    /*var userType = ServerSession.get('userType');
    
    
 
     if(userType) {
       options.profile.userType = userType;
-    }
+    } */
     options.profile.isActive = true;
     options.profile.profileStatus = 0;
     

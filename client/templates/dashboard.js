@@ -34,10 +34,15 @@ Template.dashboard.events({
 Template.dashboard.onRendered(function () {
     var user = Meteor.userId();
     var referralPath = SessionStore.get('referralPath');
+    var userType = SessionStore.get('userType');
 
     if(referralPath && !Meteor.user().profile.referralPath) {
         console.log(referralPath);
         Meteor.call('getReferralPathSession', referralPath, user);
+    }
+    if(userType && !Meteor.user().profile.userType) {
+        console.log(userType);
+        Meteor.call('getReferralPathSession', userType, user);
     }
 });
 

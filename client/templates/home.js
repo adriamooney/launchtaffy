@@ -55,7 +55,7 @@
   }
 }); */
 
-Template.salesLandingWithForm.events({
+/*Template.salesLandingWithForm.events({
   'click #sales-signup': function(e) {
     //analytics.track('click-sales-signup');
     //ServerSession.set('userType', 'salesperson');
@@ -83,4 +83,4 @@ Template.salesLanding.events({
             }
         });
   }
-});
+}); */
