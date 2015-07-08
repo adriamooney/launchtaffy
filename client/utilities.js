@@ -13,8 +13,17 @@
     return val.replace(/^\s*|\s*$/g, "");
   }
 
-  //var email = trimInput(email);
+Template.registerHelper("currentYear", function(param, arr) {
+    var currYear = moment(new Date()).year();
+    return currYear;
+});
 
-   //if (isValidLength(userPassword) // &amp;&amp; other validations) {
-    // Then use the Meteor.createUser() function
-  //}
+Template.registerHelper("equals_or", function(param, arr) {
+   arr = arr.split(",");
+   if (arr.indexOf(param) !== -1) {
+      return true;
+   } 
+   else {
+     return false;
+   }
+});

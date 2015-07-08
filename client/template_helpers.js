@@ -281,16 +281,6 @@ Template.registerHelper('reviewsForUser', function(userId) {
 		}
 });
 
-Template.registerHelper("equals_or", function(param, arr) {
-   arr = arr.split(",");
-   if (arr.indexOf(param) !== -1) {
-      return true;
-   } 
-   else {
-     return false;
-   }
-});
-
 
 
 

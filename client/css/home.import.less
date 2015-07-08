@@ -1,3 +1,7 @@
+.landingLayout {
+	margin-bottom:50px;
+}
+
 .jumbotron {
 	
 	margin-bottom:0;
@@ -27,7 +31,7 @@
 		margin-bottom:40px;
 	}
 	.home-leader-btn {
-		min-width:280px;
+		/*min-width:280px; */
 		margin:20px;
 		.linkedIn {
 			background: #0077B5;
@@ -39,8 +43,34 @@
 	}
 }
 
+.sales-landing.jumbotron {
+	background: url(/marketing_images/salespeople_bg_md.jpg) bottom center no-repeat;
+	h1, h2 {
+		color: @gray-darker;
+	}
+	h2 {
+		margin-bottom:5px;
+		text-shadow: 0 0 10px @white;
+	}
+}
+@media (max-width:716px) {
+	.sales-landing.jumbotron {
+		background: url(/marketing_images/salespeople_bg_sm.jpg) bottom center no-repeat;
+	}
+}
+
 .home-row {
 	padding: 50px 0;
+}
+.home-row-alt {
+	background:@gray-base;
+	color: @white;
+	.lead {
+		color: @white;
+	}
+	.well {
+		color: @gray-base;
+	}
 }
 @media (max-width:768px) {
 	.home-row-1 {
