@@ -6,7 +6,12 @@ Meteor.startup(function () {
 
 	Uploader.finished = function(index, file_info) {
 
-        var url = file_info.url;
+        var path = '/upload'+file_info.path
+
+        var rootUrl = Session.get('rootUrl');
+
+        var url = rootUrl+path;
+
         var user = Meteor.user();
 
         if(user.profile.userType == 'salesperson') {

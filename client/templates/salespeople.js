@@ -134,7 +134,7 @@ Template.salesProfile.events({
 
 			Meteor.call('sendMessage', senderId, toId, msg, function(err, result) {
 				if(!err) {
-					console.log(result);
+					//console.log(result);
 					var rootUrl = Session.get('rootUrl');
 					var cleanmsg = msg.replace(/'/g, '&lsquo;');
 					AppMessages.throw('your messages was sent', 'success');
@@ -292,7 +292,7 @@ Template.updateSalesForm.helpers({
 Template.salespeopleItem.onRendered(function () {
 	var userId = this.data._id;
 
-	console.log(this);
+	//console.log(this);
 
 	var reviews = Reviews.find({userId: userId });
 
