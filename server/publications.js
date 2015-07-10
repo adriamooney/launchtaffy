@@ -3,7 +3,7 @@ Meteor.publish('companies', function(){
 });
 
 Meteor.publish("users", function () {
-	return Meteor.users.find({}, {fields: {emails: 1, profile: 1}});
+	return Meteor.users.find({}, {fields: {emails: 1, profile: 1, createdAt:1}});
   //return Meteor.users.find({'profile.userType': 'salesperson'});
 });
 
@@ -54,3 +54,5 @@ Meteor.publish('featuredCompanies', function(){
 Meteor.publish('reviews', function(){
     return Reviews.find();
 });
+
+

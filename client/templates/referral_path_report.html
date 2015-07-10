@@ -1,0 +1,12 @@
+<template name="referralPathReport">
+	<div class="page-header">
+		<h1>Affiliate Report</h1>
+	</div>
+	<h3>Sales Professionals</h3>
+	<ul class="list-group">
+	{{#each this}}
+		<li class="list-group-item">{{date}} <a href="/profile/{{_id}}">{{profile.firstName}} {{profile.LastName}} - {{profile.emailAddress}} </a> <span class="label label-primary">{{numSales}}</span>  <span class="label label-info">{{numLeads}}</span></li>
+	{{/each}}
+</ul>
+
+</template>   
