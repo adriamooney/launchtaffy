@@ -1,6 +1,6 @@
 Template.referralPathReport.helpers({
 	date: function() {
-		console.log(this.createdAt);
+		//console.log(this.createdAt);
 		var date = moment(this.createdAt).format('L');
 		return date;
 	},
