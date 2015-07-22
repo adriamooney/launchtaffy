@@ -16,6 +16,10 @@ Meteor.publish("sales", function () {
 	return Sales.find({salesPersonId: user}); 
 });
 
+Meteor.publish("allSales", function () {
+    return Sales.find({}); 
+});
+
 Meteor.publish("leads", function () {
 	var user = this.userId;
 	return Leads.find({}); 
