@@ -7,7 +7,7 @@ Template.referralPathReport.helpers({
 	numSales: function() {
 		var user = this.profile.userType;
 		if(user == 'company') {
-			var sales = Sales.find({$or: [{$and: [{companyId: this.profile.companyId},{'status': 'approved'}]}, {$and: [{salesPersonId: this._id},{'status': 'paid'}]}]} ).count();  
+			var sales = Sales.find({$or: [{$and: [{companyId: this.profile.companyId},{'status': 'approved'}]}, {$and: [{companyId: this.profile.companyId},{'status': 'paid'}]}]} ).count();  
 		}
 		if(user == 'salesperson') {
 			var sales = Sales.find({$or: [{$and: [{salesPersonId: this._id},{'status': 'approved'}]}, {$and: [{salesPersonId: this._id},{'status': 'paid'}]}]} ).count();  
@@ -28,7 +28,7 @@ Template.referralPathReport.helpers({
 	numLeads: function() {
 		var user = this.profile.userType;
 		if(user == 'company') {
-			var leads = Leads.find({$or: [{$and: [{companyId: this.profile.companyId},{'status': 'approved'}]}, {$and: [{salesPersonId: this._id},{'status': 'paid'}]}]} ).count();   
+			var leads = Leads.find({$or: [{$and: [{companyId: this.profile.companyId},{'status': 'approved'}]}, {$and: [{companyId: this.profile.companyId},{'status': 'paid'}]}]} ).count();   
 		}
 		if(user == 'salesperson') {
 			var leads = Leads.find({$or: [{$and: [{salesPersonId: this._id},{'status': 'approved'}]}, {$and: [{salesPersonId: this._id},{'status': 'paid'}]}]} ).count();   
