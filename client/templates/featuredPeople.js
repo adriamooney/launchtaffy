@@ -58,7 +58,7 @@ Template.featuredSalesPeopleWidget.helpers({
 	},
 	lastName:function() {
 		var lastName = this.profile.lastName;
-		console.log(this);
+		//console.log(this);
 		var b = lastName.slice(0,1);
 		return b+'.';
 	}
